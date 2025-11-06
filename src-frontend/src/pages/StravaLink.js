@@ -21,7 +21,7 @@ export function InitStravaLink() {
     const baseUrl = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/strava/return/`;
     const encodedBaseUrl = encodeURIComponent(baseUrl);
 
-    const STRAVA_CLIENT_ID = window.RUNTIME_CONFIG?.STRAVA_CLIENT_ID;
+    const STRAVA_CLIENT_ID = window.RUNTIME_CONFIG?.REACT_APP_STRAVA_CLIENT_ID;
     const isIOS = () => {
         return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     };

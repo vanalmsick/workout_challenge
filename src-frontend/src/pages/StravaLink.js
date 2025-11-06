@@ -21,11 +21,12 @@ export function InitStravaLink() {
     const baseUrl = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/strava/return/`;
     const encodedBaseUrl = encodeURIComponent(baseUrl);
 
+    const STRAVA_CLIENT_ID = window.RUNTIME_CONFIG?.STRAVA_CLIENT_ID;
     const isIOS = () => {
         return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     };
 
-    const urlSecondPart = 'client_id=156364&response_type=code&approval_prompt=force&scope=profile:read_all,activity:read_all&redirect_uri=' + encodedBaseUrl;
+    const urlSecondPart = `client_id=${STRAVA_CLIENT_ID}&response_type=code&approval_prompt=force&scope=profile:read_all,activity:read_all&redirect_uri=${encodedBaseUrl}`;
     let urlFirstPart = '';
 
     if (isIOS()) {

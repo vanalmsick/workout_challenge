@@ -37,9 +37,9 @@ print(f'Debug modus is turned {"on" if DEBUG else "off"}')
 MAIN_HOST = os.environ.get("MAIN_HOST", "http://localhost")
 HOSTS = os.environ.get("HOSTS", "http://localhost,http://127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = HOSTS
-ALLOWED_HOSTS = [urlparse(url).netloc for url in HOSTS]
+ALLOWED_HOSTS = ['*'] if os.environ.get("ALLOW_ALL_HOSTS", "false").lower() == "true" else [urlparse(url).netloc for url in HOSTS]
 CORS_ALLOWED_ORIGINS = HOSTS
-CORS_ALLOW_ALL_ORIGINS = True if DEBUG else False
+CORS_ALLOW_ALL_ORIGINS = True if DEBUG or os.environ.get("ALLOW_ALL_HOSTS", "false").lower() == "true" else False
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -230,7 +230,7 @@ STRAVA_LIMIT_DAY = int(os.environ.get("STRAVA_LIMIT_DAY", 1000))
 
 
 # Sentry
-if (sentry_sdk_url := os.environ.get("REACT_APP_SENTRY_DSN", None)) is not None:
+if (sentry_sdk_url := os.environ.get("SENTRY_DSN", None)) is not None:
     sentry_sdk.init(
         dsn=sentry_sdk_url,
         environment="backend",

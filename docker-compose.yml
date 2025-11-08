@@ -22,7 +22,7 @@ services:
       - TIME_ZONE=Europe/London
       - STRAVA_CLIENT_ID=000000
       - STRAVA_CLIENT_SECRET=<secret_key>
-      - REACT_APP_SENTRY_DSN=https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID>
+      - SENTRY_DSN=https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID>
       - EMAIL_HOST=smtp.gmail.com
       - EMAIL_PORT=465
       - EMAIL_HOST_USER=competition@yourdomain.com

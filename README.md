@@ -41,7 +41,7 @@ Made with ❤️ in London
 
 ## Give it a quick try
 ```
-docker run -p 80:80 vanalmsick/workout_challenge
+docker run -p 80:80 -e ALLOW_ALL_HOSTS=true vanalmsick/workout_challenge
 ```
 
 ## Full Production Deployment
@@ -71,7 +71,7 @@ services:
       - TIME_ZONE=Europe/London
       - STRAVA_CLIENT_ID=000000
       - STRAVA_CLIENT_SECRET=<secret_key>
-      - REACT_APP_SENTRY_DSN=https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID>
+      - SENTRY_DSN=https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID>
       - EMAIL_HOST=smtp.gmail.com
       - EMAIL_PORT=465
       - EMAIL_HOST_USER=competition@yourdomain.com
@@ -117,12 +117,13 @@ docker compose -f /path/to/docker-compose.yml up
 | SECRET_KEY            | [a hard-coded string in code]       | Django's [SECRET_KEY](https://docs.djangoproject.com/en/5.2/ref/settings/#std-setting-SECRET_KEY) for cryptographic signing.                                                                                                                                                                                    |
 | TIME_ZONE             | "Europe/London"                     | Timezone for [Django](https://docs.djangoproject.com/en/5.2/ref/settings/#time-zone) and [Celery](https://docs.celeryq.dev/en/stable/userguide/configuration.html#timezone)                                                                                                                                     |
 | DEBUG                 | false                               | Django's DEBUG mode. If true, [CORS_ALLOW_ALL_ORIGINS](https://pypi.org/project/django-cors-headers/) will also be true and the [CACHE](https://docs.djangoproject.com/en/5.2/ref/settings/#caches) will use [Local Memory Cache](https://docs.djangoproject.com/en/5.2/ref/settings/#caches) instead of Redis. |
+| ALLOW_ALL_HOSTS       | false                               | For quick testing to not having to set HOSTS. Do not set to true in production but set HOSTS.                                                                                                                                                                                                                   |
 | POSTGRES_HOST         | None                                | If set to None, Django will use SQLite as database (might cause database lock errors in production), else this is the host url to the [Postgres database](https://hub.docker.com/_/postgres/).                                                                                                                  |
 | POSTGRES_DB           | "postgres"                          | Database name in [Postgres database](https://hub.docker.com/_/postgres/)                                                                                                                                                                                                                                        | 
 | POSTGRES_USER         | "postgres"                          | Database username in [Postgres database](https://hub.docker.com/_/postgres/)                                                                                                                                                                                                                                    | 
 | POSTGRES_PASSWORD     | ""                                  | Database password in [Postgres database](https://hub.docker.com/_/postgres/)                                                                                                                                                                                                                                    | 
-| REACT_APP_SENTRY_DSN  | None                                | If None no [Sentry.io](https://sentry.io/) error capturing, else please provide the project url https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID>                                                                                                                                                                        | 
-| STRAVA_CLIENT_ID      | "1234321"                           | [Strava API](https://developers.strava.com) Client Id. Please see below how to get one.                                                                                                                                                                                                                         | 
+| SENTRY_DSN            | None                                | If None no [Sentry.io](https://sentry.io/) error capturing, else please provide the project url https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID> *(In local development you might have to set REACT_APP_SENTRY_DSN instead)*                                                                                            | 
+| STRAVA_CLIENT_ID      | "1234321"                           | [Strava API](https://developers.strava.com) Client Id. Please see below how to get one. *(In local development you might have to set REACT_APP_STRAVA_CLIENT_ID instead)*                                                                                                                                       | 
 | STRAVA_CLIENT_SECRET  | "ReplaceWithClientSecret"           | [Strava API](https://developers.strava.com) Client Secret. Please see below how to get one.                                                                                                                                                                                                                     | 
 | STRAVA_LIMIT_15MIN    | 100                                 | [Strava API](https://developers.strava.com) Limit per 15min. 300 if part of developer program, else 100.                                                                                                                                                                                                        | 
 | STRAVA_LIMIT_DAY      | 1000                                | [Strava API](https://developers.strava.com) Limit per day. 3000 if part of developer program, else 1000.                                                                                                                                                                                                        | 

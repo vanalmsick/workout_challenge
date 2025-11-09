@@ -192,3 +192,23 @@ suggested env variables:
 REACT_APP_BACKEND_URL=http://localhost:8000
 ```
 run React: `npm start`
+
+
+#### ToDos / Ideas:
+- Add help text to "Link Strava Button" if Strava linkage is not set up
+- Add explanation text for how Steps are converted
+- Add tickbox for runs/walks if they count towards the total daily steps
+- Group finished competitions in archive button
+- Remove total daily steps from weekly email
+- Add competition finish email
+- Send competition start email if user joins after competition already started
+- Add help text if users try joining competitions using non-invite link
+- Add option for competition admin to remove users
+- Improve README texts
+- Improve repo link preview picture
+- Add Garmin API support
+- Add Futbit API suport
+- Add friends page
+- Add more personal statistics
+- Add medals and achievements
+- Add UI hint if old version of workout challenge is used

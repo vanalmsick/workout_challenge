@@ -5,6 +5,13 @@ from django.utils.deprecation import MiddlewareMixin
 
 class JsonSecurityErrorMiddleware(MiddlewareMixin):
     def process_exception(self, request, exception):
+        # Add detailed logging
+        print("=== Debug Information ===")
+        print(f"Request Host: {request.get_host()}")
+        print(f"Request Headers: {dict(request.headers)}")
+        print(f"Exception type: {type(exception)}")
+        print(f"Exception message: {str(exception)}")
+        print("======================")
         # Invalid Host (ALLOWED_HOSTS violation)
         if isinstance(exception, DisallowedHost):
             return JsonResponse(

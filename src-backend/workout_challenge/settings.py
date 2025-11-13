@@ -63,7 +63,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'workout_challenge.middleware.JsonSecurityErrorMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -257,6 +256,31 @@ EMAIL_USE_SSL = None if (use_ssl := os.environ.get("EMAIL_USE_SSL", None)) is No
 EMAIL_FROM = DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_FROM", None)
 EMAIL_REPLY_TO = None if (reply_email := os.environ.get("EMAIL_REPLY_TO", None)) is None else reply_email.split(",")
 
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[{levelname}] {asctime} {name}: {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        # This is where Django logs DisallowedHost errors
+        "django.security.DisallowedHost": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}
 
 # OpenAI for AI quotes
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", None)

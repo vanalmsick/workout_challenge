@@ -171,7 +171,11 @@ const apiCreateAccount = async (email, first_name, last_name, gender, password) 
             return [true, undefined];
         } else {
             console.log('Registration Error:', response.status, response.statusText);
-            let error_msg = 'Registration Error (' + response.status + '): ' + response.statusText + ', ';
+            let error_msg = 'Registration Error (' + response.status + '): ' + response.statusText;
+            if (response.status === 400) {
+                error_msg += ' (Does env HOSTS contain the correct domain?)';
+            }
+            error_msg += ', ';
             try {
                 const error = await response.json();
                 for (const key in error) {

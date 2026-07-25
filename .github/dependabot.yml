@@ -3,7 +3,7 @@ version: 2
 updates:
   # ── Frontend: npm ──────────────────────────────────────────────────────────
   - package-ecosystem: "npm"
-    directory: "/frontend"
+    directory: "/src-frontend"
     schedule:
       interval: "weekly"
       day: "friday"
@@ -37,7 +37,7 @@ updates:
 
   # ── Backend: pip ───────────────────────────────────────────────────────────
   - package-ecosystem: "pip"
-    directory: "/backend/src"
+    directory: "/src-backend"
     schedule:
       interval: "weekly"
       day: "friday"

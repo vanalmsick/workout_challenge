@@ -3,7 +3,7 @@ WORKDIR /workout_challenge/src-frontend
 COPY src-frontend/ /workout_challenge/src-frontend/
 RUN npm install && npm run build
 
-FROM python:3.11-alpine AS backend
+FROM python:3.14-alpine AS backend
 WORKDIR /workout_challenge/src-backend
 COPY src-backend/ /workout_challenge/src-backend/
 
@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Collect Django static files
 RUN python3 manage.py collectstatic --noinput
 
-FROM python:3.11-alpine AS final
+FROM python:3.14-alpine AS final
 
 # Install system dependencies
 RUN apk add --no-cache nginx supervisor build-base redis postgresql-libs

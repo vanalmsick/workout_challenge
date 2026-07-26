@@ -1,4 +1,4 @@
-FROM node:18 AS frontend
+FROM node:20 AS frontend
 WORKDIR /workout_challenge/src-frontend
 COPY src-frontend/ /workout_challenge/src-frontend/
 RUN npm install && npm run build

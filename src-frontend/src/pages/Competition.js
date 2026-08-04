@@ -853,7 +853,7 @@ export default function Competition() {
     }
 
     if (competitionError) {
-        console.log('Error retrieving competition (' + id + '):', competitionError);
+        console.log('Error retrieving competition:', id, competitionError);
         return <PageWrapper additionClasses="h-screen flex items-center justify-center"><ErrorBoxSection
             errorMsg={competitionError?.status + ' / ' + (competitionError?.error || competitionError?.message || competitionError?.data?.detail)}/></PageWrapper>;
     }

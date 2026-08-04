@@ -4,6 +4,9 @@ on:
     branches: [ 'dev' ]
     paths-ignore: [ '.github/**', 'docs/**', 'README.md' ]
 
+permissions:
+  contents: read
+
 jobs:
 
   docker:

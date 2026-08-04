@@ -8,10 +8,15 @@ on:
       - master
       - main
 
+permissions:
+  contents: read
+
 jobs:
   merge-master-back-to-dev:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # pushes the auto-merge commit to dev
     steps:
       - uses: actions/checkout@v7
       - name: Set Git config

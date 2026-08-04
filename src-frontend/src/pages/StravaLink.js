@@ -1,7 +1,7 @@
 import {useGetUserByIdQuery, usersApi} from "../utils/reducers/usersSlice";
 import {ClipLoader} from "react-spinners";
 import React, {useEffect} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router";
 import {useDeleteWorkoutMutation, workoutsApi} from "../utils/reducers/workoutsSlice";
 import {useLinkStravaMutation} from "../utils/reducers/linkSlice";
 import {useDispatch} from "react-redux";

@@ -16,7 +16,7 @@ import {useGetCompetitionsQuery} from "../utils/reducers/competitionsSlice";
 import CompetitionForm from "../forms/competitionForm";
 import PersonalGoalsForm from "../forms/personalGoalsForm";
 import SettingsForm from "../forms/settingsForm";
-import {useLocation, useNavigate, useNavigationType, useSearchParams} from "react-router-dom";
+import {useLocation, useNavigate, useNavigationType, useSearchParams} from "react-router";
 import NavMenu from "../utils/navMenu";
 import JoinCompetitionForm from "../forms/joinCompetitionForm";
 import {HowToScreen, LinkStravaScreen} from "./HowTo";

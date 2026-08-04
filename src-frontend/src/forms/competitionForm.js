@@ -4,7 +4,7 @@ import {
     useDeleteCompetitionMutation,
     useUpdateCompetitionMutation
 } from "../utils/reducers/competitionsSlice";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {ChangeOwnerButton, DeleteButton, Modal, SaveButton, SingleForm} from "./basicComponents";
 
 

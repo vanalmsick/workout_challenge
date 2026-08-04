@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Link, useLocation, useNavigationType, useParams} from "react-router-dom";
+import {Link, useLocation, useNavigationType, useParams} from "react-router";
 import {useDispatch} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import {BarLoader, MoonLoader} from "react-spinners";
 import {usersApi} from '../utils/reducers/usersSlice';
 import {workoutsApi} from '../utils/reducers/workoutsSlice';

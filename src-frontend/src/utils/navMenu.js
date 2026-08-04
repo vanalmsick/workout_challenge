@@ -1,5 +1,5 @@
 import {useGetCompetitionsQuery} from "./reducers/competitionsSlice";
-import {Link} from "react-router-dom";
+import {Link} from "react-router";
 import React, {useState} from "react";
 import CompetitionForm from "../forms/competitionForm";
 import {LogOut, BadgeHelp} from "lucide-react";

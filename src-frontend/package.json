@@ -23,7 +23,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^19.2.7",
     "react-redux": "^9.3.0",
-    "react-router-dom": "^7.18.1",
+    "react-router": "^8.3.0",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.17.0",
     "web-vitals": "^2.1.4"
@@ -51,12 +51,35 @@
       "last 1 safari version"
     ]
   },
+  "comment_overrides": "Security patches for transitive deps pinned by the abandoned react-scripts 5.0.1. Remove once the build moves off CRA.",
+  "overrides": {
+    "@babel/core": "^7.29.7",
+    "@svgr/webpack": "^8.1.0",
+    "@tootallnate/once": "^2.0.1",
+    "brace-expansion@^1": "^1.1.18",
+    "brace-expansion@^2": "^2.1.4",
+    "diff@^4": "^4.0.4",
+    "fast-uri@^3": "^3.1.5",
+    "glob@^10": "^10.5.0",
+    "http-proxy-middleware@^2": "^2.0.10",
+    "js-yaml@^3": "^3.15.1",
+    "js-yaml@^4": "^4.3.1",
+    "nanoid@^3": "^3.3.17",
+    "nth-check": "^2.1.1",
+    "path-to-regexp@^0.1": "^0.1.13",
+    "postcss": "$postcss",
+    "serialize-javascript": "^7.0.7",
+    "svgo@^2": "^2.8.3",
+    "svgo@^4": "^4.0.2",
+    "underscore": "^1.13.8",
+    "uuid@^8": "^11.1.1",
+    "webpack-dev-server": "^5.2.6"
+  },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "autoprefixer": "^10.5.4",
-    "critters-webpack-plugin": "^3.0.2",
     "cssnano": "^7.1.0",
-    "postcss": "^8.5.19",
+    "postcss": "^8.5.25",
     "postcss-import": "^16.1.1",
     "postcss-nesting": "^13.0.1",
     "tailwindcss": "^3.4.17"

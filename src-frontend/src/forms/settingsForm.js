@@ -1,7 +1,7 @@
 import {useDeleteUserMutation, usersApi, useUpdateUserMutation} from "../utils/reducers/usersSlice";
 import React, {useEffect, useState} from "react";
 import {DeleteButton, Modal, SaveButton, SingleForm, StravaButton} from "./basicComponents";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {useUnlinkStravaMutation} from "../utils/reducers/linkSlice";
 import {useDispatch} from "react-redux";
 

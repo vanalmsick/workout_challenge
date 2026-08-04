@@ -1,4 +1,4 @@
-import {useNavigate, useNavigationType, useParams} from 'react-router-dom';
+import {useNavigate, useNavigationType, useParams} from 'react-router';
 import React, {useEffect, useState} from "react";
 import NavMenu from "../utils/navMenu";
 import {competitionsApi, useGetCompetitionByIdQuery} from "../utils/reducers/competitionsSlice";

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useJoinCompetitionMutation} from "../utils/reducers/joinSlice";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {JoinButton, Modal, SingleForm} from "./basicComponents";
 import {competitionsApi} from "../utils/reducers/competitionsSlice";
 import {usersApi} from "../utils/reducers/usersSlice";

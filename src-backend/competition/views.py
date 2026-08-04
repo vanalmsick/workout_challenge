@@ -22,6 +22,9 @@ from .stats import get_competition_stats
 
 from celery import current_app
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 class CompetitionViewSet(viewsets.ModelViewSet):
     #queryset = Competition.objects.all()
@@ -135,9 +138,10 @@ class CeleryQueryView(APIView):
                     'result': task.result if task.successful() else None,
                     'error': str(task.result) if task.failed() else None
                 })
-            except Exception as e:
+            except Exception:
+                logger.exception("Error retrieving status of task %s", task_id)
                 return Response(
-                    {"error": f"Error retrieving task status: {str(e)}"}, 
+                    {"error": "Error retrieving task status"},
                     status=status.HTTP_400_BAD_REQUEST
                 )
         else:
@@ -149,9 +153,10 @@ class CeleryQueryView(APIView):
                     if not name.startswith('celery.')
                 ]
                 return Response(registered_tasks)
-            except Exception as e:
+            except Exception:
+                logger.exception("Error retrieving registered tasks")
                 return Response(
-                    {"error": f"Error retrieving tasks: {str(e)}"}, 
+                    {"error": "Error retrieving tasks"},
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
 
@@ -190,9 +195,10 @@ class CeleryQueryView(APIView):
                 {"error": f"Task '{task}' not found"}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
-        except Exception as e:
+        except Exception:
+            logger.exception("Error dispatching task %s", task)
             return Response(
-                {"error": str(e)}, 
+                {"error": "Error dispatching task"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 

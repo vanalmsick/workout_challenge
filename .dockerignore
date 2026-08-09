@@ -12,6 +12,7 @@
 *
 
 !nginx.conf
+!nginx-security-headers.conf
 !supervisord.conf
 !src-backend/
 !src-frontend/

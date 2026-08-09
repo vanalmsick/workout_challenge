@@ -53,13 +53,21 @@ class Command(BaseCommand):
 
 
 
+        # Competition windows are relative to today. They used to be hardcoded to 2025 while the
+        # dummy workouts below are always generated for "the last 6 months", so once the calendar
+        # moved past 2025 the two ranges stopped overlapping entirely: every workout fell outside
+        # every competition, no Points rows were created, and the seeded dev environment came up
+        # with an empty leaderboard.
+        today_date = datetime.date.today()
+
         test_competitions = [
             {
                 "owner": CustomUser.objects.get(email="user1@admin.local"),
                 "name": "WHO Competition",
                 "join_code": "WHOComp",
-                "start_date": "2025-05-01",
-                "end_date": "2025-12-31",
+                # started part-way through the generated workout history, still running
+                "start_date": today_date - timedelta(days=30 * 4),
+                "end_date": today_date + timedelta(days=30 * 8),
                 "has_teams": True,
                 "teams": [
                     {
@@ -93,21 +101,21 @@ class Command(BaseCommand):
                         "name": "10 Workouts (Bronze)",
                         "sport": "GROUP_ANY",
                         "threshold": 10,
-                        "period": "end",
+                        "period": "competition",  # "end" was not one of POINT_REF_PERIODS
                         "reward_points": 250,
                     },
                     {
                         "name": "25 Workouts (Silver)",
                         "sport": "GROUP_ANY",
                         "threshold": 25,
-                        "period": "end",
+                        "period": "competition",  # "end" was not one of POINT_REF_PERIODS
                         "reward_points": 500,
                     },
                     {
                         "name": "50 Workouts (Gold)",
                         "sport": "GROUP_ANY",
                         "threshold": 25,
-                        "period": "end",
+                        "period": "competition",  # "end" was not one of POINT_REF_PERIODS
                         "reward_points": 1_000,
                     },
                 ]
@@ -116,8 +124,9 @@ class Command(BaseCommand):
                 "owner": CustomUser.objects.get(email="user2@admin.local"),
                 "name": "100k 1k Competition",
                 "join_code": "100k1k",
-                "start_date": "2025-01-01",
-                "end_date": "2025-12-31",
+                # spans the whole generated workout history
+                "start_date": today_date - timedelta(days=30 * 7),
+                "end_date": today_date + timedelta(days=30 * 5),
                 "teams": [
                     {
                         "name": "Team 1",

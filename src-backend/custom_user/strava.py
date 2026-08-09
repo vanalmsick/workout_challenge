@@ -8,7 +8,7 @@ from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import IntegrityError
-from workout_challenge.celery import app, is_task_already_executing
+from workout_challenge.celery import app, single_instance
 from django.db.models import Q
 
 from workouts.models import Workout
@@ -35,36 +35,39 @@ def _seconds_until_next_interval():
 
 @app.task(bind=True, time_limit=60 * 60 * 3, max_retries=10)  # 3 hour time limit
 def daily_strava_sync(self, refresh_all=False):
-    if is_task_already_executing('daily_strava_sync'):
-        return 'Task already executing. Skipping.'
+    with single_instance('daily_strava_sync', timeout=60 * 60 * 3) as got_lock:
+        if not got_lock:
+            return 'Task already executing. Skipping.'
 
-    CustomUser = get_user_model()
-    user_lst = CustomUser.objects.filter(
-        strava_refresh_token__isnull=False,
-        is_active=True
-    )
-    if refresh_all is False:
-        user_lst = user_lst.filter(
-            Q(strava_last_synced_at__lt=timezone.now() - datetime.timedelta(hours=6)) |
-            Q(strava_last_synced_at__isnull=True)
+        CustomUser = get_user_model()
+        user_lst = CustomUser.objects.filter(
+            strava_refresh_token__isnull=False,
+            is_active=True
         )
-    user_lst = user_lst.order_by('strava_last_synced_at', 'pk')
+        if refresh_all is False:
+            user_lst = user_lst.filter(
+                Q(strava_last_synced_at__lt=timezone.now() - datetime.timedelta(hours=6)) |
+                Q(strava_last_synced_at__isnull=True)
+            )
+        user_lst = user_lst.order_by('strava_last_synced_at', 'pk')
 
-    user_lst_names = [{'pk': i.pk, 'username': i.username, 'email': i.email} for i in user_lst]
-    print(f'Syncing Strava for {len(user_lst)} users: {user_lst_names}')
+        # Only the ids/labels are needed here - don't keep full CustomUser instances alive for the
+        # whole (up to 3 hour) sync loop.
+        user_lst_names = list(user_lst.values('pk', 'username', 'email'))
+        print(f'Syncing Strava for {len(user_lst_names)} users: {user_lst_names}')
 
-    for user in user_lst:
-        try:
-            sync_strava(user__id=user.id)
-        except RateLimitExceeded as exc:
-            sleep_time = _seconds_until_next_interval() + 60
-            print(f'Strava sync rate limit exceeded - sleeping for {sleep_time // 60 } mins')
-            raise self.retry(exc=exc, countdown=sleep_time)  # retry in next Strava 15min api period
-        except Exception as exc:
-            print(f'Strava sync failed for user {user.email} - {exc}')
+        for user in user_lst_names:
+            try:
+                sync_strava(user__id=user['pk'])
+            except RateLimitExceeded as exc:
+                sleep_time = _seconds_until_next_interval() + 60
+                print(f'Strava sync rate limit exceeded - sleeping for {sleep_time // 60 } mins')
+                raise self.retry(exc=exc, countdown=sleep_time)  # retry in next Strava 15min api period
+            except Exception as exc:
+                print(f'Strava sync failed for user {user["email"]} - {exc}')
 
-    print('Finished syncing Strava.')
-    return user_lst_names
+        print('Finished syncing Strava.')
+        return user_lst_names
 
 
 
@@ -74,7 +77,16 @@ def sync_strava(self, user__id, start_datetime=None):
     CustomUser = get_user_model()
     user = CustomUser.objects.get(id=user__id)
 
-    all_existing_strava_activities = set(Workout.objects.all().values_list('strava_id', flat=True))
+    # Only this user's already-imported Strava ids. Previously this was
+    # ``set(Workout.objects.all().values_list('strava_id', flat=True))`` - every workout row in the
+    # entire database (including the manually-logged ones, whose strava_id is None), rebuilt for
+    # every user on every sync. That set grew linearly with total app usage and, because prefork
+    # children were never recycled, its peak stayed resident in the worker forever.
+    all_existing_strava_activities = set(
+        Workout.objects
+        .filter(user=user, strava_id__isnull=False)
+        .values_list('strava_id', flat=True)
+    )
 
     cnt_new_strava_activities = 0
     cnt_updated_strava_activities = 0
@@ -141,7 +153,7 @@ def sync_strava(self, user__id, start_datetime=None):
 
             # if existing workout - update activity details
             if activity_id in all_existing_strava_activities:
-                workout = Workout.objects.get(strava_id=activity_id)
+                workout = Workout.objects.get(user=user, strava_id=activity_id)
                 for key, value in props.items():
                     setattr(workout, key, value)
                 workout.save()

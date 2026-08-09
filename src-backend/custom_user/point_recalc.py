@@ -3,9 +3,12 @@ import datetime
 from django.db.models import Min
 
 from django.core.cache import cache
-from workout_challenge.celery import app, is_task_already_executing
+from workout_challenge.celery import app, single_instance
 from django.apps import apps
 from django.contrib.auth import get_user_model
+
+# How many Points rows to hold in memory at once while replaying a user/goal through the Scorer.
+RECALC_CHUNK_SIZE = 500
 
 
 def trigger_recalc_points():
@@ -21,34 +24,60 @@ def trigger_recalc_points():
 
 @app.task(bind=True, time_limit=60 * 30, max_retries=3)  # 30 min time limit
 def recalc_points(self):
-    if is_task_already_executing('recalc_points'):
-        print('Recalc points task skipped because it is already running')
-        return 'Skipped because it is already running.'
+    with single_instance('recalc_points', timeout=60 * 30) as got_lock:
+        if not got_lock:
+            print('Recalc points task skipped because it is already running')
+            return 'Skipped because it is already running.'
 
-    print('Recalculating points...')
+        print('Recalculating points...')
 
-    ActivityGoal = apps.get_model('competition', 'ActivityGoal')
-    Points = apps.get_model('competition', 'Points')
-    RecalcRequest = apps.get_model('custom_user', 'RecalcRequest')
+        ActivityGoal = apps.get_model('competition', 'ActivityGoal')
+        Points = apps.get_model('competition', 'Points')
+        RecalcRequest = apps.get_model('custom_user', 'RecalcRequest')
 
-    all_tasks = RecalcRequest.objects.filter(done=False)
-    grouped_tasks = all_tasks.values('user', 'goal').annotate(start_datetime=Min('start_datetime'))
-    for task_group in grouped_tasks:
-        points_lst = Points.objects.filter(goal=task_group['goal'], workout__user=task_group['user'], workout__start_datetime__gte=task_group['start_datetime']).order_by('workout__start_datetime')
+        all_tasks = RecalcRequest.objects.filter(done=False)
+        # Materialise the grouping now: the queryset is re-evaluated in the return statement
+        # below, which happens *after* all_tasks.delete() and would otherwise come back empty.
+        grouped_tasks = list(all_tasks.values('user', 'goal').annotate(start_datetime=Min('start_datetime')))
 
-        goal = ActivityGoal.objects.get(pk=task_group['goal'])
+        for task_group in grouped_tasks:
+            points_lst = (
+                Points.objects
+                .filter(
+                    goal=task_group['goal'],
+                    workout__user=task_group['user'],
+                    workout__start_datetime__gte=task_group['start_datetime'],
+                )
+                # select_related pulls the workout in the same query. Without it, Scorer's
+                # points.workout access fired one extra query per row and kept every fetched
+                # Workout alive on the Points instances for the whole loop.
+                .select_related('workout')
+                .order_by('workout__start_datetime')
+            )
 
-        scorer = Scorer()
-        scorer.set_goal(goal)
+            goal = ActivityGoal.objects.get(pk=task_group['goal'])
 
-        for points in points_lst:
-            earned_points = scorer.calculate_points(points)
-            setattr(points, 'points_capped', earned_points)
-            points.save()
+            scorer = Scorer()
+            scorer.set_goal(goal)
 
-    all_tasks.delete()
-    print('All points recalculated.')
-    return [{k: str(v) for k, v in i.items()} for i in grouped_tasks]
+            # .iterator() streams rows in chunks instead of loading (and caching) the entire
+            # result set, and bulk_update writes them back in batches rather than one save() -
+            # one UPDATE - per row. Memory is now bounded by RECALC_CHUNK_SIZE regardless of how
+            # many workouts a competition has accumulated.
+            batch = []
+            for points in points_lst.iterator(chunk_size=RECALC_CHUNK_SIZE):
+                points.points_capped = scorer.calculate_points(points)
+                batch.append(points)
+                if len(batch) >= RECALC_CHUNK_SIZE:
+                    Points.objects.bulk_update(batch, ['points_capped'])
+                    batch.clear()
+            if batch:
+                Points.objects.bulk_update(batch, ['points_capped'])
+                batch.clear()
+
+        all_tasks.delete()
+        print('All points recalculated.')
+        return [{k: str(v) for k, v in i.items()} for i in grouped_tasks]
 
 
 

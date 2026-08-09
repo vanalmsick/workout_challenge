@@ -71,9 +71,30 @@ class Competition(models.Model):
         """str print-out of model entry"""
         return f"{self.name} ({self.start_date} - {self.end_date})"
 
+    def _coerce_dates(self):
+        """ turn ISO date strings into real date objects
+
+        Django does not convert field values on assignment, so a Competition built as
+        ``Competition(start_date="2025-05-01")`` keeps a str in memory until it is re-read from the
+        database. Everything downstream treats these as dates - ``trigger_goal_change`` does
+        ``competition.end_date + timedelta(days=1)`` and ``trigger_competition_change`` compares the
+        old and new value with ``<`` - so a str blows up with TypeError. Normalising here (before
+        the change-detection snapshot is taken, and again on save) keeps the in-memory instance
+        consistent with what the DB would hand back, whichever way it was constructed.
+        """
+        for field_name in ('start_date', 'end_date'):
+            value = self.__dict__.get(field_name)
+            if isinstance(value, str):
+                # DateField.to_python parses ISO strings and raises ValidationError on garbage.
+                setattr(self, field_name, self._meta.get_field(field_name).to_python(value))
+
     def __init__(self, *args, **kwargs):
         """ save initial field values to be able to detect changes """
         super().__init__(*args, **kwargs)
+        # Must run before the snapshot, otherwise save() coercing str -> date would show up as a
+        # spurious "start_date changed" and send a brand new competition down the resize branch of
+        # trigger_competition_change (which would then compare a date against a str).
+        self._coerce_dates()
         self._original = self._dict()
 
     #@property
@@ -92,6 +113,8 @@ class Competition(models.Model):
 
     def save(self, *args, **kwargs):
         """ trigger recalculation of points_capped if competition changes """
+        # catches dates assigned as strings after __init__ (comp.start_date = "2025-01-01")
+        self._coerce_dates()
         is_create = self.pk is None
         if self.join_code == '':
             self.join_code = re.sub(r'[^a-zA-Z0-9]', '', self.name)[:8] + str(self.owner.pk).zfill(3) + str(random.randint(10_000, 99_999))

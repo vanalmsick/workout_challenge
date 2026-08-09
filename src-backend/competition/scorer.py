@@ -144,7 +144,7 @@ def trigger_competition_change(instance, new, changes):
             points_to_delete.delete()
             print(f"Competition ({instance.pk}) start_date was shortened from {changes['start_date'][0]} to {changes['start_date'][1]} triggering point cap recalc")
 
-        trigger_recalc_points
+        trigger_recalc_points()
 
     if 'end_date' in changes:
         if changes['end_date'][1] > changes['end_date'][0]:

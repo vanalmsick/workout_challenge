@@ -59,19 +59,39 @@ app.conf.beat_schedule = {
 }
 
 
-def is_task_already_executing(task_name: str) -> bool:
-    """Returns whether the task with given task_name is already being executed.
+class single_instance:
+    """Context manager guaranteeing only one copy of a task runs at a time.
 
-    Args:
-        task_name: Name of the task to check if it is running currently.
-    Returns: A boolean indicating whether the task with the given task name is
-        running currently.
+    Replaces the previous ``app.control.inspect().active()`` check. That call broadcast over the
+    pidbox and created a fresh per-call reply queue in redis every time it ran; those reply keys
+    accumulate in the broker, and it also blocked for the full inspect timeout and raised
+    AttributeError whenever no worker replied (``active()`` returns None).
+
+    This uses the Django cache (redis) instead: one atomic ``add`` for the lock, released on
+    ``__exit__`` (so it is freed on exceptions and on ``self.retry()`` too), with a TTL so a
+    hard-killed worker can never leave the lock stuck.
+
+        with single_instance('recalc_points') as got_lock:
+            if not got_lock:
+                return 'Skipped because it is already running.'
+            ...
     """
-    active_tasks = app.control.inspect().active()
-    task_count = 0
-    for worker, running_tasks in active_tasks.items():
-        for task in running_tasks:
-            if task["name"] == task_name:
-                task_count += 1
 
-    return task_count > 1
+    def __init__(self, task_name: str, timeout: int = 60 * 30):
+        self.key = f"task_lock_{task_name}"
+        self.timeout = timeout
+        self.acquired = False
+
+    def __enter__(self) -> bool:
+        from django.core.cache import cache
+
+        # cache.add is a no-op (returns False) if the key already exists -> atomic lock.
+        self.acquired = cache.add(self.key, "1", self.timeout)
+        return self.acquired
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.acquired:
+            from django.core.cache import cache
+
+            cache.delete(self.key)
+        return False

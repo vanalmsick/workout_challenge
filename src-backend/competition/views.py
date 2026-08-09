@@ -228,7 +228,13 @@ class FeedPermissions(BasePermission):
 
 
 class FeedQueryView(APIView):
-    """ API view to get the activity/point feed for a competition. """
+    """ API view to get the activity/point feed for a competition.
+
+    The feed is capped to the ``FEED_MAX_WORKOUTS`` most recent workouts. Previously it returned
+    every Points row the competition had ever produced, so both the peak memory of this view and
+    the size of the JSON response grew for as long as the competition ran - and gunicorn workers
+    that are never recycled keep that peak resident.
+    """
     permission_classes = [FeedPermissions]
 
     def get(self, request, competition):
@@ -238,11 +244,18 @@ class FeedQueryView(APIView):
         competition_obj = Competition.objects.filter(id=competition)
         self.check_object_permissions(request, competition_obj)
 
+        try:
+            limit = int(request.query_params.get('limit', settings.FEED_MAX_WORKOUTS))
+        except (TypeError, ValueError):
+            limit = settings.FEED_MAX_WORKOUTS
+        limit = max(1, min(limit, settings.FEED_MAX_WORKOUTS))
+
         all_points = Points.objects.filter(Q(award__competition__id=competition) | Q(goal__competition_id=competition)).order_by('-workout__start_datetime', '-workout__steps', '-workout__duration', '-workout', '-workout__user')
 
-        grouped_points = {i['workout']: i for i in all_points.values('workout__user', 'workout__user__username', 'workout__user__strava_allow_follow', 'workout', 'workout__sport_type', 'workout__start_datetime', 'workout__duration', 'workout__steps', 'workout__strava_id', 'award').annotate(points_capped=Sum('points_capped'), points_raw=Sum('points_raw')).order_by('-workout__start_datetime', '-workout__duration', '-workout', '-workout__user')}
+        grouped_points = {i['workout']: i for i in all_points.values('workout__user', 'workout__user__username', 'workout__user__strava_allow_follow', 'workout', 'workout__sport_type', 'workout__start_datetime', 'workout__duration', 'workout__steps', 'workout__strava_id', 'award').annotate(points_capped=Sum('points_capped'), points_raw=Sum('points_raw')).order_by('-workout__start_datetime', '-workout__duration', '-workout', '-workout__user')[:limit]}
 
-        for i in all_points.values('workout', 'id', 'goal', 'goal__name', 'award', 'award__name', 'points_capped', 'points_raw'):
+        # Only pull the per-goal detail rows for the workouts that survived the slice above.
+        for i in all_points.filter(workout__in=list(grouped_points.keys())).values('workout', 'id', 'goal', 'goal__name', 'award', 'award__name', 'points_capped', 'points_raw'):
             if 'details' not in grouped_points[i['workout']]:
                 grouped_points[i['workout']]['details'] = []
             grouped_points[i['workout']]['details'].append(i)

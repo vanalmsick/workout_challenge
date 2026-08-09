@@ -67,7 +67,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -175,6 +174,10 @@ SIMPLE_JWT = {
 
 PASSWORD_RESET_TIMEOUT = 600  # seconds = 10 minutes
 
+# Upper bound on how many workouts the /api/feed/<competition>/ endpoint returns. Without a cap the
+# feed response (and the memory needed to build it) grows for the whole length of a competition.
+FEED_MAX_WORKOUTS = int(os.environ.get("FEED_MAX_WORKOUTS", 500))
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -190,6 +193,18 @@ USE_TZ = True
 # Celery
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+# Memory hygiene for the worker / broker.
+# Task results live in redis and are only needed long enough for CeleryQueryView to poll them.
+# Celery's default is 24h, which keeps a day's worth of result payloads resident for no benefit.
+CELERY_RESULT_EXPIRES = int(os.environ.get("CELERY_RESULT_EXPIRES", 60 * 60 * 6))  # 6 hours
+# Belt-and-braces alongside supervisord's --max-memory-per-child: recycle a prefork child once it
+# exceeds this RSS (KiB) so a single heavy task can't pin memory for the container's lifetime.
+CELERY_WORKER_MAX_MEMORY_PER_CHILD = int(os.environ.get("CELERY_MAX_MEMORY_PER_CHILD", 200_000))  # KiB
+CELERY_WORKER_MAX_TASKS_PER_CHILD = int(os.environ.get("CELERY_MAX_TASKS_PER_CHILD", 50))
+# Don't let a worker hoard messages it isn't working on yet (default prefetches 4x concurrency,
+# all of which sit deserialised in the worker's memory).
+CELERY_WORKER_PREFETCH_MULTIPLIER = 1
 
 CACHES = {
     'default': ({
@@ -230,19 +245,39 @@ STRAVA_LIMIT_DAY = int(os.environ.get("STRAVA_LIMIT_DAY", 1000))
 
 
 # Sentry
-if (sentry_sdk_url := os.environ.get("SENTRY_DSN", None)) is not None:
-    sentry_sdk.init(
-        dsn=sentry_sdk_url,
-        environment="backend",
-        send_default_pii=False,
-        enable_tracing=True,
-        traces_sample_rate=0.25,
-        profiles_sample_rate=1.0,
-        integrations=[
-            DjangoIntegration(),
-            CeleryIntegration(monitor_beat_tasks=True),
-        ],
-    )
+#
+# The old guard was `if os.environ.get("SENTRY_DSN") is not None:`, which let anything non-None
+# through - including an empty/whitespace value, an unexpanded literal "${SENTRY_DSN}", or the
+# "https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID>" placeholder shipped in docker-compose.yml. sentry_sdk
+# then raised BadDsn at import time, and because this module is imported by gunicorn, the celery
+# worker, celery beat and flower alike, one unusable DSN took the entire container down at startup.
+# Error monitoring is optional infrastructure: if it cannot be configured, log it and carry on.
+sentry_sdk_url = (os.environ.get("SENTRY_DSN") or "").strip()
+if sentry_sdk_url:
+    try:
+        sentry_sdk.init(
+            dsn=sentry_sdk_url,
+            environment="backend",
+            send_default_pii=False,
+            enable_tracing=True,
+            # Profiling runs a sampling thread and buffers stack samples per transaction. At
+            # profiles_sample_rate=1.0 under gevent workers that is a constant, non-trivial
+            # allocation load on every request. Sample instead of profiling everything.
+            traces_sample_rate=float(os.environ.get("SENTRY_TRACES_SAMPLE_RATE", 0.1)),
+            profiles_sample_rate=float(os.environ.get("SENTRY_PROFILES_SAMPLE_RATE", 0.1)),
+            max_request_body_size="small",
+            integrations=[
+                DjangoIntegration(),
+                CeleryIntegration(monitor_beat_tasks=True),
+            ],
+        )
+        print("Sentry error monitoring is enabled.")
+    # Deliberately broad: BadDsn is the expected failure, but nothing sentry_sdk.init() can raise
+    # is worth refusing to boot the app over.
+    except Exception as sentry_exc:
+        print(f"Sentry error monitoring is disabled - SENTRY_DSN is not usable ({sentry_exc!r}).")
+else:
+    print("Sentry error monitoring is disabled - no SENTRY_DSN set.")
 
 
 # Emails

@@ -30,7 +30,9 @@ jobs:
           platforms: linux/arm64/v8,linux/amd64
           push: true
           tags: ${{secrets.DOCKER_USER}}/workout_challenge:dev
-          # Reuse BuildKit layers across runs. mode=max also caches intermediate
-          # stages (npm ci, pip install), which is where the build time goes.
+          # Reuse BuildKit layers across runs.
+          # ignore-error: a rejected cache export (GitHub Actions cache rate
+          # limit or quota) must not fail the build - caching is an
+          # optimisation, not a requirement.
           cache-from: type=gha
-          cache-to: type=gha,mode=min
+          cache-to: type=gha,mode=min,ignore-error=true

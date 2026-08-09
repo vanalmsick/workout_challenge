@@ -3,7 +3,8 @@ version: '3.9'
 services:
   workoutchallenge:
     container_name: workoutchallenge
-    build: .
+    # build: .
+    image: vanalmsick/workout_challenge:dev
     ports:
       - "80:80"
       - "5555:5555" # Celery Flower task monitoring - do not open to public - only for local network for debugging
@@ -22,7 +23,9 @@ services:
       - TIME_ZONE=Europe/London
       - STRAVA_CLIENT_ID=000000
       - STRAVA_CLIENT_SECRET=<secret_key>
-      - SENTRY_DSN=https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID>
+      # Optional. Leave commented out to run without error monitoring - the placeholder below is
+      # not a valid DSN, so uncomment it only once you have substituted your real values.
+      #- SENTRY_DSN=https://<PUBLIC_KEY>@<HOST>/<PROJECT_ID>
       - EMAIL_HOST=smtp.gmail.com
       - EMAIL_PORT=465
       - EMAIL_HOST_USER=competition@yourdomain.com

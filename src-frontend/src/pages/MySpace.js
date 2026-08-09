@@ -645,6 +645,7 @@ function StatsBox({workouts, user}) {
 
 
 export default function MySpace() {
+    const navigate = useNavigate();
     const navType = useNavigationType();
     useEffect(() => {
         if (navType === "POP") {
@@ -688,29 +689,50 @@ export default function MySpace() {
     const [linkStrava, setLinkStrava] = useState(false);
     const [joinCompetition, setJoinCompetition] = useState(false);
 
+    // Competition the user joined via ?join=<code>; redirected to once onboarding is done.
+    const [pendingJoinRedirect, setPendingJoinRedirect] = useState(null);
+
+    // Handle ?join=<code> on its own - independent of the welcome/onboarding flow.
+    // This must NOT be gated on ?welcome, otherwise a plain login with ?join=<code>
+    // (which does not set ?welcome) would silently drop the join.
+    const [joinHandled, setJoinHandled] = useState(false);
     useEffect(() => {
-        if (searchTermWelcome !== null && welcomeMessage === false && linkStrava === false && joinCompetition === false) {
-            // Step 1: Join competition
+        if (searchTermJoin !== null && joinHandled === false) {
+            setJoinHandled(true);
+            setJoinCompetition(searchTermJoin);
+            searchParams.delete('join');
+            setSearchParams(searchParams, {replace: true});
+        }
+    }, [searchTermJoin, joinHandled])
+
+    // True while a ?join=<code> is still being processed. Derived (not state) so the
+    // welcome effect sees it on the very first render, before setJoinCompetition commits.
+    const joinPending = searchTermJoin !== null || joinCompetition !== false;
+
+    useEffect(() => {
+        if (searchTermWelcome !== null && welcomeMessage === false && linkStrava === false && joinPending === false) {
+            // Step 1: Welcome message
             if (welcomeStep === 0) {
-                if (searchTermJoin !== null) {
-                    setJoinCompetition(searchTermJoin);
-                }
-                setWelcomeStep(1);
-            // Step 2: Welcome message
-            } else if (welcomeStep === 1) {
-                searchParams.delete('join');
-                setSearchParams(searchParams);
                 setWelcomeMessage(true);
-                setWelcomeStep(2);
-            // Step 3: Link Strava
-            } else if (welcomeStep === 2) {
+                setWelcomeStep(1);
+            // Step 2: Link Strava
+            } else if (welcomeStep === 1) {
                 setLinkStrava(true);
-                setWelcomeStep(3);
+                setWelcomeStep(2);
                 searchParams.delete('welcome');
-                setSearchParams(searchParams);
+                setSearchParams(searchParams, {replace: true});
             }
         }
-    }, [welcomeStep, welcomeMessage, linkStrava, joinCompetition])
+    }, [welcomeStep, welcomeMessage, linkStrava, joinPending])
+
+    // Redirect to the joined competition once the join modal and the welcome flow
+    // (if it was triggered) have both finished.
+    useEffect(() => {
+        if (pendingJoinRedirect === null) return;
+        if (joinPending || welcomeMessage || linkStrava || searchTermWelcome !== null) return;
+        setPendingJoinRedirect(null);
+        navigate('/competition/' + pendingJoinRedirect);
+    }, [pendingJoinRedirect, joinPending, welcomeMessage, linkStrava, searchTermWelcome])
 
 
     if (userError) {
@@ -790,7 +812,9 @@ export default function MySpace() {
 
             {welcomeMessage && <HowToScreen setModal={setWelcomeMessage}/>}
             {linkStrava && <LinkStravaScreen setModal={setLinkStrava}/>}
-            {joinCompetition && <JoinCompetitionForm setModalState={setJoinCompetition} join_code={searchTermJoin}/>}
+            {joinCompetition && <JoinCompetitionForm setModalState={setJoinCompetition}
+                                                     join_code={typeof joinCompetition === 'string' ? joinCompetition : null}
+                                                     onJoined={setPendingJoinRedirect}/>}
 
         </PageWrapper>
     )

@@ -75,7 +75,13 @@ RUN apk add --no-cache \
         nginx \
         redis \
         supervisor \
-    && mkdir -p /run/nginx
+    && mkdir -p /run/nginx /var/log/nginx \
+    # The apk nginx package (unlike the official nginx image) writes its logs to
+    # files under /var/log/nginx. Inside a container that means `docker logs`
+    # shows nothing and the logs grow unbounded with no logrotate running.
+    # Symlink them onto the container's stdout/stderr so supervisord picks them up.
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 ENV PATH="/venv/bin:$PATH" \
     PYTHONUNBUFFERED=1 \
@@ -86,6 +92,7 @@ COPY --from=pydeps /venv /venv
 
 # Config layers before source: they change rarely, so they stay cached.
 COPY nginx.conf /etc/nginx/http.d/default.conf
+COPY nginx-security-headers.conf /etc/nginx/nginx-security-headers.conf
 COPY supervisord.conf /etc/supervisord.conf
 
 WORKDIR /workout_challenge/src-backend
@@ -106,8 +113,9 @@ EXPOSE 8000
 EXPOSE 9001
 EXPOSE 5555
 
-# busybox wget - no extra package needed.
+# busybox wget - no extra package needed. Hits the dedicated /healthz endpoint
+# (a static `return 200`) instead of reading index.html off disk every 30s.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
-    CMD wget -q -O /dev/null http://127.0.0.1/ || exit 1
+    CMD wget -q -O /dev/null http://127.0.0.1/healthz || exit 1
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

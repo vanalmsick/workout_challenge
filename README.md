@@ -207,7 +207,7 @@ run React: `npm start`
 - Improve README texts
 - Improve repo link preview picture
 - Add Garmin API support
-- Add Futbit API suport
+- Add Fitbit API suport
 - Add friends page
 - Add more personal statistics
 - Add medals and achievements

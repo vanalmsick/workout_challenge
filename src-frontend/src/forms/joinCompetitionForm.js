@@ -21,7 +21,7 @@ const fields = {
 }
 
 
-export default function JoinCompetitionForm({setModalState, join_code= null}) {
+export default function JoinCompetitionForm({setModalState, join_code = null, onJoined = null}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -63,11 +63,15 @@ export default function JoinCompetitionForm({setModalState, join_code= null}) {
             console.log('Join Competition success:', result);
             setModalState(false);
             document.body.classList.remove('body-no-scroll');
+            dispatch(competitionsApi.util.invalidateTags(['Competition']));
+            dispatch(usersApi.util.invalidateTags(['User']));
+            // Let the parent decide when to redirect (e.g. after the welcome flow).
+            if (onJoined !== null) {
+                onJoined(result.competition);
+            }
             if (redirect) {
                 navigate('/competition/' + result.competition);
             }
-            dispatch(competitionsApi.util.invalidateTags(['Competition']));
-            dispatch(usersApi.util.invalidateTags(['User']));
         } catch (err) {
             console.error('Join Competition failed', err);
             setFieldErrors(err.data);

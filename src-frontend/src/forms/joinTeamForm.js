@@ -127,7 +127,7 @@ export default function JoinTeamForm({competition, setModalState, user, isOwner}
                         placeholder="Enter team name"
                         required={true}
                         disabled={teamsLoading}
-                        className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 dark:bg-gray-900 focus:ring-blue-400"
+                        className="flex-1 border rounded-sm px-3 py-2 focus:outline-hidden focus:ring-2 dark:bg-gray-900 focus:ring-blue-400"
                     />
                     {(teamsLoading || teamsIsFetching) ? (
                         <BeatLoader color="rgb(209 213 219)"/>

@@ -349,9 +349,9 @@ function ThirtyDayStats({thirtyDayStats}) {
     return (
         <div className="w-full">
             <div className="relative flex pb-5 pt-3 items-center text-sm">
-                <span className="flex-shrink mx-4 text-gray-500 uppercase"><span
+                <span className="shrink mx-4 text-gray-500 uppercase"><span
                     className="font-bold">30 Day Activity</span> • {thirtyDayStats.startDate} - {thirtyDayStats.endDate}</span>
-                <div className="flex-grow border-t border-gray-100 border-t-2"></div>
+                <div className="grow border-t border-gray-100 border-t-2"></div>
             </div>
             <div className="flex p-3">
                 <div className="flex flex-col px-4 text-left">
@@ -394,7 +394,7 @@ function ThirtyDayStats({thirtyDayStats}) {
                 </div>
             </div>
             <div className="relative flex py-5 items-center text-sm">
-                <div className="flex-grow border-t border-gray-100 border-t-2"></div>
+                <div className="grow border-t border-gray-100 border-t-2"></div>
             </div>
         </div>
     )
@@ -407,7 +407,7 @@ function SevenDayStats({sevenDayStats, user}) {
     return (
         <div className="w-full">
             <div className="relative flex py-5 items-center text-sm xl:hidden block">
-                <div className="flex-grow border-t border-gray-100 border-t-2"></div>
+                <div className="grow border-t border-gray-100 border-t-2"></div>
             </div>
 
             <div className="flex flex-col items-center justify-between sm:flex-row sm:items-center">

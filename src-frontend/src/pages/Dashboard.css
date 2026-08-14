@@ -1,3 +1,6 @@
+/* This file is imported on its own, so @apply needs the theme pulled in. */
+@reference "../index.css";
+
 .streak-table {
     @apply border-t-2 border-[#f0f0f0] dark:max-md:border-[#111827] md:border-t-0;
 

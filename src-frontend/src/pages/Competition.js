@@ -340,7 +340,7 @@ function TeamLeaderboardBox({stats, competition, user, teamId, isOwner}) {
                                     <UsersRound className="h-3.5 w-3.5"/> {team.members.length}
                                 </span>
                                     <div
-                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 bg-white dark:bg-gray-800 border dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto z-10">
+                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 bg-white dark:bg-gray-800 border dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-sm shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto z-10">
                                         <p className="text-sm font-semibold">Members:</p>
                                         <ul className="text-sm list-disc pl-5">
                                             {team.members.map((user, usr_index) => (
@@ -467,7 +467,7 @@ function FeedBox({feed, refreshCompetition, competitionIsRefreshing}) {
                                         className="">+{Math.round(entry.points_capped, 0).toLocaleString()}P{(entry.points_capped !== entry.points_raw) ?
                                         <span className="text-gray-500">*</span> : null}</span>
                                     <div
-                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 bg-white border dark:bg-gray-800 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto z-10">
+                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 bg-white border dark:bg-gray-800 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-sm shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto z-10">
                                         <p className="text-sm font-semibold">Breakdown:</p>
                                         <ul className="text-sm list-disc pl-5">
                                             {entry.details.map((detail, detail_index) => (

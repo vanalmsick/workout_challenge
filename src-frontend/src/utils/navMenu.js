@@ -106,7 +106,7 @@ export default function NavMenu({page}) {
                 <div className="flex items-center justify-between">
                     <div className="mr-auto"></div>
 
-                    <div className="bg-white dark:bg-gray-700 rounded-full shadow-sm w-max mx-auto">
+                    <div className="bg-white dark:bg-gray-700 rounded-full shadow-xs w-max mx-auto">
                         <nav className="flex space-x-1 sm:space-x-4 text-sm font-medium text-gray-600 whitespace-nowrap">
                             <Link to='/dashboard'
                                   className={linkClasses(page === 'my')}>My
@@ -137,10 +137,10 @@ export default function NavMenu({page}) {
                         </nav>
                     </div>
                     <div className="flex pl-2 space-x-2 ml-auto">
-                        <Link to={'/logout'} className="bg-white dark:bg-gray-700 rounded-full shadow-sm w-max p-2">
+                        <Link to={'/logout'} className="bg-white dark:bg-gray-700 rounded-full shadow-xs w-max p-2">
                             <LogOut className="w-5 h-5"/>
                         </Link>
-                        <button onClick={() => setShowSupportModal(true)} className="bg-white dark:bg-gray-700 rounded-full shadow-sm w-max p-2">
+                        <button onClick={() => setShowSupportModal(true)} className="bg-white dark:bg-gray-700 rounded-full shadow-xs w-max p-2">
                             <BadgeHelp className="w-5 h-5"/>
                         </button>
                     </div>
@@ -150,7 +150,7 @@ export default function NavMenu({page}) {
                 <div ref={pastMenuRef}
                      role="menu"
                      style={{top: pastMenuPos.top, left: pastMenuPos.left}}
-                     className="fixed z-50 min-w-[10rem] max-h-72 overflow-y-auto py-1 bg-white dark:bg-gray-700 rounded-xl shadow-lg text-sm font-medium text-gray-600">
+                     className="fixed z-50 min-w-40 max-h-72 overflow-y-auto py-1 bg-white dark:bg-gray-700 rounded-xl shadow-lg text-sm font-medium text-gray-600">
                     {pastCompetitions.map((competition) => (
                         <Link key={"past" + competition.id}
                               to={`/competition/${competition.id}`}

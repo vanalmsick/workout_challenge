@@ -77,11 +77,8 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
-    "autoprefixer": "^10.5.4",
-    "cssnano": "^8.0.2",
+    "@tailwindcss/postcss": "^4.3.3",
     "postcss": "^8.5.25",
-    "postcss-import": "^16.1.1",
-    "postcss-nesting": "^14.0.1",
     "tailwindcss": "^4.3.3"
   }
 }

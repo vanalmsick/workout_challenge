@@ -39,7 +39,7 @@ export function Modal({setShowModal, title = null, landscape = false, isLoading 
 
     return (
         <div
-            className="modal-background fixed inset-0 z-50 bg-white bg-opacity-80 dark:bg-black dark:bg-opacity-80 overflow-y-auto sm:p-4"
+            className="modal-background fixed inset-0 z-50 bg-white/80 dark:bg-black/80 overflow-y-auto sm:p-4"
             onClick={(e) => backgroundClick(e)}
         >
             <div className="modal-background min-h-screen flex items-center justify-center">
@@ -142,7 +142,7 @@ export function FormInput({
                         <TimeField
                             value={value}
                             onChange={(e) => setValue(e.target.value)}
-                            input={<input type="text" className={"w-full shadow border rounded py-2 px-3 text-gray-700 dark:bg-gray-900 dark:text-gray-400 leading-tight focus:outline-none focus:shadow-outline" + (highlight ? " bg-blue-100 dark:bg-blue-950 ": "") + additionalClasses} />}
+                            input={<input type="text" className={"w-full shadow-sm border rounded-sm py-2 px-3 text-gray-700 dark:bg-gray-900 dark:text-gray-400 leading-tight focus:outline-hidden focus:shadow-outline" + (highlight ? " bg-blue-100 dark:bg-blue-950 ": "") + additionalClasses} />}
                             showSeconds={true}
                         />
                     ) :
@@ -169,7 +169,7 @@ export function FormInput({
                         <>
                             {/* Dropdown Input Element */}
                             <select
-                                className={"w-full shadow border rounded py-2 px-3 text-gray-700 dark:bg-gray-800 dark:text-gray-400 leading-tight focus:outline-none focus:shadow-outline" + (highlight ? " bg-sky-50 dark:bg-sky-950 border border-blue-300 ": "") + additionalClasses}
+                                className={"w-full shadow-sm border rounded-sm py-2 px-3 text-gray-700 dark:bg-gray-800 dark:text-gray-400 leading-tight focus:outline-hidden focus:shadow-outline" + (highlight ? " bg-sky-50 dark:bg-sky-950 border border-blue-300 ": "") + additionalClasses}
                                 name={name}
                                 tabIndex={tabIndex}
                                 required={required}
@@ -189,7 +189,7 @@ export function FormInput({
                         <>
                             {/* All Other Input Elements */}
                             <input
-                                className={"w-full shadow border rounded py-2 px-3 text-gray-700 dark:text-gray-400 dark:placeholder-gray-600 leading-tight focus:outline-none focus:shadow-outline" + (highlight ? " bg-sky-50 dark:bg-sky-950 border border-blue-300 ": " dark:bg-gray-900 ") + additionalClasses}
+                                className={"w-full shadow-sm border rounded-sm py-2 px-3 text-gray-700 dark:text-gray-400 dark:placeholder-gray-600 leading-tight focus:outline-hidden focus:shadow-outline" + (highlight ? " bg-sky-50 dark:bg-sky-950 border border-blue-300 ": " dark:bg-gray-900 ") + additionalClasses}
                                 name={name}
                                 type={(type === "duration") ? "time" : type}
                                 placeholder={placeholder}
@@ -315,7 +315,7 @@ function GenericButton({onClick, icon, label, highlighted, larger, IconObject, i
 
     return (
         <button
-            className={"flex items-center gap-2 transition hover:shadow " + (larger ? (label ? " px-5 py-2.5 font-semibold rounded-full " : " px-3 py-3 rounded-2xl ") : (label ? " px-4 py-2 rounded-full " : " p-2 rounded-2xl ")) + (isLoading ? " bg-white hover:bg-white shadow-none border border-gray-200 dark:bg-gray-800 dark:hover:bg-gray-800 " : (highlighted ? " bg-sky-800 text-white  hover:bg-sky-700 " : " bg-gray-100 hover:bg-gray-300 dark:bg-gray-900 dark:hover:bg-gray-700 ")) + additionalClasses}
+            className={"flex items-center gap-2 transition hover:shadow-sm " + (larger ? (label ? " px-5 py-2.5 font-semibold rounded-full " : " px-3 py-3 rounded-2xl ") : (label ? " px-4 py-2 rounded-full " : " p-2 rounded-2xl ")) + (isLoading ? " bg-white hover:bg-white shadow-none border border-gray-200 dark:bg-gray-800 dark:hover:bg-gray-800 " : (highlighted ? " bg-sky-800 text-white  hover:bg-sky-700 " : " bg-gray-100 hover:bg-gray-300 dark:bg-gray-900 dark:hover:bg-gray-700 ")) + additionalClasses}
             onClick={onClick}
             disabled={isLoading}
         >
@@ -525,7 +525,7 @@ export function SyncStravaButton({
 export function StravaButton({onClick, additionalClasses = "", label = "Strava"}) {
     return (
         <button
-            className={"flex items-center gap-1 text-orange-500 border border-strava bg-white dark:bg-gray-900 hover:bg-strava hover:text-white hover:shadow text-sm font-medium rounded-md transition p-0 " + additionalClasses}
+            className={"flex items-center gap-1 text-orange-500 border border-strava bg-white dark:bg-gray-900 hover:bg-strava hover:text-white hover:shadow-sm text-sm font-medium rounded-md transition p-0 " + additionalClasses}
             onClick={onClick}>
             <img src="/strava_logo.png" alt="Strava" className="w-7 h-7 rounded-tl-sm rounded-bl-sm"/>
             <span className={"pl-1 pr-2 py-1 " + ((label.includes("Like") || label.includes("Follow")) ? "max-lg:hidden" : "")}>{label}</span>

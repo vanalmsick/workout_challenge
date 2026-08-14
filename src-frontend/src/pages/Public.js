@@ -142,7 +142,7 @@ const waitForLocalStorage = (key, timeout = 5000) =>
 
 const LoadingForm = () => {
     return (
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex items-center justify-center"
+        <div className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4 flex items-center justify-center"
              style={{minWidth: '310px'}}>
             <BarLoader height={6} width={200}/>
         </div>
@@ -422,14 +422,14 @@ function RegisterPage() {
                 isLoading ? <LoadingForm/> : (
 
                     <div className="flex justify-center">
-                        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}
+                        <form className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}
                               onSubmit={handleSubmit}>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                                     Email*
                                 </label>
                                 <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                     id="email" type="text" placeholder="Email" autoFocus="True" tabIndex="1"/>
                             </div>
                             <div className="mb-4">
@@ -437,7 +437,7 @@ function RegisterPage() {
                                     First Name*
                                 </label>
                                 <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                     id="first_name" type="text" placeholder="First Name" tabIndex="2"/>
                             </div>
                             <div className="mb-4">
@@ -445,7 +445,7 @@ function RegisterPage() {
                                     Last Name
                                 </label>
                                 <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                     id="last_name" type="text" placeholder="Last Name" tabIndex="3"/>
                             </div>
                             <div className="mb-4">
@@ -453,7 +453,7 @@ function RegisterPage() {
                                     Gender
                                 </label>
                                 <select
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                     id="gender" value={gender} tabIndex="4" onChange={handleDropDownChange}>
                                     <option value=''>--Please choose an option--</option>
                                     <option value='M'>Male</option>
@@ -467,7 +467,7 @@ function RegisterPage() {
                                     Password*
                                 </label>
                                 <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                     id="password1" type="password" placeholder="******************" tabIndex="5"/>
                             </div>
                             <div className="mb-6">
@@ -475,12 +475,12 @@ function RegisterPage() {
                                     Repeat Password*
                                 </label>
                                 <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                     id="password2" type="password" placeholder="******************" tabIndex="6"/>
                             </div>
                             <div className="flex items-center justify-between">
                                 <button
-                                    className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 sm:mr-10"
+                                    className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mr-2 sm:mr-10"
                                     type="submit" tabIndex="7">
                                     Create Account
                                 </button>
@@ -578,14 +578,14 @@ function LogInPage() {
                 {
                     isLoading ? <LoadingForm/> : (
 
-                        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}
+                        <form className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}
                               onSubmit={handleSubmit}>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                                     Email
                                 </label>
                                 <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                     id="email" type="text" placeholder="Email" autoFocus="True" tabIndex="1"
                                     required={true}/>
                             </div>
@@ -594,7 +594,7 @@ function LogInPage() {
                                     Password
                                 </label>
                                 <input
-                                    className="shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow-sm appearance-none border  rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                     id="password" type="password" placeholder="******************" tabIndex="2"
                                     required={true}/>
                                 <Link to={`/password/`} className="button italic text-sm text-sky-800 hover:text-sky-600"
@@ -604,7 +604,7 @@ function LogInPage() {
                             </div>
                             <div className="flex items-center justify-between">
                                 <button
-                                    className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 sm:mr-16"
+                                    className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mr-2 sm:mr-16"
                                     type="submit" tabIndex="4">
                                     Sign In
                                 </button>
@@ -655,18 +655,18 @@ function ResetPasswordPage() {
             <div className="flex justify-center">
                 {
                     isLoading ? <LoadingForm/> : (
-                    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}>
+                    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}>
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email" autoFocus="True">
                                 Email
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                 id="email" type="text" placeholder="Email" autoFocus="True" tabIndex="1"/>
                         </div>
                         <div className="flex items-center justify-between">
                             <button
-                                className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 sm:mr-16"
+                                className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mr-2 sm:mr-16"
                                 type="submit" tabIndex="2">
                                 Reset Password
                             </button>
@@ -725,13 +725,13 @@ function SetNewPasswordPage() {
             <div className="flex justify-center">
                 {
                     isLoading ? <LoadingForm/> : (
-                    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{minWidth: '45%'}}>
+                    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '45%'}}>
                         <div className="mb-6">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password1">
                                 Password
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                 id="password1" type="password" placeholder="******************" tabIndex="1" autoFocus={true}/>
                         </div>
                         <div className="mb-6">
@@ -739,12 +739,12 @@ function SetNewPasswordPage() {
                                 Repeat Password
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                 id="password2" type="password" placeholder="******************" tabIndex="2"/>
                         </div>
                         <div className="flex items-center justify-between">
                             <button
-                                className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-auto sm:mx-16"
+                                className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mx-auto sm:mx-16"
                                 type="submit" tabIndex="3">
                                 Reset Password
                             </button>

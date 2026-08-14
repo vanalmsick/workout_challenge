@@ -45,8 +45,8 @@ export function HowToScreen({setModal}) {
     document.body.classList.add("body-no-scroll");
 
     return (
-        <div className="fixed inset-0 z-50 bg-white bg-opacity-80 dark:bg-black dark:bg-opacity-80 flex items-center justify-center overflow-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-2xl w-full text-center space-y-4 max-h-[100vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-white/80 dark:bg-black/80 flex items-center justify-center overflow-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-2xl w-full text-center space-y-4 max-h-screen overflow-y-auto">
                 <h2 className="text-xl font-semibold">{steps[current].title}</h2>
                 <p className="text-gray-600 dark:text-gray-400">{steps[current].content}</p>
                 <img src={steps[current].img}/>
@@ -105,8 +105,8 @@ export function LinkStravaScreen({setModal}) {
     }, [])
 
     return (
-        <div className="fixed inset-0 z-50 bg-white bg-opacity-80 dark:bg-black dark:bg-opacity-80 flex items-center justify-center overflow-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-2xl w-full text-center space-y-4 max-h-[100vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-white/80 dark:bg-black/80 flex items-center justify-center overflow-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-2xl w-full text-center space-y-4 max-h-screen overflow-y-auto">
                 {
                     current === 0 ? (
                         <>

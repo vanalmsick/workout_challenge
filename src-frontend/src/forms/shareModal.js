@@ -14,7 +14,7 @@ export default function CompetitionInviteModal({competition, setModalState}) {
             <div className="relative bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300 rounded-xl p-4">
                 <button
                     onClick={() => navigator.clipboard.writeText(document.getElementById('code-block').innerText)}
-                    className="absolute top-2 right-2 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 px-2 py-1 rounded">
+                    className="absolute top-2 right-2 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 px-2 py-1 rounded-sm">
                     Copy
                 </button>
                 <pre id="code-block" className="overflow-x-auto whitespace-pre-wrap text-sm">

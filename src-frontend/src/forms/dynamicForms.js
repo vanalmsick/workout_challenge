@@ -56,7 +56,7 @@ export default function DynamicForm({setModalState, fields, setAction, actionDat
                                 {prop.label}{(prop.required) ? ("*") : (null)}
                             </label>
                             {(prop.type === "choice") ? (
-                                <select className="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                <select className="w-full shadow-sm appearance-none border rounded-sm py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
                                         name={key}
                                         value={actionData[key] || ''}
                                         tabIndex={i}
@@ -72,7 +72,7 @@ export default function DynamicForm({setModalState, fields, setAction, actionDat
                                     type={prop.type}
                                     name={key}
                                     id={key}
-                                    className={((prop.type === "checkbox") ? "h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" : "w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline") + ((prop.read_only) ? " bg-gray-100 text-gray-500" : "")}
+                                    className={((prop.type === "checkbox") ? "h-5 w-5 text-blue-600 border-gray-300 rounded-sm focus:ring-blue-500" : "w-full shadow-sm appearance-none border rounded-sm py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline") + ((prop.read_only) ? " bg-gray-100 text-gray-500" : "")}
                                     required={prop.required}
                                     readOnly={prop.read_only}
                                     placeholder={null}
@@ -91,17 +91,17 @@ export default function DynamicForm({setModalState, fields, setAction, actionDat
                 <div className="flex flex-row-reverse items-center justify-between mt-3.5">
                     <button type="submit"
                             onClick={(e) => handleSubmit(e, 'SAVE')}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mx-4 px-5 rounded focus:outline-none focus:shadow-outline">
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mx-4 px-5 rounded-sm focus:outline-hidden focus:shadow-outline">
                         Save
                     </button>
                     {(secondaryAction === 'ADD') ? (
                         <button onClick={(e) => handleSubmit(e, 'ADD')}
-                                className="text-blue-500 hover:bg-blue-500 hover:text-white bg-white font-bold border-1 border-blue-500 py-2 mx-4 px-5 rounded focus:outline-none focus:shadow-outline">
+                                className="text-blue-500 hover:bg-blue-500 hover:text-white bg-white font-bold border border-blue-500 py-2 mx-4 px-5 rounded-sm focus:outline-hidden focus:shadow-outline">
                             Save and add another
                         </button>
                     ) : (secondaryAction === 'DELETE') ? (
                         <button onClick={(e) => handleSubmit(e, 'DELETE')}
-                                className="text-blue-500 hover:bg-blue-500 hover:text-white bg-white font-bold border-1 border-blue-500 py-2 mx-4 px-5 rounded focus:outline-none focus:shadow-outline">
+                                className="text-blue-500 hover:bg-blue-500 hover:text-white bg-white font-bold border border-blue-500 py-2 mx-4 px-5 rounded-sm focus:outline-hidden focus:shadow-outline">
                             Delete
                         </button>
                     ) : null}

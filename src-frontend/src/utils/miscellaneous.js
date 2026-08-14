@@ -78,14 +78,14 @@ function ErrorBoxSection({errorMsg, additionalClasses = ''}) {
     return (
         <BoxSection additionalClasses={"flex items-center justify-center " + additionalClasses}>
             <div
-                className="flex items-start gap-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded max-w-md">
+                className="flex items-start gap-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-sm max-w-md">
                 <AlertCircle className="w-20 h-20 mt-1 text-red-700"/>
                 <div>
                     <p className="font-semibold">Oops, that didn't work!</p>
                     <p>Please <a href='' className='text-blue-500 hover:underline' onClick={() => handleReload()}>reset & reload the page (click here)</a>. If the issue remains, <a className='text-blue-500 hover:underline' target='_self' href="/logout">log out (click here)</a> and log back in. If it still persists, contact the administrator.</p>
                     <br/>
                     <p className="font-semibold italic">This error occurred:</p>
-                    <p className="bg-red-200 text-sm p-2 rounded font-mono">{errorMsg}</p>
+                    <p className="bg-red-200 text-sm p-2 rounded-sm font-mono">{errorMsg}</p>
                 </div>
             </div>
         </BoxSection>

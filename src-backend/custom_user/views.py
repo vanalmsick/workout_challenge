@@ -3,6 +3,7 @@ import requests
 from rest_framework import viewsets
 from rest_framework.permissions import BasePermission, IsAdminUser, SAFE_METHODS, AllowAny
 from rest_framework.permissions import IsAuthenticated
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -109,6 +110,26 @@ class LinkStravaView(APIView):
     """ API post view for users to link with Strava. """
     permission_classes = [IsAuthenticated]
 
+    @staticmethod
+    def _already_linked_response(athlete_id, user):
+        """ Return a 409 response if this Strava athlete is already linked to another account, else None. """
+        if athlete_id is None:
+            return None
+
+        other_user = CustomUser.objects.filter(strava_athlete_id=athlete_id).exclude(pk=user.pk).first()
+        if other_user is None:
+            return None
+
+        return Response(
+            {
+                "message": f"This Strava account is already linked to the account with the email address {other_user.email}. "
+                           f"Please log in with that account and unlink Strava there first, or link a different Strava account.",
+                "code": "strava_already_linked",
+                "linked_email": other_user.email,
+            },
+            status=status.HTTP_409_CONFLICT,
+        )
+
     def post(self, request, code):
         user = request.user
         client_id = settings.STRAVA_CLIENT_ID
@@ -131,9 +152,28 @@ class LinkStravaView(APIView):
             return Response({"message": "Invalid Strava linkage code"}, status=status.HTTP_400_BAD_REQUEST)
 
         strava_tokens = response.json()
+        athlete_id = strava_tokens.get('athlete', {}).get('id', None)
+
+        # This Strava account may already belong to a different user of this app
+        already_linked = self._already_linked_response(athlete_id, user)
+        if already_linked is not None:
+            return already_linked
+
         setattr(user, 'strava_refresh_token', strava_tokens.get('refresh_token', None))
-        setattr(user, 'strava_athlete_id', strava_tokens.get('athlete', {}).get('id', None))
-        user.save()
+        setattr(user, 'strava_athlete_id', athlete_id)
+        try:
+            with transaction.atomic():
+                user.save()
+        except IntegrityError:
+            # Race condition - another user linked the same Strava account in the meantime
+            already_linked = self._already_linked_response(athlete_id, user)
+            if already_linked is not None:
+                return already_linked
+            return Response(
+                {"message": "This Strava account is already linked to another account.",
+                 "code": "strava_already_linked"},
+                status=status.HTTP_409_CONFLICT,
+            )
 
         cache.set(f"strava_access_token_{user.id}", strava_tokens.get('access_token', None), int(strava_tokens.get('expires_in', 21600)) - 60)
         try:
@@ -146,7 +186,17 @@ class LinkStravaView(APIView):
             if '401 Client Error: Unauthorized' in str(err):
                 return Response({'message': 'Access to activities denied by Strava. Not sufficient permissions to download activities.'}, status=status.HTTP_403_FORBIDDEN)
             else:
-                raise Response(err.response.json(), status=err.response.status_code)
+                err_response = getattr(err, 'response', None)
+                if err_response is None:
+                    return Response({'message': f'Strava request failed: {err}'}, status=status.HTTP_502_BAD_GATEWAY)
+                try:
+                    err_body = err_response.json()
+                except ValueError:  # Strava did not answer with JSON
+                    err_body = None
+                if not isinstance(err_body, dict):
+                    err_body = {}
+                err_body.setdefault('message', f'Strava request failed: {err}')
+                return Response(err_body, status=err_response.status_code)
 
         return Response({"message": "Successfully linked Strava."}, status=status.HTTP_200_OK)
 

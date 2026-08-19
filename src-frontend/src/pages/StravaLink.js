@@ -90,6 +90,16 @@ export function ReturnStravaLink() {
     const searchScope = query.get('scope'); // null if not present
 
     const [errorMsg, setErrorMsg] = React.useState(null);
+    const [allowRetry, setAllowRetry] = React.useState(true);
+
+    // Show the message the backend sent (e.g. "already linked to ...") instead of a raw status dump
+    const handleLinkError = (err) => {
+        const serverMsg = err?.data?.message;
+        setAllowRetry(err?.data?.code !== 'strava_already_linked');
+        setErrorMsg(serverMsg
+            ? serverMsg
+            : `Strava linkage error (${err?.status}). Please try again.`);
+    };
 
     useEffect(() => {
         if (!(linkStravaIsLoading || linkStravaIsSuccess || linkStravaIsError)) {
@@ -111,7 +121,7 @@ export function ReturnStravaLink() {
                     .catch((err) => {
                         // send user back to set up link page
                         console.error('Strava linkage error (1):', err);
-                        setErrorMsg(`Strava linkage error (${err?.status} / ${err?.data?.message}). Please try again.`);
+                        handleLinkError(err);
                     });
             }
         }
@@ -120,7 +130,7 @@ export function ReturnStravaLink() {
     useEffect(() => {
         if (linkStravaError) {
             console.error('Strava linkage error (2):', linkStravaError);
-            setErrorMsg(`Strava linkage error - ${linkStravaError?.status} / ${linkStravaError?.data?.message}. Please try again.`);
+            handleLinkError(linkStravaError);
         }
     }, [linkStravaError])
 
@@ -130,9 +140,12 @@ export function ReturnStravaLink() {
             <PageWrapper additionClasses="h-screen flex items-center justify-center">
                 <div className="text-center">
                     <p className="p-2">{errorMsg}</p>
-                    <p className="p-0.5"><a className="text-blue-500 hover:underline" href='/strava/link'>Click here
-                        to <b>try again linking Strava</b></a></p>
-                    <p className="p-0.5"><a className="text-blue-500 hover:underline" href='/dashboard'>Or go back to
+                    {allowRetry && (
+                        <p className="p-0.5"><a className="text-blue-500 hover:underline" href='/strava/link'>Click here
+                            to <b>try again linking Strava</b></a></p>
+                    )}
+                    <p className="p-0.5"><a className="text-blue-500 hover:underline"
+                                            href='/dashboard'>{allowRetry ? 'Or go' : 'Go'} back to
                         the <b>Dashboard</b></a></p>
                 </div>
             </PageWrapper>

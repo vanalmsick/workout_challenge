@@ -76,6 +76,89 @@ export function Modal({setShowModal, title = null, landscape = false, isLoading 
 }
 
 
+/* =========================================================================
+ * Shared form-control styling
+ * -------------------------------------------------------------------------
+ * Single source of truth for how every input in the app looks. Import
+ * `inputClasses`, `labelClasses` & friends instead of hand-writing Tailwind
+ * on an <input>/<select> somewhere, so all fields stay in sync.
+ * ========================================================================= */
+
+// Label above a field
+export const labelClasses = "block mb-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300";
+
+// Error message underneath a field
+export const errorClasses = "mt-1 block text-xs italic text-red-600 dark:text-red-400";
+
+// Small print / helper text underneath a field
+export const helpTextClasses = "mt-1 block text-xs italic text-gray-500 dark:text-gray-400";
+
+// Geometry + typography shared by <input>, <select> and the duration field
+const CONTROL_BASE =
+    "block w-full rounded-lg border px-3 py-2 text-sm leading-6 shadow-sm " +
+    "transition-colors duration-150 focus:outline-hidden focus:ring-2";
+
+const CONTROL_DEFAULT =
+    "border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 hover:border-gray-400 " +
+    "focus:border-sky-600 focus:ring-sky-600/30 " +
+    "dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200 dark:placeholder:text-gray-500 " +
+    "dark:hover:border-gray-500 dark:focus:border-sky-400 dark:focus:ring-sky-400/30";
+
+// Fields the user should notice (e.g. the calculated equalizer factors)
+const CONTROL_HIGHLIGHT =
+    "border-sky-300 bg-sky-50 text-sky-900 placeholder:text-sky-400 hover:border-sky-400 " +
+    "focus:border-sky-600 focus:ring-sky-600/30 " +
+    "dark:border-sky-700 dark:bg-sky-950 dark:text-sky-100 dark:placeholder:text-sky-700 " +
+    "dark:hover:border-sky-600 dark:focus:border-sky-400 dark:focus:ring-sky-400/30";
+
+const CONTROL_ERROR =
+    "border-red-400 bg-red-50 text-gray-900 placeholder:text-red-300 hover:border-red-500 " +
+    "focus:border-red-500 focus:ring-red-500/30 " +
+    "dark:border-red-500 dark:bg-red-950/40 dark:text-gray-100 dark:placeholder:text-red-800 " +
+    "dark:focus:border-red-400 dark:focus:ring-red-400/30";
+
+// Read-only / disabled
+const CONTROL_MUTED =
+    "border-gray-200 bg-gray-100 text-gray-500 placeholder:text-gray-400 " +
+    "focus:border-gray-300 focus:ring-gray-300/30 " +
+    "dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600";
+
+/**
+ * Build the class list for a text input / select / textarea.
+ * Use this everywhere instead of repeating Tailwind class strings.
+ */
+export function inputClasses({
+                                 highlight = false,
+                                 error = false,
+                                 readOnly = false,
+                                 disabled = false,
+                                 extra = "",
+                             } = {}) {
+    let state;
+    if (error) {
+        state = CONTROL_ERROR;
+    } else if (highlight) {
+        // highlighted fields keep their colour even when read-only/disabled
+        state = CONTROL_HIGHLIGHT;
+    } else if (disabled || readOnly) {
+        state = CONTROL_MUTED;
+    } else {
+        state = CONTROL_DEFAULT;
+    }
+    const cursor = disabled ? " cursor-not-allowed" : (readOnly ? " cursor-default" : "");
+    return `${CONTROL_BASE} ${state}${cursor}${extra ? " " + extra : ""}`;
+}
+
+// Checkbox / radio boxes
+export const checkboxClasses =
+    "h-4 w-4 shrink-0 rounded-sm border-gray-300 accent-sky-800 " +
+    "focus:outline-hidden focus:ring-2 focus:ring-sky-600/30 " +
+    "disabled:cursor-not-allowed disabled:opacity-60 " +
+    "dark:border-gray-600 dark:accent-sky-500";
+
+export const radioClasses = checkboxClasses.replace("rounded-sm", "rounded-full");
+
+
 export function FormInput({
                               name,
                               value = "",
@@ -87,6 +170,7 @@ export function FormInput({
                               placeholder = null,
                               required = false,
                               readOnly = false,
+                              read_only = false,          // field definitions use the snake_case key
                               disabled = false,
                               tabIndex = null,
                               autoFocus = false,
@@ -95,131 +179,197 @@ export function FormInput({
                               width = "w-full",
                               highlight = false,
                               errorMsg = null,
+                              decimal_places = 2,
                           }) {
 
+    const isReadOnly = readOnly || read_only;
+    const hasError = errorMsg !== null && errorMsg !== undefined && errorMsg !== "" &&
+        !(Array.isArray(errorMsg) && errorMsg.length === 0);
 
-    let additionalClasses = "";
-    if (readOnly) {
-        additionalClasses += " text-gray-500 dark:text-gray-500 " + ((highlight) ? "": " bg-gray-100 dark:bg-gray-700 ");
+    // stable id so the <label> actually focuses its field when clicked
+    const fieldId = "field-" + String(name || label || type).toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    const errorId = fieldId + "-error";
+    const listId = fieldId + "-suggestions";
+
+    const classes = inputClasses({highlight, error: hasError, readOnly: isReadOnly, disabled});
+
+    const errorNode = hasError ? (
+        <span id={errorId} role="alert" className={errorClasses}>
+            {Array.isArray(errorMsg) ? errorMsg.join(" ") : errorMsg}
+        </span>
+    ) : null;
+
+    const labelNode = label ? (
+        <label htmlFor={fieldId} className={labelClasses}>
+            {label}{required ? <span className="text-red-500"> *</span> : null}
+        </label>
+    ) : null;
+
+    /* ---------------------------------------------------------------- */
+    /* Checkbox – box and text on one clickable row                      */
+    /* ---------------------------------------------------------------- */
+    if (type === "checkbox") {
+        return (
+            <div className={"px-4 py-2 " + width}>
+                <label
+                    htmlFor={fieldId}
+                    className={"flex items-start gap-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 " +
+                        (disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer select-none")}
+                >
+                    <input
+                        id={fieldId}
+                        type="checkbox"
+                        className={checkboxClasses + " mt-1"}
+                        name={name}
+                        tabIndex={tabIndex}
+                        disabled={disabled || isReadOnly}
+                        autoFocus={!isMobile && autoFocus}
+                        checked={Boolean(value)}
+                        aria-invalid={hasError || undefined}
+                        aria-describedby={hasError ? errorId : undefined}
+                        onChange={() => setValue(!value)}
+                    />
+                    <span>{label}{required ? <span className="text-red-500"> *</span> : null}</span>
+                </label>
+                {errorNode}
+            </div>
+        )
     }
-    if (disabled) {
-        additionalClasses += " text-gray-500 dark:text-gray-500 cursor-not-allowed " + ((highlight) ? "": " bg-gray-100 dark:bg-gray-700 ");
+
+    /* ---------------------------------------------------------------- */
+    /* Radio group                                                       */
+    /* ---------------------------------------------------------------- */
+    if (type === "radio") {
+        return (
+            <div className={"px-4 py-2 " + width}>
+                {labelNode}
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-0.5">
+                    {selectList.map((item, index) => (
+                        <label key={index}
+                               className={"inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 " +
+                                   (disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer select-none")}>
+                            <input
+                                type="radio"
+                                className={radioClasses}
+                                name={name || fieldId}
+                                tabIndex={tabIndex}
+                                disabled={disabled || isReadOnly}
+                                autoFocus={!isMobile && autoFocus && index === 0}
+                                checked={item.value === value}
+                                onChange={(e) => setValue(e.target.value)}
+                                value={item.value}
+                            />
+                            <span>{item.label}</span>
+                        </label>
+                    ))}
+                </div>
+                {errorNode}
+            </div>
+        )
     }
+
+    /* ---------------------------------------------------------------- */
+    /* Duration (desktop uses the cursor-aware time field)               */
+    /* ---------------------------------------------------------------- */
+    if (type === "time-cursor" || (!isMobile && type === "duration")) {
+        return (
+            <div className={"px-4 py-2 " + width}>
+                {labelNode}
+                <TimeField
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    input={<input
+                        id={fieldId}
+                        type="text"
+                        inputMode="numeric"
+                        className={classes}
+                        name={name}
+                        tabIndex={tabIndex}
+                        disabled={disabled}
+                        readOnly={isReadOnly}
+                        autoFocus={!isMobile && autoFocus}
+                        aria-invalid={hasError || undefined}
+                        aria-describedby={hasError ? errorId : undefined}
+                    />}
+                    showSeconds={true}
+                />
+                {errorNode}
+            </div>
+        )
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* Select                                                            */
+    /* ---------------------------------------------------------------- */
+    if (type === "select") {
+        return (
+            <div className={"px-4 py-2 " + width}>
+                {labelNode}
+                <select
+                    id={fieldId}
+                    // extra right padding leaves room for the native dropdown arrow
+                    className={classes + " pr-8"}
+                    name={name}
+                    tabIndex={tabIndex}
+                    required={required}
+                    disabled={disabled || isReadOnly}
+                    autoFocus={!isMobile && autoFocus}
+                    value={(value === null || value === undefined) ? '' : value}
+                    aria-invalid={hasError || undefined}
+                    aria-describedby={hasError ? errorId : undefined}
+                    onChange={(e) => setValue(e.target.value)}
+                >
+                    {(placeholder !== false) &&
+                        <option value="">{placeholder ? placeholder : "Select an option"}</option>}
+                    {selectList.map((item, index) => (
+                        <option key={index} value={item.value}>{item.label}</option>
+                    ))}
+                </select>
+                {errorNode}
+            </div>
+        )
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* Everything else: text, email, number, decimal, date, datetime …   */
+    /* ---------------------------------------------------------------- */
+    const htmlType = (type === "duration") ? "time" : (type === "decimal") ? "number" : type;
+    const step = (type === "decimal") ? String(1 / Math.pow(10, decimal_places)) : undefined;
 
     return (
-        <div className={"px-4 " + width}>
-            <fieldset>
-                {/* Checkbox Input */}
-                {
-                    (type === "checkbox") ? (
-                        <input
-                            type="checkbox"
-                            className="mr-2 leading-tight"
-                            name={name}
-                            tabIndex={tabIndex}
-                            readOnly={readOnly}
-                            disabled={disabled}
-                            autoFocus={!isMobile && autoFocus}
-                            checked={value}
-                            onChange={(e) => setValue(!value)}
-                        />
-                    ) : null
-                }
+        <div className={"px-4 py-2 " + width}>
+            {labelNode}
+            <input
+                id={fieldId}
+                className={classes}
+                name={name}
+                type={htmlType}
+                step={step}
+                inputMode={(type === "decimal") ? "decimal" : undefined}
+                placeholder={(placeholder === false) ? undefined : placeholder}
+                tabIndex={tabIndex}
+                required={required}
+                readOnly={isReadOnly}
+                disabled={disabled}
+                autoFocus={!isMobile && autoFocus}
+                autoComplete={autoComplete}
+                pattern={pattern}
+                value={(value === null || value === undefined) ? '' : value}
+                list={(suggestions.length > 0) ? listId : undefined}
+                aria-invalid={hasError || undefined}
+                aria-describedby={hasError ? errorId : undefined}
+                onChange={(e) => setValue(e.target.value)}
+            />
+            {errorNode}
 
-                {/* Input Label */}
-                {(label) ? <label
-                    className="w-full text-gray-700 dark:text-gray-400 text-sm font-bold mb-2 mr-4"
-                    onClick={(type === "checkbox") ? (e) => setValue(!value): null}
-                >{label}{(required) ? "*" : null}{(errorMsg) ?
-                    <span className="text-red-600 font-normal italic"> ({errorMsg})</span> : null}</label> : null}
-
-                {/* Input Element */}
-                {
-                    (type === "checkbox") ? (
-                        <> {/* Checkbox Input Element has to go before the label */} </>
-                    ) :
-                    ((type === "time-cursor") || (!isMobile && type === "duration")) ? (
-                        <TimeField
-                            value={value}
-                            onChange={(e) => setValue(e.target.value)}
-                            input={<input type="text" className={"w-full shadow-sm border rounded-sm py-2 px-3 text-gray-700 dark:bg-gray-900 dark:text-gray-400 leading-tight focus:outline-hidden focus:shadow-outline" + (highlight ? " bg-blue-100 dark:bg-blue-950 ": "") + additionalClasses} />}
-                            showSeconds={true}
-                        />
-                    ) :
-                    (type === "radio") ? (
-                        <>
-                            {/* Radio Select Input Element */}
-                            {selectList.map((item, index) => (
-                                <label key={index} className="inline-flex items-center mr-4 text-gray-700 text-sm">
-                                    <input type="radio" className="form-radio text-gray-700"
-                                           name={name}
-                                           tabIndex={tabIndex}
-                                           disabled={disabled}
-                                           autoFocus={!isMobile && autoFocus}
-                                           checked={(item.value === value) ? true : null}
-                                           onChange={(e) => setValue(e.target.value)}
-                                           value={item.value}
-                                    />
-                                    <span className="ml-2">{item.label}</span>
-                                </label>
-                            ))}
-                        </>
-                    ) :
-                    (type === "select") ? (
-                        <>
-                            {/* Dropdown Input Element */}
-                            <select
-                                className={"w-full shadow-sm border rounded-sm py-2 px-3 text-gray-700 dark:bg-gray-800 dark:text-gray-400 leading-tight focus:outline-hidden focus:shadow-outline" + (highlight ? " bg-sky-50 dark:bg-sky-950 border border-blue-300 ": "") + additionalClasses}
-                                name={name}
-                                tabIndex={tabIndex}
-                                required={required}
-                                disabled={disabled}
-                                autoFocus={!isMobile && autoFocus}
-                                value={(value === null) ? '' : value}
-                                onChange={(e) => setValue(e.target.value)}
-                            >
-                                {(placeholder !== false) && <option value="">{(placeholder) ? placeholder : "Select an option"}</option>}
-                                {selectList.map((item, index) => (
-                                    <option key={index} value={item.value}>{item.label}</option>
-                                ))}
-                            </select>
-                        </>
-                    ) :
-                    (
-                        <>
-                            {/* All Other Input Elements */}
-                            <input
-                                className={"w-full shadow-sm border rounded-sm py-2 px-3 text-gray-700 dark:text-gray-400 dark:placeholder-gray-600 leading-tight focus:outline-hidden focus:shadow-outline" + (highlight ? " bg-sky-50 dark:bg-sky-950 border border-blue-300 ": " dark:bg-gray-900 ") + additionalClasses}
-                                name={name}
-                                type={(type === "duration") ? "time" : type}
-                                placeholder={placeholder}
-                                tabIndex={tabIndex}
-                                required={required}
-                                readOnly={readOnly}
-                                disabled={disabled}
-                                autoFocus={!isMobile && autoFocus}
-                                autoComplete={autoComplete}
-                                pattern={pattern}
-                                value={(value === null) ? '' : value}
-                                list={name + "-suggestions"}
-                                onChange={(e) => setValue(e.target.value)}
-                            />
-                        </>
-                    )
-                }
-
-                {/* Input User Suggestions */}
-                {
-                    (suggestions.length > 0) ? (
-                        <datalist id={name + "-suggestions"}>
-                            {suggestions.map((item, index) => (
-                                <option key={index} value={item}/>
-                            ))}
-                        </datalist>
-                    ) : null
-                }
-
-            </fieldset>
+            {/* Input User Suggestions */}
+            {(suggestions.length > 0) ? (
+                <datalist id={listId}>
+                    {suggestions.map((item, index) => (
+                        <option key={index} value={item}/>
+                    ))}
+                </datalist>
+            ) : null}
         </div>
     )
 }
@@ -227,14 +377,11 @@ export function FormInput({
 
 export function SingleForm({fields, values, setValues, errors = {}}) {
 
-    const initialValues = Object.fromEntries(
-        Object.entries(fields).map(([key, value]) => [key, value.value])
-    );
-
     return (
         <div className="flex flex-wrap">
             {Object.entries(fields).map(([fieldName, fieldKwargs]) => (
-                <FormInput key={fieldName} {...fieldKwargs} value={values[fieldName]} errorMsg={errors[fieldName]}
+                <FormInput key={fieldName} name={fieldName} {...fieldKwargs} value={values[fieldName]}
+                           errorMsg={errors?.[fieldName]}
                            setValue={(value) => setValues({...values, [fieldName]: value})}/>
             ))}
         </div>
@@ -273,15 +420,17 @@ export function MultiForm({fields, values, setValues, errors = {}}) {
     return (
         <div>
             {values?.map((value_row, index) => (
-                <div key={index} className="relative border border-gray-300 rounded-lg p-4 mb-4">
-                    <button className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
+                <div key={index}
+                     className="relative border border-gray-200 dark:border-gray-700 rounded-xl p-4 pt-6 mb-4">
+                    <button className="absolute top-2 right-2 text-gray-500 hover:text-red-500 transition-colors"
                             onClick={() => deleteRow(index)}
                     >
                         <Trash2 className="h-5 w-5"/>
                     </button>
                     <div className="flex flex-wrap">
                         {Object.entries(fields).map(([fieldName, fieldKwargs]) => (
-                            <FormInput key={fieldName} {...fieldKwargs} value={value_row[fieldName]}
+                            <FormInput key={fieldName} name={fieldName + "-" + index} {...fieldKwargs}
+                                       value={value_row[fieldName]}
                                        errorMsg={errors?.[index]?.[fieldName]}
                                        setValue={(value) => handleChange(index, fieldName, value)}/>
                         ))}

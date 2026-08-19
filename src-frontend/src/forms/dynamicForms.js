@@ -2,6 +2,7 @@ import '../utils/Modals.css';
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router";
 import WorkoutForm from "./workoutForm";
+import {checkboxClasses, inputClasses, labelClasses} from "./basicComponents";
 
 
 function validateForm({actionData, fields}) {
@@ -52,11 +53,12 @@ export default function DynamicForm({setModalState, fields, setAction, actionDat
                 <div className="flex flex-wrap">
                     {Object.entries(fields).map(([key, prop], i) => (
                         <div className={"px-4 py-2 modal_" + key} key={key}>
-                            <label className="w-full block text-gray-700 text-sm font-bold mb-2">
-                                {prop.label}{(prop.required) ? ("*") : (null)}
+                            <label className={labelClasses} htmlFor={key}>
+                                {prop.label}{(prop.required) ? <span className="text-red-500"> *</span> : null}
                             </label>
                             {(prop.type === "choice") ? (
-                                <select className="w-full shadow-sm appearance-none border rounded-sm py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
+                                <select className={inputClasses({readOnly: prop.read_only, extra: "pr-8"})}
+                                        id={key}
                                         name={key}
                                         value={actionData[key] || ''}
                                         tabIndex={i}
@@ -72,7 +74,9 @@ export default function DynamicForm({setModalState, fields, setAction, actionDat
                                     type={prop.type}
                                     name={key}
                                     id={key}
-                                    className={((prop.type === "checkbox") ? "h-5 w-5 text-blue-600 border-gray-300 rounded-sm focus:ring-blue-500" : "w-full shadow-sm appearance-none border rounded-sm py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline") + ((prop.read_only) ? " bg-gray-100 text-gray-500" : "")}
+                                    className={(prop.type === "checkbox")
+                                        ? checkboxClasses
+                                        : inputClasses({readOnly: prop.read_only})}
                                     required={prop.required}
                                     readOnly={prop.read_only}
                                     placeholder={null}

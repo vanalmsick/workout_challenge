@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Link, useLocation, useNavigationType, useParams} from "react-router";
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router';
 import {BarLoader, MoonLoader} from "react-spinners";
+import {Check, X} from "lucide-react";
 import {usersApi} from '../utils/reducers/usersSlice';
 import {workoutsApi} from '../utils/reducers/workoutsSlice';
 import {competitionsApi} from '../utils/reducers/competitionsSlice';
@@ -148,6 +149,88 @@ const LoadingForm = () => {
         </div>
     )
 }
+
+
+/**
+ * Input field with a "confirm" twin that blends in while the user types and
+ * collapses again as soon as both values match. A green tick is then shown
+ * inside the primary field, a red cross inside the confirm field while the
+ * two values differ. On a match the focus is moved on via onMatch().
+ */
+const ConfirmedInput = ({
+                            id,
+                            label,
+                            confirmLabel,
+                            type = "text",
+                            placeholder,
+                            value,
+                            confirmValue,
+                            onValueChange,
+                            onConfirmChange,
+                            onMatch,
+                            tabIndex,
+                            autoFocus = false,
+                            autoComplete,
+                            confirmAutoComplete = "off",
+                        }) => {
+    const isMatch = value !== '' && value === confirmValue;
+    const showConfirm = value !== '' && !isMatch;
+    const isMismatch = value !== '' && confirmValue !== '' && !isMatch;
+
+    const inputClasses = "shadow-sm appearance-none border rounded-sm w-full py-2 pl-3 pr-10 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline";
+
+    // typing/pasting into the confirm field until it matches hands the focus on
+    const handleConfirmChange = (newConfirmValue) => {
+        onConfirmChange(newConfirmValue);
+        if (value !== '' && newConfirmValue === value && onMatch) {
+            // deferred so React has collapsed the (then inert) confirm field first
+            setTimeout(() => onMatch(), 0);
+        }
+    };
+
+    return (
+        <>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={id}>
+                    {label}
+                </label>
+                <div className="relative">
+                    <input
+                        className={inputClasses}
+                        id={id} name={id} type={type} placeholder={placeholder}
+                        value={value} onChange={(e) => onValueChange(e.target.value)}
+                        autoFocus={autoFocus} tabIndex={tabIndex} autoComplete={autoComplete}/>
+                    <span
+                        className={`pointer-events-none absolute inset-y-0 right-3 flex items-center transition-opacity duration-200 ${isMatch ? 'opacity-100' : 'opacity-0'}`}>
+                        <Check className="w-5 h-5 text-green-600" strokeWidth={3} aria-hidden="true"/>
+                    </span>
+                </div>
+                <span className="sr-only" role="status">
+                    {isMatch ? `${label} confirmed` : (isMismatch ? `${confirmLabel} does not match` : '')}
+                </span>
+            </div>
+            <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${showConfirm ? 'max-h-32 opacity-100 mb-4' : 'max-h-0 opacity-0 mb-0'}`}
+                inert={!showConfirm}>
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`${id}_confirm`}>
+                    {confirmLabel}
+                </label>
+                <div className="relative">
+                    <input
+                        className={`${inputClasses} ${isMismatch ? 'border-red-400' : ''}`}
+                        id={`${id}_confirm`} name={`${id}_confirm`} type={type} placeholder={placeholder}
+                        value={confirmValue} onChange={(e) => handleConfirmChange(e.target.value)}
+                        aria-invalid={isMismatch}
+                        tabIndex={tabIndex + 1} autoComplete={confirmAutoComplete}/>
+                    <span
+                        className={`pointer-events-none absolute inset-y-0 right-3 flex items-center transition-opacity duration-200 ${isMismatch ? 'opacity-100' : 'opacity-0'}`}>
+                        <X className="w-5 h-5 text-red-500" strokeWidth={3} aria-hidden="true"/>
+                    </span>
+                </div>
+            </div>
+        </>
+    );
+};
 
 
 const apiCreateAccount = async (email, first_name, last_name, gender, password) => {
@@ -364,19 +447,27 @@ function RegisterPage() {
     const [errorMessage, setErrorMessage] = useState([]);
     const navigate = useNavigate();
 
+    const [email, setEmail] = useState('');
+    const [emailConfirm, setEmailConfirm] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
+
+    // focus targets the confirm fields hand over to once they match
+    const firstNameRef = useRef(null);
+    const submitRef = useRef(null);
+
     async function handleSubmit(e) {
         e.preventDefault();
-        const email = e.target.email.value;
         const first_name = e.target.first_name.value;
         const last_name = e.target.last_name.value;
         const gender = e.target.gender.value;
-        const password1 = e.target.password1.value;
-        const password2 = e.target.password2.value;
-        if (typeof (email) === "undefined" || email === null || email === "") {
+        if (email === "") {
             setErrorMessage(['Please enter an email address.']);
+        } else if (email !== emailConfirm) {
+            setErrorMessage(['Email addresses do not match.']);
         } else if (typeof (first_name) === "undefined" || first_name === null || first_name === "") {
             setErrorMessage(['Please enter a first name.']);
-        } else if (typeof (password1) === "undefined" || password1 === null || password1 === "") {
+        } else if (password1 === "") {
             setErrorMessage(['Please enter a password.']);
         } else if (password1 !== password2) {
             setErrorMessage(['Passwords do not match.']);
@@ -424,21 +515,21 @@ function RegisterPage() {
                     <div className="flex justify-center">
                         <form className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}
                               onSubmit={handleSubmit}>
-                            <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                                    Email*
-                                </label>
-                                <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="email" type="text" placeholder="Email" autoFocus="True" tabIndex="1"/>
-                            </div>
+                            <ConfirmedInput
+                                id="email" label="Email*" confirmLabel="Repeat Email*"
+                                type="text" placeholder="Email"
+                                value={email} confirmValue={emailConfirm}
+                                onValueChange={setEmail} onConfirmChange={setEmailConfirm}
+                                onMatch={() => firstNameRef.current?.focus()}
+                                tabIndex={1} autoFocus={true} autoComplete="email"/>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="first_name">
                                     First Name*
                                 </label>
                                 <input
                                     className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="first_name" type="text" placeholder="First Name" tabIndex="2"/>
+                                    id="first_name" type="text" placeholder="First Name" tabIndex="3"
+                                    ref={firstNameRef}/>
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="last_name">
@@ -446,7 +537,7 @@ function RegisterPage() {
                                 </label>
                                 <input
                                     className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="last_name" type="text" placeholder="Last Name" tabIndex="3"/>
+                                    id="last_name" type="text" placeholder="Last Name" tabIndex="4"/>
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gender">
@@ -454,7 +545,7 @@ function RegisterPage() {
                                 </label>
                                 <select
                                     className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="gender" value={gender} tabIndex="4" onChange={handleDropDownChange}>
+                                    id="gender" value={gender} tabIndex="5" onChange={handleDropDownChange}>
                                     <option value=''>--Please choose an option--</option>
                                     <option value='M'>Male</option>
                                     <option value='F'>Female</option>
@@ -462,31 +553,22 @@ function RegisterPage() {
                                     <option value=''>Don't want to tell</option>
                                 </select>
                             </div>
-                            <div className="mb-6">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password1">
-                                    Password*
-                                </label>
-                                <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="password1" type="password" placeholder="******************" tabIndex="5"/>
-                            </div>
-                            <div className="mb-6">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password2">
-                                    Repeat Password*
-                                </label>
-                                <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="password2" type="password" placeholder="******************" tabIndex="6"/>
-                            </div>
-                            <div className="flex items-center justify-between">
+                            <ConfirmedInput
+                                id="password1" label="Password*" confirmLabel="Repeat Password*"
+                                type="password" placeholder="******************"
+                                value={password1} confirmValue={password2}
+                                onValueChange={setPassword1} onConfirmChange={setPassword2}
+                                onMatch={() => submitRef.current?.focus()}
+                                tabIndex={6} autoComplete="new-password" confirmAutoComplete="new-password"/>
+                            <div className="flex items-center justify-between mt-2">
                                 <button
                                     className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mr-2 sm:mr-10"
-                                    type="submit" tabIndex="7">
+                                    type="submit" tabIndex="8" ref={submitRef}>
                                     Create Account
                                 </button>
                                 <Link to={`/login/${location.search}`}
                                       className="inline-block align-baseline font-bold text-sm text-sky-800 hover:text-sky-600 ml-2"
-                                      tabIndex="8">
+                                      tabIndex="9">
                                     Go to SignIn
                                 </Link>
                             </div>

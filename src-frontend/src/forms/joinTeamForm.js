@@ -3,7 +3,7 @@ import {useJoinTeamMutation} from "../utils/reducers/joinSlice";
 import {useAddTeamMutation, useDeleteTeamMutation, useGetTeamsQuery} from "../utils/reducers/teamsSlice";
 import {PlusIcon, UsersRound, Trash2} from "lucide-react";
 import {BeatLoader} from "react-spinners";
-import {FormInput, Modal} from "./basicComponents";
+import {FormInput, Modal, inputClasses} from "./basicComponents";
 
 
 export default function JoinTeamForm({competition, setModalState, user, isOwner}) {
@@ -127,7 +127,7 @@ export default function JoinTeamForm({competition, setModalState, user, isOwner}
                         placeholder="Enter team name"
                         required={true}
                         disabled={teamsLoading}
-                        className="flex-1 border rounded-sm px-3 py-2 focus:outline-hidden focus:ring-2 dark:bg-gray-900 focus:ring-blue-400"
+                        className={inputClasses({disabled: teamsLoading, extra: "flex-1"})}
                     />
                     {(teamsLoading || teamsIsFetching) ? (
                         <BeatLoader color="rgb(209 213 219)"/>

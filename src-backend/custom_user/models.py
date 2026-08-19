@@ -91,7 +91,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     email_mid_week = models.BooleanField(default=False)
 
-    strava_athlete_id = models.IntegerField(null=True, blank=True)
+    strava_athlete_id = models.IntegerField(null=True, blank=True, unique=True)
     strava_allow_follow = models.BooleanField(default=True)
     strava_refresh_token = models.CharField(max_length=40, null=True, blank=True)
     strava_last_synced_at = models.DateTimeField(null=True, blank=True)

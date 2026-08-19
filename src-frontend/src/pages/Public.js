@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Link, useLocation, useNavigationType, useParams} from "react-router";
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router';
 import {BarLoader, MoonLoader} from "react-spinners";
+import {Check, X} from "lucide-react";
 import {usersApi} from '../utils/reducers/usersSlice';
 import {workoutsApi} from '../utils/reducers/workoutsSlice';
 import {competitionsApi} from '../utils/reducers/competitionsSlice';
@@ -10,6 +11,20 @@ import {statsApi} from '../utils/reducers/statsSlice';
 import {feedApi} from '../utils/reducers/feedSlice';
 import {PageWrapper} from "../utils/miscellaneous";
 import {sentryError} from "../utils/reducers/baseQueryWithReauth";
+import {inputClasses, labelClasses} from "../forms/basicComponents";
+
+/* The public (logged-out) forms reuse the exact same field styling as the rest
+ * of the app – see `inputClasses` / `labelClasses` in forms/basicComponents.js */
+const authCardClasses =
+    "bg-white dark:bg-gray-800 shadow-xl rounded-2xl px-8 pt-6 pb-8 mb-4 " +
+    "text-gray-900 dark:text-gray-200";
+const authFieldClasses = inputClasses();
+const authSubmitClasses =
+    "bg-sky-800 hover:bg-sky-700 text-white text-sm font-semibold py-2.5 px-5 rounded-full transition " +
+    "focus:outline-hidden focus:ring-2 focus:ring-sky-600/40 hover:shadow-sm";
+const authLinkClasses =
+    "inline-block align-baseline text-sm font-semibold text-sky-800 hover:text-sky-600 " +
+    "dark:text-sky-400 dark:hover:text-sky-300";
 
 function BaseHome({children}) {
     const navType = useNavigationType();
@@ -142,12 +157,97 @@ const waitForLocalStorage = (key, timeout = 5000) =>
 
 const LoadingForm = () => {
     return (
-        <div className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4 flex items-center justify-center"
+        <div className={authCardClasses + " flex items-center justify-center"}
              style={{minWidth: '310px'}}>
             <BarLoader height={6} width={200}/>
         </div>
     )
 }
+
+
+/**
+ * Input field with a "confirm" twin that blends in while the user types and
+ * collapses again as soon as both values match. A green tick is then shown
+ * inside the primary field, a red cross inside the confirm field while the
+ * two values differ. On a match the focus is moved on via onMatch().
+ */
+const ConfirmedInput = ({
+                            id,
+                            label,
+                            confirmLabel,
+                            type = "text",
+                            placeholder,
+                            value,
+                            confirmValue,
+                            onValueChange,
+                            onConfirmChange,
+                            onMatch,
+                            tabIndex,
+                            autoFocus = false,
+                            autoComplete,
+                            confirmAutoComplete = "off",
+                        }) => {
+    const isMatch = value !== '' && value === confirmValue;
+    const showConfirm = value !== '' && !isMatch;
+    const isMismatch = value !== '' && confirmValue !== '' && !isMatch;
+
+    // same base styling as every other field, just with room for the tick/cross
+    const fieldClasses = inputClasses({extra: "pr-10"});
+
+    // typing/pasting into the confirm field until it matches hands the focus on
+    const handleConfirmChange = (newConfirmValue) => {
+        onConfirmChange(newConfirmValue);
+        if (value !== '' && newConfirmValue === value && onMatch) {
+            // deferred so React has collapsed the (then inert) confirm field first
+            setTimeout(() => onMatch(), 0);
+        }
+    };
+
+    return (
+        <>
+            <div className="mb-4">
+                <label className={labelClasses} htmlFor={id}>
+                    {label}
+                </label>
+                <div className="relative">
+                    <input
+                        className={fieldClasses}
+                        id={id} name={id} type={type} placeholder={placeholder}
+                        value={value} onChange={(e) => onValueChange(e.target.value)}
+                        autoFocus={autoFocus} tabIndex={tabIndex} autoComplete={autoComplete}/>
+                    <span
+                        className={`pointer-events-none absolute inset-y-0 right-3 flex items-center transition-opacity duration-200 ${isMatch ? 'opacity-100' : 'opacity-0'}`}>
+                        <Check className="w-5 h-5 text-green-600" strokeWidth={3} aria-hidden="true"/>
+                    </span>
+                </div>
+                <span className="sr-only" role="status">
+                    {isMatch ? `${label} confirmed` : (isMismatch ? `${confirmLabel} does not match` : '')}
+                </span>
+            </div>
+            <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${showConfirm ? 'max-h-32 opacity-100 mb-4' : 'max-h-0 opacity-0 mb-0'}`}
+                inert={!showConfirm}>
+                <label className={labelClasses} htmlFor={`${id}_confirm`}>
+                    {confirmLabel}
+                </label>
+                <div className="relative">
+                    <input
+                        className={isMismatch
+                            ? inputClasses({error: true, extra: "pr-10"})
+                            : fieldClasses}
+                        id={`${id}_confirm`} name={`${id}_confirm`} type={type} placeholder={placeholder}
+                        value={confirmValue} onChange={(e) => handleConfirmChange(e.target.value)}
+                        aria-invalid={isMismatch}
+                        tabIndex={tabIndex + 1} autoComplete={confirmAutoComplete}/>
+                    <span
+                        className={`pointer-events-none absolute inset-y-0 right-3 flex items-center transition-opacity duration-200 ${isMismatch ? 'opacity-100' : 'opacity-0'}`}>
+                        <X className="w-5 h-5 text-red-500" strokeWidth={3} aria-hidden="true"/>
+                    </span>
+                </div>
+            </div>
+        </>
+    );
+};
 
 
 const apiCreateAccount = async (email, first_name, last_name, gender, password) => {
@@ -364,19 +464,27 @@ function RegisterPage() {
     const [errorMessage, setErrorMessage] = useState([]);
     const navigate = useNavigate();
 
+    const [email, setEmail] = useState('');
+    const [emailConfirm, setEmailConfirm] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
+
+    // focus targets the confirm fields hand over to once they match
+    const firstNameRef = useRef(null);
+    const submitRef = useRef(null);
+
     async function handleSubmit(e) {
         e.preventDefault();
-        const email = e.target.email.value;
         const first_name = e.target.first_name.value;
         const last_name = e.target.last_name.value;
         const gender = e.target.gender.value;
-        const password1 = e.target.password1.value;
-        const password2 = e.target.password2.value;
-        if (typeof (email) === "undefined" || email === null || email === "") {
+        if (email === "") {
             setErrorMessage(['Please enter an email address.']);
+        } else if (email !== emailConfirm) {
+            setErrorMessage(['Email addresses do not match.']);
         } else if (typeof (first_name) === "undefined" || first_name === null || first_name === "") {
             setErrorMessage(['Please enter a first name.']);
-        } else if (typeof (password1) === "undefined" || password1 === null || password1 === "") {
+        } else if (password1 === "") {
             setErrorMessage(['Please enter a password.']);
         } else if (password1 !== password2) {
             setErrorMessage(['Passwords do not match.']);
@@ -422,39 +530,40 @@ function RegisterPage() {
                 isLoading ? <LoadingForm/> : (
 
                     <div className="flex justify-center">
-                        <form className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}
+                        <form className={authCardClasses} style={{minWidth: '310px'}}
                               onSubmit={handleSubmit}>
+                            <ConfirmedInput
+                                id="email" label="Email*" confirmLabel="Repeat Email*"
+                                type="text" placeholder="Email"
+                                value={email} confirmValue={emailConfirm}
+                                onValueChange={setEmail} onConfirmChange={setEmailConfirm}
+                                onMatch={() => firstNameRef.current?.focus()}
+                                tabIndex={1} autoFocus={true} autoComplete="email"/>
                             <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                                    Email*
+                                <label className={labelClasses} htmlFor="first_name">
+                                    First Name<span className="text-red-500"> *</span>
                                 </label>
                                 <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="email" type="text" placeholder="Email" autoFocus="True" tabIndex="1"/>
+                                    className={authFieldClasses}
+                                    id="first_name" type="text" placeholder="First Name" tabIndex="3"
+                                    autoComplete="given-name" ref={firstNameRef}/>
                             </div>
                             <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="first_name">
-                                    First Name*
-                                </label>
-                                <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="first_name" type="text" placeholder="First Name" tabIndex="2"/>
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="last_name">
+                                <label className={labelClasses} htmlFor="last_name">
                                     Last Name
                                 </label>
                                 <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="last_name" type="text" placeholder="Last Name" tabIndex="3"/>
+                                    className={authFieldClasses}
+                                    id="last_name" type="text" placeholder="Last Name" tabIndex="4"
+                                    autoComplete="family-name"/>
                             </div>
                             <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gender">
+                                <label className={labelClasses} htmlFor="gender">
                                     Gender
                                 </label>
                                 <select
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="gender" value={gender} tabIndex="4" onChange={handleDropDownChange}>
+                                    className={authFieldClasses + " pr-8"}
+                                    id="gender" value={gender} tabIndex="5" onChange={handleDropDownChange}>
                                     <option value=''>--Please choose an option--</option>
                                     <option value='M'>Male</option>
                                     <option value='F'>Female</option>
@@ -462,31 +571,22 @@ function RegisterPage() {
                                     <option value=''>Don't want to tell</option>
                                 </select>
                             </div>
-                            <div className="mb-6">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password1">
-                                    Password*
-                                </label>
-                                <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="password1" type="password" placeholder="******************" tabIndex="5"/>
-                            </div>
-                            <div className="mb-6">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password2">
-                                    Repeat Password*
-                                </label>
-                                <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="password2" type="password" placeholder="******************" tabIndex="6"/>
-                            </div>
-                            <div className="flex items-center justify-between">
+                            <ConfirmedInput
+                                id="password1" label="Password*" confirmLabel="Repeat Password*"
+                                type="password" placeholder="••••••••••"
+                                value={password1} confirmValue={password2}
+                                onValueChange={setPassword1} onConfirmChange={setPassword2}
+                                onMatch={() => submitRef.current?.focus()}
+                                tabIndex={6} autoComplete="new-password" confirmAutoComplete="new-password"/>
+                            <div className="flex items-center justify-between mt-2">
                                 <button
-                                    className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mr-2 sm:mr-10"
-                                    type="submit" tabIndex="7">
+                                    className={authSubmitClasses + " mr-2 sm:mr-10"}
+                                    type="submit" tabIndex="8" ref={submitRef}>
                                     Create Account
                                 </button>
                                 <Link to={`/login/${location.search}`}
-                                      className="inline-block align-baseline font-bold text-sm text-sky-800 hover:text-sky-600 ml-2"
-                                      tabIndex="8">
+                                      className={authLinkClasses + " ml-2"}
+                                      tabIndex="9">
                                     Go to SignIn
                                 </Link>
                             </div>
@@ -578,38 +678,39 @@ function LogInPage() {
                 {
                     isLoading ? <LoadingForm/> : (
 
-                        <form className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}
+                        <form className={authCardClasses} style={{minWidth: '310px'}}
                               onSubmit={handleSubmit}>
                             <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                                <label className={labelClasses} htmlFor="email">
                                     Email
                                 </label>
                                 <input
-                                    className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="email" type="text" placeholder="Email" autoFocus="True" tabIndex="1"
-                                    required={true}/>
+                                    className={authFieldClasses}
+                                    id="email" type="text" placeholder="Email" autoFocus={true} tabIndex="1"
+                                    autoComplete="email" required={true}/>
                             </div>
                             <div className="mb-6">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                                <label className={labelClasses} htmlFor="password">
                                     Password
                                 </label>
                                 <input
-                                    className="shadow-sm appearance-none border  rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                    id="password" type="password" placeholder="******************" tabIndex="2"
-                                    required={true}/>
-                                <Link to={`/password/`} className="button italic text-sm text-sky-800 hover:text-sky-600"
+                                    className={authFieldClasses}
+                                    id="password" type="password" placeholder="••••••••••" tabIndex="2"
+                                    autoComplete="current-password" required={true}/>
+                                <Link to={`/password/`}
+                                      className="mt-1.5 inline-block italic text-sm text-sky-800 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300"
                                       tabIndex="3">
                                     Forgot Password?
                                 </Link>
                             </div>
                             <div className="flex items-center justify-between">
                                 <button
-                                    className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mr-2 sm:mr-16"
+                                    className={authSubmitClasses + " mr-2 sm:mr-16"}
                                     type="submit" tabIndex="4">
                                     Sign In
                                 </button>
                                 <Link to={`/signup/${location.search}`}
-                                      className="inline-block align-baseline font-bold text-sm text-sky-800 hover:text-sky-600 ml-2"
+                                      className={authLinkClasses + " ml-2"}
                                       tabIndex="5">
                                     Create Account
                                 </Link>
@@ -655,23 +756,24 @@ function ResetPasswordPage() {
             <div className="flex justify-center">
                 {
                     isLoading ? <LoadingForm/> : (
-                    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '310px'}}>
+                    <form onSubmit={handleSubmit} className={authCardClasses} style={{minWidth: '310px'}}>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email" autoFocus="True">
+                            <label className={labelClasses} htmlFor="email">
                                 Email
                             </label>
                             <input
-                                className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                id="email" type="text" placeholder="Email" autoFocus="True" tabIndex="1"/>
+                                className={authFieldClasses}
+                                id="email" type="text" placeholder="Email" autoFocus={true} tabIndex="1"
+                                autoComplete="email"/>
                         </div>
                         <div className="flex items-center justify-between">
                             <button
-                                className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mr-2 sm:mr-16"
+                                className={authSubmitClasses + " mr-2 sm:mr-16"}
                                 type="submit" tabIndex="2">
                                 Reset Password
                             </button>
                             <Link to="/login"
-                                  className="inline-block align-baseline font-bold text-sm text-sky-800 hover:text-sky-600 ml-2"
+                                  className={authLinkClasses + " ml-2"}
                                   tabIndex="3">
                                 Back to SignIn
                             </Link>
@@ -725,26 +827,28 @@ function SetNewPasswordPage() {
             <div className="flex justify-center">
                 {
                     isLoading ? <LoadingForm/> : (
-                    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-sm px-8 pt-6 pb-8 mb-4" style={{minWidth: '45%'}}>
+                    <form onSubmit={handleSubmit} className={authCardClasses} style={{minWidth: '45%'}}>
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password1">
+                            <label className={labelClasses} htmlFor="password1">
                                 Password
                             </label>
                             <input
-                                className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                id="password1" type="password" placeholder="******************" tabIndex="1" autoFocus={true}/>
+                                className={authFieldClasses}
+                                id="password1" type="password" placeholder="••••••••••" tabIndex="1"
+                                autoComplete="new-password" autoFocus={true}/>
                         </div>
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password2">
+                            <label className={labelClasses} htmlFor="password2">
                                 Repeat Password
                             </label>
                             <input
-                                className="shadow-sm appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-hidden focus:shadow-outline"
-                                id="password2" type="password" placeholder="******************" tabIndex="2"/>
+                                className={authFieldClasses}
+                                id="password2" type="password" placeholder="••••••••••" tabIndex="2"
+                                autoComplete="new-password"/>
                         </div>
                         <div className="flex items-center justify-between">
                             <button
-                                className="bg-sky-800 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline mx-auto sm:mx-16"
+                                className={authSubmitClasses + " mx-auto sm:mx-16"}
                                 type="submit" tabIndex="3">
                                 Reset Password
                             </button>

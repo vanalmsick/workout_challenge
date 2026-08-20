@@ -217,7 +217,7 @@ export default class TimeField extends React.Component {
                 ref={inputRef}
                 value={value}
                 onChange={onChangeHandler}
-                style={{width: showSeconds ? 54 : 35, ...style}}
+                style={{width: showSeconds ? '8ch' : '5ch', fontSize: 16, ...style}}
             />
         );
     }

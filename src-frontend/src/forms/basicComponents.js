@@ -95,7 +95,7 @@ export const helpTextClasses = "mt-1 block text-xs italic text-gray-500 dark:tex
 
 // Geometry + typography shared by <input>, <select> and the duration field
 const CONTROL_BASE =
-    "block w-full rounded-lg border px-3 py-2 text-sm leading-6 shadow-sm " +
+    "block w-full rounded-lg border px-3 py-2 text-sm pointer-coarse:text-base leading-6 shadow-sm " +
     "transition-colors duration-150 focus:outline-hidden focus:ring-2";
 
 const CONTROL_DEFAULT =

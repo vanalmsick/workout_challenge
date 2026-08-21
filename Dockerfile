@@ -16,7 +16,7 @@
 # architecture-independent, so this stage runs natively on the builder instead of
 # once per target arch under QEMU emulation. On the multi-arch CI build this
 # removes an entire emulated webpack run.
-FROM --platform=$BUILDPLATFORM node:25-alpine AS frontend
+FROM --platform=$BUILDPLATFORM node:26-alpine AS frontend
 
 WORKDIR /build
 

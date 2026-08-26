@@ -35,11 +35,27 @@ class CustomUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError(_("The Email must be set"))
-        email = self.normalize_email(email)
+        email = self.normalize_email(email).strip().lower()
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save()
         return user
+
+    def get_by_natural_key(self, username):
+        """
+        Look up the login e-mail case-insensitively.
+
+        Used by django.contrib.auth's ModelBackend, i.e. this is what makes
+        logging in with "Sven@Example.com" work. Addresses are stored lower-case,
+        so the exact match is tried first (it uses the unique index); the
+        case-insensitive fallback only exists for rows that were created before
+        the normalisation was introduced.
+        """
+        field = self.model.USERNAME_FIELD
+        try:
+            return self.get(**{field: username})
+        except self.model.DoesNotExist:
+            return self.get(**{f"{field}__iexact": username})
 
     def create_superuser(self, email, password, **extra_fields):
         """
@@ -133,8 +149,23 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         }
 
 
+    def clean(self):
+        """
+        Normalise the e-mail before ModelForm validation.
+
+        full_clean() runs clean() before validate_unique(), so the Django admin
+        checks uniqueness against the lower-cased address and reports a proper
+        form error instead of hitting an IntegrityError in save().
+        """
+        super().clean()
+        if self.email:
+            self.email = self.email.strip().lower()
+
     def save(self, *args, **kwargs):
         """ trigger recalculation of points_capped if workout changes """
+        if self.email:
+            self.email = self.email.strip().lower()
+
         if self.username is None or self.username == "":
             if self.first_name is None or self.first_name == "":
                 self.username = self.email.split("@")[0]

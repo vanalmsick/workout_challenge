@@ -19,7 +19,7 @@ class Command(BaseCommand):
             email = input("Enter the email of the user to promote to staff: ")
 
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(email__iexact=email.strip())
             user.is_staff = True
             user.save()
             self.stdout.write(self.style.SUCCESS(f"User {email} is now staff."))

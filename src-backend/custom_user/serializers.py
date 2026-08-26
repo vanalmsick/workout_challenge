@@ -17,7 +17,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     # check runs - otherwise 'A@b.com' would slip past an existing 'a@b.com'.
     email = LowercaseEmailField(
         max_length=254,
-        validators=[UniqueValidator(queryset=CustomUser.objects.all())],
+        validators=[UniqueValidator(queryset=CustomUser.objects.all(), lookup='iexact')],
     )
 
     class Meta:
@@ -77,7 +77,7 @@ class PasswordResetSerializer(serializers.Serializer):
 
     def save(self, request):
         email = self.validated_data['email']
-        users = CustomUser.objects.filter(email=email)
+        users = CustomUser.objects.filter(email__iexact=email)
         for user in users:
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)

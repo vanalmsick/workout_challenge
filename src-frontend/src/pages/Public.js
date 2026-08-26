@@ -186,8 +186,12 @@ const ConfirmedInput = ({
                             autoFocus = false,
                             autoComplete,
                             confirmAutoComplete = "off",
+                            caseInsensitive = false,
                         }) => {
-    const isMatch = value !== '' && value === confirmValue;
+    // Email addresses are treated case-insensitively (the backend stores them
+    // lower-case); passwords obviously are not.
+    const normalise = (v) => (caseInsensitive ? (v ?? '').trim().toLowerCase() : v);
+    const isMatch = value !== '' && normalise(value) === normalise(confirmValue);
     const showConfirm = value !== '' && !isMatch;
     const isMismatch = value !== '' && confirmValue !== '' && !isMatch;
 
@@ -197,7 +201,7 @@ const ConfirmedInput = ({
     // typing/pasting into the confirm field until it matches hands the focus on
     const handleConfirmChange = (newConfirmValue) => {
         onConfirmChange(newConfirmValue);
-        if (value !== '' && newConfirmValue === value && onMatch) {
+        if (value !== '' && normalise(newConfirmValue) === normalise(value) && onMatch) {
             // deferred so React has collapsed the (then inert) confirm field first
             setTimeout(() => onMatch(), 0);
         }
@@ -344,7 +348,7 @@ const apiRequestNewPassword = async (email) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email: email,
+                email: email.trim().toLowerCase(),
             }),
         });
         
@@ -480,7 +484,7 @@ function RegisterPage() {
         const gender = e.target.gender.value;
         if (email === "") {
             setErrorMessage(['Please enter an email address.']);
-        } else if (email !== emailConfirm) {
+        } else if (email.trim().toLowerCase() !== emailConfirm.trim().toLowerCase()) {
             setErrorMessage(['Email addresses do not match.']);
         } else if (typeof (first_name) === "undefined" || first_name === null || first_name === "") {
             setErrorMessage(['Please enter a first name.']);
@@ -537,6 +541,7 @@ function RegisterPage() {
                                 type="text" placeholder="Email"
                                 value={email} confirmValue={emailConfirm}
                                 onValueChange={setEmail} onConfirmChange={setEmailConfirm}
+                                caseInsensitive={true}
                                 onMatch={() => firstNameRef.current?.focus()}
                                 tabIndex={1} autoFocus={true} autoComplete="email"/>
                             <div className="mb-4">

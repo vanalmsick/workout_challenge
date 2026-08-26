@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -6,11 +7,18 @@ from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 
 from .models import CustomUser
+from .fields import LowercaseEmailField
 from .emails.multipurpose import send_email
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     my = serializers.SerializerMethodField()
+    # Declared explicitly so the address is lower-cased before the uniqueness
+    # check runs - otherwise 'A@b.com' would slip past an existing 'a@b.com'.
+    email = LowercaseEmailField(
+        max_length=254,
+        validators=[UniqueValidator(queryset=CustomUser.objects.all())],
+    )
 
     class Meta:
         model = CustomUser
@@ -65,13 +73,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class PasswordResetSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-
-    def validate_email(self, value):
-        if not CustomUser.objects.filter(email=value).exists():
-            # To avoid leaking info
-            return value
-        return value
+    email = LowercaseEmailField()
 
     def save(self, request):
         email = self.validated_data['email']

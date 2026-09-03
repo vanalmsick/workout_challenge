@@ -36,7 +36,7 @@ import {
     StravaButton
 } from "../forms/basicComponents";
 import {BoxSection, ErrorBoxSection, PageWrapper, useDarkMode} from "../utils/miscellaneous";
-import {workoutTypes} from "../forms/workoutForm";
+import {getWorkoutType} from "../forms/workoutForm";
 import CompetitionInviteModal from "../forms/shareModal";
 import {useDispatch} from "react-redux";
 import {useLeaveCompetitionMutation} from "../utils/reducers/joinSlice";
@@ -108,7 +108,7 @@ function CompetitionHead({competition, feed, isOwner}) {
                     {Object.entries(countGroups).map(([label, count], index) => (
                         <div key={"stat" + index} className="flex flex-col px-4 text-center hidden lg:block">
                             <div className="text-3xl font-semibold text-left">{count}</div>
-                            <div className="uppercase text-xs tracking-wide text-gray-500">{workoutTypes[label].label_short}</div>
+                            <div className="uppercase text-xs tracking-wide text-gray-500">{getWorkoutType(label).label_short}</div>
                         </div>
                     ))}
                 </div>
@@ -446,13 +446,13 @@ function FeedBox({feed, refreshCompetition, competitionIsRefreshing}) {
                                     {/* Mobile view (stacked) */}
                                     <div className="md:hidden">
                                         <div className="font-medium">{entry.workout__user__username}</div>
-                                        <div className="text-sm text-gray-600 dark:text-gray-400">{(entry.workout__sport_type === "Steps") ? entry.workout__steps?.toLocaleString() : Math.round(parseFloat(entry.workout__duration) / 60, 0).toLocaleString() + "min"}<span className="font-semibold"> {workoutTypes[entry.workout__sport_type].label_short}</span></div>
+                                        <div className="text-sm text-gray-600 dark:text-gray-400">{(entry.workout__sport_type === "Steps") ? entry.workout__steps?.toLocaleString() : Math.round(parseFloat(entry.workout__duration) / 60, 0).toLocaleString() + "min"}<span className="font-semibold"> {getWorkoutType(entry.workout__sport_type).label_short}</span></div>
                                     </div>
                                     {/* Desktop view (normal) */}
                                     <div className="hidden md:block">{entry.workout__user__username}</div>
                                 </td>
                                 <td className="py-2 px-4 hidden md:table-cell">{(entry.workout__sport_type === "Steps") ? entry.workout__steps?.toLocaleString() : Math.round(parseFloat(entry.workout__duration) / 60, 0).toLocaleString() + "min"}<span
-                                    className="font-semibold"> {workoutTypes[entry.workout__sport_type].label_short}</span>
+                                    className="font-semibold"> {getWorkoutType(entry.workout__sport_type).label_short}</span>
                                 </td>
                                 <td className="py-2 px-0 sm:px-4">
                                     {(entry.workout__user__strava_allow_follow && entry.workout__strava_id) ? (

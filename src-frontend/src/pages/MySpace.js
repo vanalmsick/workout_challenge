@@ -9,7 +9,7 @@ import {
     Ruler,
 } from 'lucide-react';
 import {useGetWorkoutsQuery, workoutsApi} from "../utils/reducers/workoutsSlice";
-import WorkoutForm, {workoutTypes} from "../forms/workoutForm";
+import WorkoutForm, {getWorkoutType} from "../forms/workoutForm";
 import _ from 'lodash';
 import {useGetUserByIdQuery, usersApi} from "../utils/reducers/usersSlice";
 import {useGetCompetitionsQuery} from "../utils/reducers/competitionsSlice";
@@ -83,7 +83,7 @@ function WelcomeBox({user, workouts, setLinkStrava}) {
                         <div key={"stat" + index} className="flex flex-col px-4 text-center hidden lg:block">
                             <div className="text-3xl font-semibold text-left">{count}</div>
                             <div
-                                className="uppercase text-xs tracking-wide text-gray-500">{workoutTypes[label].label_short}</div>
+                                className="uppercase text-xs tracking-wide text-gray-500">{getWorkoutType(label).label_short}</div>
                         </div>
                     ))}
                 </div>
@@ -172,11 +172,11 @@ function WorkoutsBox({workouts, user, setLinkStrava}) {
                             <td className="py-2 px-4 text-sm md:text-base">
                                 {/* Mobile view (stacked) */}
                                 <div className="md:hidden">
-                                    <div className="font-base">{(workout.sport_type === "Steps") ? workout.steps?.toLocaleString() : workout.duration.substring(0, 5)} <span className="font-semibold">{workoutTypes[workout.sport_type].label_short}</span></div>
+                                    <div className="font-base">{(workout.sport_type === "Steps") ? workout.steps?.toLocaleString() : workout.duration.substring(0, 5)} <span className="font-semibold">{getWorkoutType(workout.sport_type).label_short}</span></div>
                                     {(workout.sport_type !== "Steps") && <div className="text-sm text-gray-600 dark:text-gray-400">{Math.round(workout.kcal).toLocaleString()}<span className="text-sm"> kcal < /span></div>}
                                 </div>
                                 {/* Desktop view (normal) */}
-                                <div className="hidden md:block">{(workout.sport_type === "Steps") ? workout.steps?.toLocaleString() : workout.duration.substring(0, 5)} <span className="font-semibold text-base">{workoutTypes[workout.sport_type].label_short}</span> {(workout.distance && workout.sport_type !== "Steps") ? (<span className="hidden sm:inline">({workout.distance}km)</span>) : (null)}</div>
+                                <div className="hidden md:block">{(workout.sport_type === "Steps") ? workout.steps?.toLocaleString() : workout.duration.substring(0, 5)} <span className="font-semibold text-base">{getWorkoutType(workout.sport_type).label_short}</span> {(workout.distance && workout.sport_type !== "Steps") ? (<span className="hidden sm:inline">({workout.distance}km)</span>) : (null)}</div>
                             </td>
                             <td className="py-2 px-4 hidden md:table-cell">
                                 {(workout.kcal) ? (

@@ -175,7 +175,8 @@ def sync_strava(self, user__id, start_datetime=None):
                 activity_details = response.json()
 
                 avg_heart_rate = activity_details.get('average_heartrate', 0)
-                props['kcal'] = kcal = activity_details.get('calories', activity_details.get('kilojoules', 0) / 4.18)
+                kcal_from_kj = activity_details.get('kilojoules', 0)
+                props['kcal'] = kcal = activity_details.get('calories', 0 if kcal_from_kj is None else kcal_from_kj / 4.18)
                 props['strava_intensity_avg_watts'] = avg_watt = activity_details.get('average_watts', 0)
 
                 # estimate intensity

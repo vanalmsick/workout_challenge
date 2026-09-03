@@ -12,6 +12,7 @@ import {useDispatch} from "react-redux";
 export const workoutTypes = {
     "Steps": {"label": "Total Daily Steps", "label_short": "Steps"},
     "Badminton": {"label": "Badminton", "label_short": "Badminton"},
+    "Basketball": {"label": "Basketball", "label_short": "Basketball"},
     "Ride": {"label": "Biking/Cycling", "label_short": "Cycling"},
     "EBikeRide": {"label": "Biking/Cycling (E-Bike)", "label_short": "Cycling"},
     "GravelRide": {"label": "Biking/Cycling (Gravel)", "label_short": "Cycling"},
@@ -19,7 +20,9 @@ export const workoutTypes = {
     "Velomobile": {"label": "Biking/Cycling (Velomobile)", "label_short": "Cycling"},
     "VirtualRide": {"label": "Biking/Cycling (Virtual)", "label_short": "Cycling"},
     "Canoeing": {"label": "Canoe", "label_short": "Canoe"},
+    "Cricket": {"label": "Cricket", "label_short": "Cricket"},
     "Crossfit": {"label": "Crossfit", "label_short": "Crossfit"},
+    "Dance": {"label": "Dance", "label_short": "Dance"},
     "Elliptical": {"label": "Elliptical", "label_short": "Elliptical"},
     "Golf": {"label": "Golf", "label_short": "Golf"},
     "HighIntensityIntervalTraining": {"label": "High Intensity Interval Training (HIIT)", "label_short": "HIIT"},
@@ -30,6 +33,8 @@ export const workoutTypes = {
     "Kitesurf": {"label": "Kitesurf", "label_short": "Kitesurf"},
     "MountainBikeRide": {"label": "Mountain-Biking/Cycling", "label_short": "Mountain-Biking"},
     "EMountainBikeRide": {"label": "Mountain-Biking/Cycling (E-Bike)", "label_short": "Mountain-Biking"},
+    "Padel": {"label": "Padel", "label_short": "Padel"},
+    "PhysicalTherapy": {"label": "Physical Therapy", "label_short": "Physio"},
     "Pickleball": {"label": "Pickleball", "label_short": "Pickleball"},
     "Pilates": {"label": "Pilates", "label_short": "Pilates"},
     "Racquetball": {"label": "Racquetball", "label_short": "Racquetball"},
@@ -54,6 +59,7 @@ export const workoutTypes = {
     "Swim": {"label": "Swim", "label_short": "Swim"},
     "TableTennis": {"label": "Table Tennis", "label_short": "Table Tennis"},
     "Tennis": {"label": "Tennis", "label_short": "Tennis"},
+    "Volleyball": {"label": "Volleyball", "label_short": "Volleyball"},
     "Walk": {"label": "Walk", "label_short": "Walk"},
     "Snowshoe": {"label": "Walk (Snowshoe)", "label_short": "Walk"},
     "WeightTraining": {"label": "Weight Training", "label_short": "Weights"},
@@ -61,6 +67,17 @@ export const workoutTypes = {
     "Windsurf": {"label": "Windsurf", "label_short": "Windsurf"},
     "Yoga": {"label": "Yoga", "label_short": "Yoga"},
     "Workout": {"label": "Other Workout", "label_short": "Other"}
+}
+
+
+export const getWorkoutType = (sportType) => {
+    if (workoutTypes[sportType] !== undefined) {
+        return workoutTypes[sportType];
+    }
+    const fallback = (typeof sportType === "string" && sportType.trim() !== "")
+        ? sportType.replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+        : "Other";
+    return {"label": fallback, "label_short": fallback};
 }
 
 

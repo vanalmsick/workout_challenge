@@ -150,6 +150,9 @@ INTENSITY_CATEGORIES = [
     (4, "All Out (Can't do another one tomorrow)")
 ]
 
+SPORT_TYPE_WALK_LST=['Walk', 'Snowshoe', 'Hike', 'Golf', 'StairStepper']
+SPORT_TYPE_RUN_LST=['Run', 'TrailRun', 'VirtualRun']
+
 
 class Workout(models.Model):
     """Workout - user logged workout"""
@@ -203,8 +206,8 @@ class Workout(models.Model):
             self.intensity_category = 1
 
             # Subtract the steps from walks and runs from the daily total steps to not double count
-            recorded_walks = Workout.objects.filter(user=self.user, start_datetime__date=self.start_datetime, sport_type='Walk').aggregate(duration=Sum('duration'))['duration']
-            recorded_runs = Workout.objects.filter(user=self.user, start_datetime__date=self.start_datetime, sport_type='Run').aggregate(duration=Sum('duration'))['duration']
+            recorded_walks = Workout.objects.filter(user=self.user, start_datetime__date=self.start_datetime, sport_type__in=SPORT_TYPE_WALK_LST).aggregate(duration=Sum('duration'))['duration']
+            recorded_runs = Workout.objects.filter(user=self.user, start_datetime__date=self.start_datetime, sport_type__in=SPORT_TYPE_RUN_LST).aggregate(duration=Sum('duration'))['duration']
             recorded_steps_walks = 0 if recorded_walks is None else 6_000 / (60 * 60) * recorded_walks.seconds
             recorded_steps_runs = 0 if recorded_runs is None else 10_000 / (60 * 60) * recorded_runs.seconds
             self.distance = 0.82 * scaling_distance * max(self.steps - recorded_steps_walks - recorded_steps_runs, 0) / 1000
@@ -239,7 +242,7 @@ class Workout(models.Model):
         self._original = self._dict()  # reset
 
         # if workout is run or walk and steps were recorded on the same day, update steps to avoid double counting
-        if self.sport_type in ['Run', 'Walk']:
+        if self.sport_type in SPORT_TYPE_RUN_LST + SPORT_TYPE_WALK_LST:
             if 'start_datetime' in changed:
                 date_lst = datetime.datetime.fromisoformat(changed['start_datetime']) if type(changed['start_datetime']) is str else changed['start_datetime']
                 date_lst = list(date_lst)
@@ -255,7 +258,7 @@ class Workout(models.Model):
 
     def delete(self, *args, **kwargs):
         """ trigger recalculation of points_capped if workout deleted """
-        deleted_run_or_walk = self.sport_type in ['Run', 'Walk']
+        deleted_run_or_walk = self.sport_type in SPORT_TYPE_RUN_LST + SPORT_TYPE_WALK_LST
         trigger_workout_delete(
             instance=self
         )

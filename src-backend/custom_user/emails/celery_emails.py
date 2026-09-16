@@ -46,7 +46,7 @@ def send_all_log_workouts_email():
     user_lst = CustomUser.objects.filter(
         Q(my_competitions__start_date__lte=datetime.date.today()) &
         Q(my_competitions__end_date__gte=datetime.date.today())
-    ).order_by('pk')
+    ).order_by('pk').distinct()
     task_log = []
     if len(user_lst) > 0:
         eta_steps = max(min((60 * 60) // len(user_lst), 60), 10)
@@ -91,11 +91,11 @@ def log_workouts_email(user_pk):
 def send_all_competition_start_email():
     print("Scheduling competition start emails...")
     Competition = apps.get_model('competition', 'Competition')
-    competition_lst = Competition.objects.filter(start_date=datetime.date.today() + datetime.timedelta(days=1)).order_by('pk')
+    competition_lst = Competition.objects.filter(start_date=datetime.date.today() + datetime.timedelta(days=1)).order_by('pk').distinct()
     task_log = []
     for i, competition_obj in enumerate(competition_lst):
         eta = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=10) + datetime.timedelta(minutes=(15 * i))
-        user_lst = competition_obj.user.all().order_by('pk')
+        user_lst = competition_obj.user.all().order_by('pk').distinct()
         if len(user_lst) > 0:
             eta_steps = max(min((60 * 60) // len(user_lst), 60), 10)
             for user_obj in user_lst:
@@ -142,7 +142,7 @@ def competition_start_email(competition_pk, user_pk):
 def send_all_leaderboard_emails():
     print("Scheduling leaderboard emails...")
     CustomUser = apps.get_model('custom_user', 'CustomUser')
-    user_lst = CustomUser.objects.filter(my_competitions__start_date__lt=datetime.date.today(), my_competitions__end_date__gte=datetime.date.today()).order_by('pk')
+    user_lst = CustomUser.objects.filter(my_competitions__start_date__lt=datetime.date.today(), my_competitions__end_date__gte=datetime.date.today()).order_by('pk').distinct()
     task_log = []
     if len(user_lst) > 0:
         eta_steps = max(min((60 * 60) // len(user_lst), 60), 10)
@@ -202,7 +202,7 @@ def leaderboard_email(user_pk):
 def send_all_weekly_emails():
     print("Scheduling weekly emails...")
     CustomUser = apps.get_model('custom_user', 'CustomUser')
-    user_lst = CustomUser.objects.filter(email_mid_week=True).order_by('pk')
+    user_lst = CustomUser.objects.filter(email_mid_week=True, is_active=True).order_by('pk').distinct()
     task_log = []
     if len(user_lst) > 0:
         eta_steps = max(min((60 * 60) // len(user_lst), 60), 10)

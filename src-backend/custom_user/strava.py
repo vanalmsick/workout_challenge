@@ -58,7 +58,10 @@ def daily_strava_sync(self, refresh_all=False):
 
         for user in user_lst_names:
             try:
-                sync_strava(user__id=user['pk'])
+                if refresh_all:
+                    sync_strava(user__id=user['pk'], start_datetime=datetime.datetime.now() - datetime.timedelta(days=7))
+                else:
+                    sync_strava(user__id=user['pk'])
             except RateLimitExceeded as exc:
                 sleep_time = _seconds_until_next_interval() + 60
                 print(f'Strava sync rate limit exceeded - sleeping for {sleep_time // 60 } mins')

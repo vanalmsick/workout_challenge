@@ -14,6 +14,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.core.cache import cache
+from django.contrib.auth.models import update_last_login
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer, TokenObtainPairSerializer
+from rest_framework_simplejwt.settings import api_settings as jwt_settings
 
 from .serializers import PasswordResetSerializer, PasswordResetConfirmSerializer
 from .models import CustomUser
@@ -229,3 +233,44 @@ class SyncStravaView(APIView):
             return Response({"message": f"Successfully synced Strava."}, status=status.HTTP_200_OK)
 
         return Response({"message": "Too many requests! You can only request a Strava sync every 60 minutes."}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
+
+class TokenObtainPairSerializerWithReactivate(TokenObtainPairSerializer):
+    """ Same as simplejwt's TokenObtainPairSerializer, but also reactivates a user
+    (is_active=True) on a successful login, since a deactivated account (e.g. via
+    the Django admin) shouldn't stay locked out once the user proves they own it. """
+
+    def validate(self, attrs):
+        try:
+            user = CustomUser.objects.get_by_natural_key(attrs[self.username_field])
+        except CustomUser.DoesNotExist:
+            user = None
+
+        if user is not None and not user.is_active and user.check_password(attrs["password"]):
+            user.is_active = True
+            user.save(update_fields=["is_active"])
+
+        return super().validate(attrs)
+
+
+class TokenObtainPairViewWithReactivate(TokenObtainPairView):
+    """ /api/token/ view that also reactivates a deactivated user on successful login. """
+    serializer_class = TokenObtainPairSerializerWithReactivate
+
+
+class TokenRefreshSerializerWithLastLogin(TokenRefreshSerializer):
+    """ Same as simplejwt's TokenRefreshSerializer, but also bumps the user's last_login,
+    since simplejwt only does that on initial token creation, not on refresh. """
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        user_id = self.token_class(attrs["refresh"]).payload.get(jwt_settings.USER_ID_CLAIM)
+        user = CustomUser.objects.filter(**{jwt_settings.USER_ID_FIELD: user_id}).first()
+        if user is not None:
+            update_last_login(None, user)
+        return data
+
+
+class TokenRefreshViewWithLastLogin(TokenRefreshView):
+    """ /api/token/refresh/ view that also updates last_login. """
+    serializer_class = TokenRefreshSerializerWithLastLogin

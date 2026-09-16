@@ -15,6 +15,7 @@ from django.dispatch import receiver
 
 from competition.scorer import trigger_user_change
 from custom_user.emails.celery_emails import welcome_email
+from custom_user.deactivate_users import deactivate_inactive_users  # noqa: F401 - import registers the Celery task
 
 # Create your models here.
 GENDER_CHOICES = [

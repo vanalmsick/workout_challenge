@@ -16,14 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 from rest_framework.routers import DefaultRouter
 from competition.views import CompetitionViewSet, TeamViewSet, ActivityGoalViewSet, PointsViewSet, CompetitionStatsQueryView, FeedQueryView, JoinCompetitionView, JoinTeamView, CeleryQueryView
 from workouts.views import WorkoutViewSet
-from custom_user.views import CustomUserViewSet, LinkStravaView, UnlinkStravaView, SyncStravaView, PasswordResetView, PasswordResetConfirmView
+from custom_user.views import CustomUserViewSet, LinkStravaView, UnlinkStravaView, SyncStravaView, PasswordResetView, PasswordResetConfirmView, TokenRefreshViewWithLastLogin, TokenObtainPairViewWithReactivate
 
 router = DefaultRouter()
 router.register(r'competition', CompetitionViewSet, basename='competition')
@@ -46,8 +42,8 @@ urlpatterns = [
         path('celery/tasks/', CeleryQueryView.as_view(), name='celery-task-list'),
         path('celery/tasks/<str:task_id>/', CeleryQueryView.as_view(), name='celery-task-status'),
         path('celery/', CeleryQueryView.as_view(), name='celery-task-run'),
-        path('token/', TokenObtainPairView.as_view(), name='token-initial'),
-        path('token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
+        path('token/', TokenObtainPairViewWithReactivate.as_view(), name='token-initial'),
+        path('token/refresh/', TokenRefreshViewWithLastLogin.as_view(), name='token-refresh'),
         path('password-reset/request/', PasswordResetView.as_view(), name='password-reset'),
         path('password-reset/confirm/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
     ])),

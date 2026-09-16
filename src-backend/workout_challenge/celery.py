@@ -56,6 +56,12 @@ app.conf.beat_schedule = {
         "schedule": crontab(minute="5", hour="12"),
         "args": (),
     },
+    # every Monday morning deactivate users inactive 90+ days with no recent competition
+    "deactivate_inactive_users": {
+        "task": "custom_user.deactivate_users.deactivate_inactive_users",
+        "schedule": crontab(day_of_week="1", minute="5", hour="6"),
+        "args": (),
+    },
 }
 
 

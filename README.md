@@ -140,6 +140,7 @@ docker compose -f /path/to/docker-compose.yml up
 | OPENAI_API_KEY        | None                                | OpenAI API key to generate workout / health / nutritional facts for the weekly update email.                                                                                                                                                                                                                    | 
 
 ### How to get the Strava API Client id & secret
+**Note:** Strava now requires the account used to create the API connection (the "admin" user) to have an active paid Strava subscription (£5-9; €8-11; $7-12 per month). The users themselves can be on the free tier. See Strava's [announcement of this change](https://communityhub.strava.com/insider-journal-9/an-update-to-our-developer-program-13428) for details.
 1. Login to your Strava account [strava.com/login](https://www.strava.com/login)
 2. Profile picture -> Settings
 3. "My API Application"

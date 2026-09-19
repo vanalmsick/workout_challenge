@@ -102,6 +102,16 @@ function LogoutPage() {
     dispatch(competitionsApi.util.resetApiState());
     dispatch(statsApi.util.resetApiState());
     dispatch(feedApi.util.resetApiState());
+    // Revoke the refresh token server-side as well, otherwise it stays usable for its full lifetime
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (refreshToken) {
+        fetch((process.env.REACT_APP_BACKEND_URL || '') + '/api/token/blacklist/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({refresh: refreshToken}),
+            keepalive: true,
+        }).catch(() => {});
+    }
     localStorage.clear();
 
     const matched = useWaitForLocalStorage("refresh_token", null);
@@ -403,7 +413,9 @@ const apiSetNewPassword = async (uid, token, newPassword) => {
             } catch (e) {
                 parsedError = null;
             }
-            return [false, response.statusText + ' (' + response.status + ') - ' + (parsedError ? parsedError.detail : 'Unknown error')];
+            // validation errors (e.g. password too common) arrive per field, not as 'detail'
+            const errorText = parsedError ? (parsedError.detail || Object.values(parsedError).flat().join(' ')) : 'Unknown error';
+            return [false, response.statusText + ' (' + response.status + ') - ' + errorText];
         }
     } catch (error) {
         console.error('Network or server error during password reset:', error);
@@ -500,7 +512,7 @@ function RegisterPage() {
             params.set('welcome', 'true');
             if (success_register && success_login) {
                 await waitForLocalStorage('access_token');
-                console.log('Register and Login Successful - redirect ', localStorage.getItem('access_token'));
+                console.log('Register and Login Successful - redirect');
                 navigate(`/dashboard/?${params.toString()}`);
             } else if (!success_register) {
                 setErrorMessage(msg_register.split(", "));
@@ -629,7 +641,7 @@ function LogInPage() {
             // success logging in - redirect to dashboard
             await waitForLocalStorage('access_token');
             setIsLoading(false);
-            console.log('redirect', localStorage.getItem('access_token'));
+            console.log('Login Successful - redirect');
             if (params.has('redirect')) {
                 const redirectUrl = decodeURIComponent(params.get('redirect'));
                 console.log('Redirect to:', redirectUrl);
@@ -652,7 +664,7 @@ function LogInPage() {
         if (success) {
             // success refreshing access_token - redirecting to dashboard
             await waitForLocalStorage('access_token');
-            console.log('refresh_token exists and is valid - redirect ', localStorage.getItem('access_token'));
+            console.log('refresh_token exists and is valid - redirect');
             navigate(`/dashboard/${location.search}`);
         } else {
             // error refreshing access_token - manual login required

@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenBlacklistView
 from competition.views import CompetitionViewSet, TeamViewSet, ActivityGoalViewSet, PointsViewSet, CompetitionStatsQueryView, FeedQueryView, JoinCompetitionView, JoinTeamView, CeleryQueryView
 from workouts.views import WorkoutViewSet
 from custom_user.views import CustomUserViewSet, LinkStravaView, UnlinkStravaView, SyncStravaView, PasswordResetView, PasswordResetConfirmView, TokenRefreshViewWithLastLogin, TokenObtainPairViewWithReactivate
@@ -44,6 +45,7 @@ urlpatterns = [
         path('celery/', CeleryQueryView.as_view(), name='celery-task-run'),
         path('token/', TokenObtainPairViewWithReactivate.as_view(), name='token-initial'),
         path('token/refresh/', TokenRefreshViewWithLastLogin.as_view(), name='token-refresh'),
+        path('token/blacklist/', TokenBlacklistView.as_view(), name='token-blacklist'),  # logout
         path('password-reset/request/', PasswordResetView.as_view(), name='password-reset'),
         path('password-reset/confirm/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
     ])),

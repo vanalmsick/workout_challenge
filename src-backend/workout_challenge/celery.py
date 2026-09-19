@@ -62,7 +62,21 @@ app.conf.beat_schedule = {
         "schedule": crontab(day_of_week="1", minute="5", hour="6"),
         "args": (),
     },
+    # every Sunday night delete expired JWT refresh tokens from the blacklist tables (one row per login otherwise forever)
+    "flush_expired_tokens": {
+        "task": "workout_challenge.celery.flush_expired_tokens",
+        "schedule": crontab(day_of_week="0", minute="35", hour="3"),
+        "args": (),
+    },
 }
+
+
+@app.task
+def flush_expired_tokens():
+    """Delete expired OutstandingToken rows (and their BlacklistedToken rows) - simplejwt's flushexpiredtokens."""
+    from django.core.management import call_command
+
+    call_command("flushexpiredtokens")
 
 
 class single_instance:

@@ -213,13 +213,6 @@ def my_competitions_changed_handler(sender, instance, action, pk_set, **kwargs):
 
 
 
-def get_strava_auth_url(user_id):
-    """ Generate the initial auth url the user clicks, which will re-direct back to this page providing the code."""
-    client_id = settings.STRAVA_CLIENT_ID
-    redirect_url = f"{settings.MAIN_HOST}/strava/return/?user_id={user_id}"
-    return f"https://www.strava.com/oauth/authorize?client_id={client_id}&response_type=code&approval_prompt=force&scope=profile:read_all,activity:read_all&redirect_uri={redirect_url}"
-
-
 def make_url_qr_code(url, path):
     qr = qrcode.QRCode(
         version=1,

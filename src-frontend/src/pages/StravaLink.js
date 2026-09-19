@@ -9,7 +9,14 @@ import {ErrorBoxSection, PageWrapper} from "../utils/miscellaneous";
 import {SectionLoader} from "../utils/loaders";
 
 
+// OAuth `state`: proves a /strava/return/ visit belongs to a link flow this browser started. Without it, a crafted
+// /strava/return/?code=... link would silently connect the attacker's Strava account to the victim's account.
+// localStorage, not sessionStorage: the Strava app may send the user back in a new tab.
+const STRAVA_STATE_KEY = 'strava_oauth_state';
+
 export function InitStravaLink() {
+    // crypto.getRandomValues (unlike crypto.randomUUID) also works on plain-http deployments
+    const [oauthState] = React.useState(() => Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join(''));
 
     const {
         data: user,
@@ -26,7 +33,7 @@ export function InitStravaLink() {
         return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     };
 
-    const urlSecondPart = `client_id=${STRAVA_CLIENT_ID}&response_type=code&approval_prompt=force&scope=profile:read_all,activity:read_all&redirect_uri=${encodedBaseUrl}`;
+    const urlSecondPart = `client_id=${STRAVA_CLIENT_ID}&response_type=code&approval_prompt=force&scope=profile:read_all,activity:read_all&redirect_uri=${encodedBaseUrl}&state=${oauthState}`;
     let urlFirstPart = '';
 
     if (isIOS()) {
@@ -41,6 +48,7 @@ export function InitStravaLink() {
         // redirect if user valid and logged in
         if (userIsSuccess) {
             console.log('Redirect to Strava Auth page');
+            localStorage.setItem(STRAVA_STATE_KEY, oauthState);
             window.location.href = (urlFirstPart + urlSecondPart);
         }
     }, [userIsSuccess]);
@@ -63,6 +71,7 @@ export function InitStravaLink() {
     return (
         <PageWrapper>
             If you are not redirected automatically, follow this <a className="text-blue-500 hover:underline"
+                                                                    onClick={() => localStorage.setItem(STRAVA_STATE_KEY, oauthState)}
                                                                     href={(urlFirstPart + urlSecondPart)}>link to
             Strava</a>.
         </PageWrapper>
@@ -108,12 +117,16 @@ export function ReturnStravaLink() {
                 console.log('No auth strava code');
                 setErrorMsg('No auth code received from Strava. Please try again.');
                 navigate('/strava/link');
+            } else if (!query.get('state') || query.get('state') !== localStorage.getItem(STRAVA_STATE_KEY)) {
+                console.error('Strava linkage error: OAuth state mismatch');
+                setErrorMsg('This Strava link request did not start from this browser. Please start linking Strava again.');
             } else {
                 linkStrava(searchCode)
                     .unwrap()
                     .then(() => {
                         // successful linkage - redirect user to dashboard
                         console.log('Successfully linked Strava');
+                        localStorage.removeItem(STRAVA_STATE_KEY);
                         dispatch(workoutsApi.util.invalidateTags(['Workout']));
                         dispatch(usersApi.util.invalidateTags(['User']));
                         navigate('/dashboard');

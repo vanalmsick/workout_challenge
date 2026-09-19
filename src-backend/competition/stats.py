@@ -149,7 +149,7 @@ def get_competition_stats(competition, last_seven_days=False):
         'end_date': competition_obj.end_date,
         'end_date_count': (datetime.date.today() - competition_obj.end_date).days,
         'has_teams': competition_obj.has_teams,
-        'goals': competition_obj.activitygoal_set.all().values(),
+        'goals': list(competition_obj.activitygoal_set.all().values()),  # list, not a QuerySet - this dict gets cached
     }
 
     response_obj = {

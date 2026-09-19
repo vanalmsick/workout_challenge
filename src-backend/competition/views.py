@@ -6,8 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 from rest_framework.permissions import BasePermission
 
 from django.db.models import Sum
@@ -89,7 +88,8 @@ class ActivityGoalViewSet(viewsets.ModelViewSet):
         serializer.save()
 
 
-class PointsViewSet(viewsets.ModelViewSet):
+class PointsViewSet(viewsets.ReadOnlyModelViewSet):
+    # Read-only: points are only ever written by the scorer (competition/scorer.py), never via the API
     #queryset = Points.objects.all()
     serializer_class = PointsSerializer
 
@@ -99,20 +99,6 @@ class PointsViewSet(viewsets.ModelViewSet):
         # return all points the user is owner of, a participant of, or of his/her own workouts
         #time.sleep(3)  # throttle for testing
         return Points.objects.filter(Q(goal__competition__owner=self.request.user) | Q(goal__competition__user=self.request.user) | Q(workout__user=self.request.user)).distinct().order_by('-workout__start_datetime', '-workout__duration', '-workout', '-workout__user')
-
-
-class StatsPermissions(BasePermission):
-    def has_permission(self, request, view):
-        # Only authenticated users
-        if request.user.is_authenticated:
-            return True
-        return False
-
-    def has_object_permission(self, request, view, obj):
-        competition_lst = Competition.objects.filter(
-            Q(pk=view.kwargs.get('competition', 0)) & (Q(owner=request.user) | Q(user=request.user))
-        )
-        return len(competition_lst) > 0
 
 
 class IsAdmin(BasePermission):
@@ -204,12 +190,13 @@ class CeleryQueryView(APIView):
 
 
 class CompetitionStatsQueryView(APIView):
-    permission_classes = [StatsPermissions]
+    permission_classes = [IsAuthenticated]
 
-    @method_decorator(cache_page(30))  # cache for 30 seconds
     def get(self, request, competition):
-        response_obj = get_competition_stats(competition)
-        self.check_object_permissions(request, response_obj)
+        # Membership check first, cache second: a cached leaderboard must never be served to a non-member
+        if not Competition.objects.filter(Q(owner=request.user) | Q(user=request.user), pk=competition).exists():
+            raise PermissionDenied("You are not a participant of this competition.")
+        response_obj = cache.get_or_set(f"competition_stats_{competition}", lambda: get_competition_stats(competition), 30)
         return Response(response_obj)
 
 
@@ -313,8 +300,18 @@ class JoinTeamView(APIView):
         competition = team.competition
         competition_teams = competition.team_set.all()
 
-        if user != request.user and request.user != competition.owner and len(competition_teams.filter(user=user)) > 0:
-            return Response({"message": "Unauthorized. You can only change your own team or add people to your team if they are currently in no team."}, status=status.HTTP_403_FORBIDDEN)
+        # The owner can move anyone. Other participants can pick their own team (unless the organizer assigns teams)
+        # and add participants who are in no team yet to their own team.
+        if request.user != competition.owner:
+            if not competition.user.filter(pk=request.user.pk).exists():
+                return Response({"message": "Unauthorized. You are not a participant of this competition."}, status=status.HTTP_403_FORBIDDEN)
+            if competition.organizer_assigns_teams:
+                return Response({"message": "Unauthorized. The organizer assigns the teams in this competition."}, status=status.HTTP_403_FORBIDDEN)
+            if user != request.user and (not team.user.filter(pk=request.user.pk).exists() or competition_teams.filter(user=user).exists()):
+                return Response({"message": "Unauthorized. You can only change your own team or add people to your team if they are currently in no team."}, status=status.HTTP_403_FORBIDDEN)
+
+        if not competition.user.filter(pk=user.pk).exists():
+            return Response({"message": "This user is not a participant of this competition."}, status=status.HTTP_400_BAD_REQUEST)
 
         for competition_team in competition_teams:
             competition_team.user.remove(user.id)

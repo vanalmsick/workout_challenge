@@ -16,6 +16,14 @@ const fields = {
         "width": "max-sm:w-full w-1/2",
     },
 
+    "current_password": {
+        "type": "password",
+        "required": false,
+        "read_only": false,
+        "label": "Current Password (only to change email)",
+        "width": "max-sm:w-full w-1/2",
+    },
+
     "username": {
         "type": "text",
         "required": true,

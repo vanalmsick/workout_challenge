@@ -30,6 +30,12 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'competition', 'user', 'user_info', 'my']
         read_only_fields = ['user', 'user_info', 'my']
 
+    def validate_competition(self, value):
+        # A goal/team must stay in its competition - the owner check only covers the competition it is in now
+        if self.instance is not None and value != self.instance.competition:
+            raise serializers.ValidationError("The competition cannot be changed.")
+        return value
+
     def get_user_info(self, obj):
         # Assuming `obj.user` is a ManyToMany or related manager
         users = obj.user.all().order_by('username') if hasattr(obj.user, 'all') else [obj.user]
@@ -48,6 +54,12 @@ class ActivityGoalSerializer(serializers.ModelSerializer):
         model = ActivityGoal
         fields = '__all__'
         read_only_fields = []
+
+    def validate_competition(self, value):
+        # A goal/team must stay in its competition - the owner check only covers the competition it is in now
+        if self.instance is not None and value != self.instance.competition:
+            raise serializers.ValidationError("The competition cannot be changed.")
+        return value
 
 
 class PointsSerializer(serializers.ModelSerializer):

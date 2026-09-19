@@ -1,4 +1,4 @@
-import time, re, random
+import time, re, secrets, string
 from decimal import Decimal
 
 from django.db import models
@@ -117,7 +117,8 @@ class Competition(models.Model):
         self._coerce_dates()
         is_create = self.pk is None
         if self.join_code == '':
-            self.join_code = re.sub(r'[^a-zA-Z0-9]', '', self.name)[:8] + str(self.owner.pk).zfill(3) + str(random.randint(10_000, 99_999))
+            # 6 random chars from secrets (36^6 ~ 2 billion) - the code is the only thing protecting a competition from strangers
+            self.join_code = re.sub(r'[^a-zA-Z0-9]', '', self.name)[:8] + str(self.owner.pk).zfill(3) + ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(6))
         self.join_code = self.join_code.upper()
         super().save(*args, **kwargs)
         changed = self.get_changed_fields()

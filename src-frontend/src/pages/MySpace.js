@@ -203,6 +203,8 @@ function WorkoutsBox({workouts, user, setLinkStrava}) {
 }
 
 
+const teamLabel = (name) => !name ? "My Team" : /\bteam\b/i.test(name) ? name : `${name} Team`;
+
 function CompetitionRow({competition, user}) {
 
     const {
@@ -244,7 +246,7 @@ function CompetitionRow({competition, user}) {
                         ) : (
                             <>No. <span className="text-xl font-semibold">{stats.users[user.id]?.rank}</span>
                                 {(competition.has_teams) ? (
-                                    <span className="text-gray-400 italic"><br/><span className="font-semibold">My Team:</span> #{stats.teams[teamId]?.rank}</span>
+                                    <span className="text-gray-400 italic"><br/><span className="font-semibold">{teamLabel(stats.teams[teamId]?.name)}:</span> #{stats.teams[teamId]?.rank}</span>
                                 ) : null
                                 }
                             </>
@@ -262,6 +264,11 @@ function CompetitionRow({competition, user}) {
 function CompetitionsBox({user, competitions, setJoinCompetition}) {
 
     const [showEditCompetitionModal, setShowEditCompetitionModal] = useState(false);
+    const [showOld, setShowOld] = useState(false);
+
+    const monthAgo = Date.now() / 1000 - 30 * 24 * 60 * 60;
+    const oldCount = competitions.filter(c => c.end_date_epoch < monthAgo).length;
+    const visibleCompetitions = showOld ? competitions : competitions.filter(c => c.end_date_epoch >= monthAgo);
 
     return (
         <BoxSection additionalClasses={"mb-4"}>
@@ -285,12 +292,19 @@ function CompetitionsBox({user, competitions, setJoinCompetition}) {
                         </td>
                     </tr>
                 ) : (
-                    competitions.map((competition, iCompetition) => (
-                        <CompetitionRow key={"comp" + iCompetition} competition={competition} user={user} />
+                    visibleCompetitions.map((competition) => (
+                        <CompetitionRow key={"comp" + competition.id} competition={competition} user={user} />
                     ))
                 )}
                 </tbody>
             </table>
+
+            {(oldCount > 0) && (
+                <button type="button" onClick={() => setShowOld(!showOld)}
+                        className="w-full text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 py-1 cursor-pointer">
+                    {showOld ? "Show less" : `Show ${oldCount} older competition${oldCount > 1 ? "s" : ""}`}
+                </button>
+            )}
 
             {(showEditCompetitionModal) && (
                 <CompetitionForm setModalState={setShowEditCompetitionModal}/>

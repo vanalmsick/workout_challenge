@@ -16,6 +16,12 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+
+  /* Tailwind v4 dropped the pointer cursor on buttons; restore it app-wide. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 body {

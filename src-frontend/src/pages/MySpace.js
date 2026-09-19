@@ -203,7 +203,7 @@ function WorkoutsBox({workouts, user, setLinkStrava}) {
 }
 
 
-const teamLabel = (name) => !name ? "My Team" : /team/i.test(name) ? name : `${name} Team`;
+const teamLabel = (name) => !name ? "My Team" : /\bteam\b/i.test(name) ? name : `${name} Team`;
 
 function CompetitionRow({competition, user}) {
 

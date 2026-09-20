@@ -1,11 +1,13 @@
-import {useNavigate, useNavigationType, useParams} from 'react-router';
-import React, {useEffect, useState} from "react";
+import {useNavigate, useNavigationType, useParams, useSearchParams} from 'react-router';
+import React, {useEffect, useMemo, useState} from "react";
 import NavMenu from "../utils/navMenu";
 import {competitionsApi, useGetCompetitionByIdQuery} from "../utils/reducers/competitionsSlice";
 import {
     ArrowDownToLine,
     ArrowUpToLine,
+    Filter,
     UsersRound,
+    X,
 } from "lucide-react";
 import {Bar, Line} from 'react-chartjs-2';
 import {
@@ -29,7 +31,7 @@ import CompetitionForm from "../forms/competitionForm";
 import JoinTeamForm from "../forms/joinTeamForm";
 import ActivityGoalsForm from "../forms/activityGoalsForm";
 import {
-    ChangeTeamButton, LeaveButton,
+    ChangeTeamButton, inputClasses, LeaveButton,
     ModifyGoalsButton,
     RefreshButton,
     SettingsButton, ShareButton,
@@ -42,11 +44,106 @@ import {useDispatch} from "react-redux";
 import {useLeaveCompetitionMutation} from "../utils/reducers/joinSlice";
 import TransferOwnershipForm from "../forms/transferOwnershipForm";
 import {teamsApi} from "../utils/reducers/teamsSlice";
+import {applyFilter} from "../utils/competitionFilter";
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Filler, Tooltip, Legend, BarElement, ChartDataLabels);
 
 
-function CompetitionHead({competition, feed, isOwner}) {
+/* ── Page filter ──────────────────────────────────────────────────────────────
+   One filter can be active at a time (a participant, a team or a sport type). It lives in the
+   URL query string so it is shareable and survives a reload, and every box on the page renders
+   off the narrowed `stats`/`feed` copies produced by `applyFilter()` (utils/competitionFilter.js). */
+
+const FILTER_TYPES = ['user', 'team', 'sport'];
+
+function useCompetitionFilter() {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const type = FILTER_TYPES.find(key => searchParams.get(key));
+    const value = type ? searchParams.get(type) : null;
+    // stable identity so callers can use `filter` as a plain effect/memo dependency
+    const filter = useMemo(() => (type ? {type, value} : null), [type, value]);
+
+    function setFilter(next) {
+        const params = new URLSearchParams(searchParams);
+        FILTER_TYPES.forEach(key => params.delete(key));
+        if (next) params.set(next.type, String(next.value));
+        setSearchParams(params);
+    }
+
+    return [filter, setFilter];
+}
+
+/** A value the user can filter the page by - shows a filter icon on hover. */
+function FilterLink({onClick, title, additionalClasses = "", children}) {
+    return (
+        <button type="button" title={title} onClick={onClick}
+                className={"group/filter inline-flex items-center gap-1 text-left cursor-pointer hover:text-sky-700 dark:hover:text-sky-400 " + additionalClasses}>
+            {children}
+            <Filter className="h-3 w-3 shrink-0 opacity-0 transition-opacity group-hover/filter:opacity-100"/>
+        </button>
+    );
+}
+
+function filterLabel(filter, stats) {
+    if (!filter) return null;
+    if (filter.type === 'user') return stats?.users?.[filter.value]?.username ?? 'Participant';
+    if (filter.type === 'team') return stats?.teams?.[filter.value]?.name ?? 'Team';
+    return getWorkoutType(filter.value).label;
+}
+
+/** Only rendered while a filter is active: shows it, lets the user swap it or clear it. */
+function FilterBar({filter, setFilter, stats, feed}) {
+    if (!filter || !stats) return null;
+
+    const users = _.sortBy(Object.values(stats.users ?? {}), 'username');
+    const teams = _.sortBy(Object.values(stats.teams ?? {}), 'name');
+    const sports = _.sortBy(_.uniq((feed ?? []).map(entry => entry.workout__sport_type)), type => getWorkoutType(type).label);
+
+    function changeFilter(event) {
+        const [type, ...rest] = event.target.value.split(':');
+        setFilter({type, value: rest.join(':')});
+    }
+
+    return (
+        <BoxSection additionalClasses="mb-4 py-3">
+            <div className="flex flex-col items-center gap-3 sm:flex-row">
+                <span className="flex items-center gap-2 text-gray-500 uppercase font-bold text-sm">
+                    <Filter className="h-4 w-4"/> Filter
+                </span>
+                <div className="w-full sm:w-64">
+                    <select value={filter.type + ':' + filter.value} onChange={changeFilter}
+                            className={inputClasses({highlight: true})} aria-label="Active filter">
+                        <optgroup label="Participants">
+                            {users.map(person => (
+                                <option key={"filter_user" + person.id} value={"user:" + person.id}>{person.username}</option>
+                            ))}
+                        </optgroup>
+                        <optgroup label="Teams">
+                            {teams.map(team => (
+                                <option key={"filter_team" + team.id} value={"team:" + team.id}>{team.name}</option>
+                            ))}
+                        </optgroup>
+                        <optgroup label="Activities">
+                            {sports.map(sportType => (
+                                <option key={"filter_sport" + sportType} value={"sport:" + sportType}>{getWorkoutType(sportType).label}</option>
+                            ))}
+                        </optgroup>
+                    </select>
+                </div>
+                <button type="button" onClick={() => setFilter(null)}
+                        className="flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm transition hover:bg-gray-300 cursor-pointer dark:bg-gray-900 dark:hover:bg-gray-700">
+                    <X className="h-3 w-3"/> Clear filter
+                </button>
+                <span className="text-sm text-gray-500 italic sm:ml-auto text-center sm:text-right">
+                    Showing {filterLabel(filter, stats)} only - click any participant, team or activity to change.
+                </span>
+            </div>
+        </BoxSection>
+    );
+}
+
+
+function CompetitionHead({competition, feed, isOwner, onFilter, includeSteps = false}) {
 
     const [showEditCompetitionModal, setShowEditCompetitionModal] = useState(false);
     const [showInviteCompetitionModal, setShowInviteCompetitionModal] = useState(false);
@@ -55,14 +152,15 @@ function CompetitionHead({competition, feed, isOwner}) {
     const [countGroups, setCountGroups] = useState({});
 
     useEffect(() => {
-        const filteredFeed = _.filter(_.values(feed), item => item.workout !== null && item.workout__sport_type !== 'Steps');
+        // Steps are a daily auto-entry rather than a workout - only counted when explicitly filtered for
+        const filteredFeed = _.filter(_.values(feed), item => item.workout !== null && (includeSteps || item.workout__sport_type !== 'Steps'));
         const totalCount = filteredFeed.length;
         setCountTotal(totalCount);
         const grouped = _.mapValues(_.groupBy(_.values(filteredFeed), 'workout__sport_type'), group => group.length);
         const sorted = _.fromPairs(_.orderBy(_.toPairs(grouped), ([, value]) => value, 'desc'));
         const limited = Object.fromEntries(Object.entries(sorted).slice(0, 4));
         setCountGroups(limited);
-    }, [feed]);
+    }, [feed, includeSteps]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -108,7 +206,11 @@ function CompetitionHead({competition, feed, isOwner}) {
                     {Object.entries(countGroups).map(([label, count], index) => (
                         <div key={"stat" + index} className="flex flex-col px-4 text-center hidden lg:block">
                             <div className="text-3xl font-semibold text-left">{count}</div>
-                            <div className="uppercase text-xs tracking-wide text-gray-500">{getWorkoutType(label).label_short}</div>
+                            <FilterLink onClick={() => onFilter({type: 'sport', value: label})}
+                                        title={"Filter by " + getWorkoutType(label).label}
+                                        additionalClasses="uppercase text-xs tracking-wide text-gray-500">
+                                {getWorkoutType(label).label_short}
+                            </FilterLink>
                         </div>
                     ))}
                 </div>
@@ -132,18 +234,19 @@ function CompetitionHead({competition, feed, isOwner}) {
 
 function ChartThisWeek({history}) {
     const isDarkMode = useDarkMode();
+    const [meLabel, teamLabel, averageLabel] = history['names'] || ['Me', 'My Team', 'Average'];
     const data = {
         labels: history['Legend'],
         datasets: [
             {
-                label: 'Me',
+                label: meLabel,
                 data: history['Me'],
                 backgroundColor: 'rgb(99, 135, 188)',
                 borderRadius: 5,
                 clip: false,
             },
             {
-                label: 'My Team',
+                label: teamLabel,
                 data: history['My Team'],
                 backgroundColor: 'rgb(75, 192, 192)',
                 borderRadius: 5,
@@ -151,7 +254,7 @@ function ChartThisWeek({history}) {
                 hidden: true,
             },
             {
-                label: 'Average',
+                label: averageLabel,
                 data: history['Average'],
                 backgroundColor: 'rgb(156, 163, 175)',
                 borderRadius: 5,
@@ -201,11 +304,12 @@ function ChartThisWeek({history}) {
 
 
 function ChartHistory({history}) {
+    const [meLabel, teamLabel, averageLabel] = history['names'] || ['Me', 'My Team', 'Average'];
     const data = {
         labels: history['Legend'],
         datasets: [
             {
-                label: 'Me',
+                label: meLabel,
                 data: history['Me'],
                 borderColor: 'rgb(99, 135, 188)',
                 tension: 0.3, // slight smoothing
@@ -213,7 +317,7 @@ function ChartHistory({history}) {
                 spanGaps: true,
             },
             {
-                label: 'My Team',
+                label: teamLabel,
                 data: history['My Team'],
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.3, // slight smoothing
@@ -221,7 +325,7 @@ function ChartHistory({history}) {
                 spanGaps: true,
             },
             {
-                label: 'Average',
+                label: averageLabel,
                 data: history['Average'],
                 borderColor: 'rgb(156, 163, 175)',
                 tension: 0.3, // slight smoothing
@@ -294,7 +398,7 @@ function AwardsBox({competition}) {
     )
 }
 
-function TeamLeaderboardBox({stats, competition, user, teamId, isOwner}) {
+function TeamLeaderboardBox({stats, competition, user, teamId, isOwner, onFilter}) {
     const dispatch = useDispatch();
 
     const [showChangeTeamModal, setShowChangeTeamModal] = useState(false);
@@ -333,7 +437,9 @@ function TeamLeaderboardBox({stats, competition, user, teamId, isOwner}) {
                                     <span className="font-semibold">#{team.rank}</span>
                                 </td>
                                 <td className="py-2 px-2">
-                                    <span className="font-semibold">{team.name}</span>
+                                    <FilterLink onClick={() => onFilter({type: 'team', value: team.id})}
+                                                title={"Filter by " + team.name}
+                                                additionalClasses="font-semibold">{team.name}</FilterLink>
                                 </td>
                                 <td className="py-2 px-2 group relative inline-block cursor-pointer">
                                 <span className="text-sm text-gray-500 flex items-center gap-1">
@@ -368,7 +474,7 @@ function TeamLeaderboardBox({stats, competition, user, teamId, isOwner}) {
     )
 }
 
-function IndividualLeaderboardBox({stats, userId}) {
+function IndividualLeaderboardBox({stats, userId, onFilter}) {
 
     const [showInactive, setShowInactive] = useState(false);
     const hideInactive = stats?.competition?.start_date_count > 10;
@@ -396,7 +502,9 @@ function IndividualLeaderboardBox({stats, userId}) {
                             <span className="font-semibold">#{person.rank}</span>
                         </td>
                         <td className="py-2 px-2">
-                            <span className="font-semibold">{person.username}</span>
+                            <FilterLink onClick={() => onFilter({type: 'user', value: person.id})}
+                                        title={"Filter by " + person.username}
+                                        additionalClasses="font-semibold">{person.username}</FilterLink>
                         </td>
                         <td className="py-2 px-2">
                             {(person.strava_allow_follow === true && person.strava_athlete_id) && (
@@ -426,7 +534,7 @@ function IndividualLeaderboardBox({stats, userId}) {
 }
 
 
-function FeedBox({feed, refreshCompetition, competitionIsRefreshing}) {
+function FeedBox({feed, refreshCompetition, competitionIsRefreshing, onFilter}) {
 
     return (
         <BoxSection>
@@ -458,14 +566,21 @@ function FeedBox({feed, refreshCompetition, competitionIsRefreshing}) {
                                 <td className="py-2 px-4 block md:table-cell">
                                     {/* Mobile view (stacked) */}
                                     <div className="md:hidden">
-                                        <div className="font-medium">{entry.workout__user__username}</div>
-                                        <div className="text-sm text-gray-600 dark:text-gray-400">{(entry.workout__sport_type === "Steps") ? entry.workout__steps?.toLocaleString() : Math.round(parseFloat(entry.workout__duration) / 60, 0).toLocaleString() + "min"}<span className="font-semibold"> {getWorkoutType(entry.workout__sport_type).label_short}</span></div>
+                                        <FilterLink onClick={() => onFilter({type: 'user', value: entry.workout__user})}
+                                                    title={"Filter by " + entry.workout__user__username}
+                                                    additionalClasses="font-medium">{entry.workout__user__username}</FilterLink>
+                                        <div className="text-sm text-gray-600 dark:text-gray-400">{(entry.workout__sport_type === "Steps") ? entry.workout__steps?.toLocaleString() : Math.round(parseFloat(entry.workout__duration) / 60, 0).toLocaleString() + "min"} <FilterLink onClick={() => onFilter({type: 'sport', value: entry.workout__sport_type})} title={"Filter by " + getWorkoutType(entry.workout__sport_type).label} additionalClasses="font-semibold">{getWorkoutType(entry.workout__sport_type).label_short}</FilterLink></div>
                                     </div>
                                     {/* Desktop view (normal) */}
-                                    <div className="hidden md:block">{entry.workout__user__username}</div>
+                                    <div className="hidden md:block">
+                                        <FilterLink onClick={() => onFilter({type: 'user', value: entry.workout__user})}
+                                                    title={"Filter by " + entry.workout__user__username}>{entry.workout__user__username}</FilterLink>
+                                    </div>
                                 </td>
-                                <td className="py-2 px-4 hidden md:table-cell">{(entry.workout__sport_type === "Steps") ? entry.workout__steps?.toLocaleString() : Math.round(parseFloat(entry.workout__duration) / 60, 0).toLocaleString() + "min"}<span
-                                    className="font-semibold"> {getWorkoutType(entry.workout__sport_type).label_short}</span>
+                                <td className="py-2 px-4 hidden md:table-cell">{(entry.workout__sport_type === "Steps") ? entry.workout__steps?.toLocaleString() : Math.round(parseFloat(entry.workout__duration) / 60, 0).toLocaleString() + "min"} <FilterLink
+                                    onClick={() => onFilter({type: 'sport', value: entry.workout__sport_type})}
+                                    title={"Filter by " + getWorkoutType(entry.workout__sport_type).label}
+                                    additionalClasses="font-semibold">{getWorkoutType(entry.workout__sport_type).label_short}</FilterLink>
                                 </td>
                                 <td className="py-2 px-0 sm:px-4">
                                     {(entry.workout__user__strava_allow_follow && entry.workout__strava_id) ? (
@@ -699,7 +814,7 @@ function getWeekDates() {
     });
 }
 
-function Activity7DaysBox({stats, userId, teamId}) {
+function Activity7DaysBox({stats, userId, teamId, names}) {
 
     const [chartData, setChartData] = useState({'labels': [], 'Me': [], 'My Team': [], 'Average': []});
 
@@ -720,9 +835,10 @@ function Activity7DaysBox({stats, userId, teamId}) {
             'Legend': tmpLegend,
             'Me': tmpMe,
             'My Team': tmpTeam,
-            'Average': tmpAll
+            'Average': tmpAll,
+            'names': names,
         });
-    }, [stats, userId, teamId]);
+    }, [stats, userId, teamId, names]);
 
     return (
         <BoxSection>
@@ -759,7 +875,7 @@ function getDateRange(start_date, end_date) {
 }
 
 
-function ActivityCompetitionBox({stats, userId, teamId}) {
+function ActivityCompetitionBox({stats, userId, teamId, names}) {
 
     const [chartData, setChartData] = useState({'labels': [], 'Me': [], 'My Team': [], 'Average': []});
 
@@ -786,9 +902,10 @@ function ActivityCompetitionBox({stats, userId, teamId}) {
             'Legend': tmpLegend,
             'Me': tmpMe,
             'My Team': tmpTeam,
-            'Average': tmpAll
+            'Average': tmpAll,
+            'names': names,
         });
-    }, [stats, userId, teamId]);
+    }, [stats, userId, teamId, names]);
 
     return (
         <BoxSection>
@@ -858,6 +975,24 @@ export default function Competition() {
         }
     }, [stats, user])
 
+    const [filter, setFilter] = useCompetitionFilter();
+    const {stats: viewStats, feed: viewFeed} = useMemo(
+        () => applyFilter(stats, feed, filter),
+        [stats, feed, filter],
+    );
+
+    // While a user/team filter is active the page is shown from that user's/team's perspective
+    const filteredUserId = (filter?.type === 'user') ? Number(filter.value) : null;
+    const viewUserId = filteredUserId ?? user?.id;
+    const viewTeamId = (filter?.type === 'team') ? filter.value
+        : filteredUserId ? Object.keys(stats?.teams ?? {}).find(key => stats.teams[key].members.some(member => member.id === filteredUserId))
+            : teamId;
+    const chartNames = useMemo(() => [
+        (filteredUserId && filteredUserId !== user?.id) ? (stats?.users?.[filteredUserId]?.username ?? 'Participant') : 'Me',
+        (viewTeamId && String(viewTeamId) !== String(teamId)) ? (stats?.teams?.[viewTeamId]?.name ?? 'Team') : 'My Team',
+        'Average',
+    ], [stats, user?.id, teamId, filteredUserId, viewTeamId]);
+
     function refreshPage() {
         refreshCompetition();
         refreshFeed();
@@ -884,9 +1019,12 @@ export default function Competition() {
                     ) : (statsError) ? (
                         <ErrorBoxSection additionalClasses='mb-4' errorMsg={competitionError?.status + ' / ' + (competitionError?.error || competitionError?.message || competitionError?.data?.detail)}/>
                     ) : (
-                        <CompetitionHead competition={competition} feed={feed} isOwner={isOwner} />
+                        <CompetitionHead competition={competition} feed={viewFeed} isOwner={isOwner}
+                                         onFilter={setFilter} includeSteps={filter?.type === 'sport'}/>
                     )
                 }
+
+                <FilterBar filter={filter} setFilter={setFilter} stats={stats} feed={feed}/>
 
                 {/* KPI bar */}
                 <div className="flex flex-col xl:flex-row">
@@ -898,7 +1036,7 @@ export default function Competition() {
                                 <ErrorBoxSection additionalClasses="mb-4"
                                     errorMsg={statsError?.status + ' / ' + (statsError?.error || statsError?.message || statsError?.data?.detail)}/>
                             ) : (
-                                <ActivityGoalsBox user={user} stats={stats} feed={feed} competitionId={id} userId={user?.id} isOwner={isOwner} />
+                                <ActivityGoalsBox user={user} stats={viewStats} feed={viewFeed} competitionId={id} userId={viewUserId} isOwner={isOwner} />
                             )
                         }
                     </div>
@@ -910,7 +1048,7 @@ export default function Competition() {
                                 <ErrorBoxSection
                                     errorMsg={statsError?.status + ' / ' + (statsError?.error || statsError?.message || statsError?.data?.detail)}/>
                             ) : (
-                                <Activity7DaysBox feed={feed} stats={stats} userId={user?.id} teamId={teamId}/>
+                                <Activity7DaysBox feed={viewFeed} stats={viewStats} userId={viewUserId} teamId={viewTeamId} names={chartNames}/>
                             )
                         }
                     </div>
@@ -922,7 +1060,7 @@ export default function Competition() {
                                 <ErrorBoxSection
                                     errorMsg={statsError?.status + ' / ' + (statsError?.error || statsError?.message || statsError?.data?.detail)}/>
                             ) : (
-                                <ActivityCompetitionBox feed={feed} stats={stats} userId={user?.id} teamId={teamId}/>
+                                <ActivityCompetitionBox feed={viewFeed} stats={viewStats} userId={viewUserId} teamId={viewTeamId} names={chartNames}/>
                             )
                         }
                     </div>
@@ -938,7 +1076,7 @@ export default function Competition() {
                                 <ErrorBoxSection
                                     errorMsg={feedError?.status + ' / ' + (feedError?.error || feedError?.message || feedError?.data?.detail)}/>
                             ) : (
-                                <FeedBox feed={feed} refreshCompetition={refreshPage}
+                                <FeedBox feed={viewFeed} refreshCompetition={refreshPage} onFilter={setFilter}
                                          competitionIsRefreshing={competitionFetching || feedFetching || statsFetching}/>
                             )
                         }
@@ -955,7 +1093,7 @@ export default function Competition() {
                                     <ErrorBoxSection
                                         errorMsg={statsError?.status + ' / ' + (statsError?.error || statsError?.message || statsError?.data?.detail)}/>
                                 ) : (
-                                    <TeamLeaderboardBox stats={stats} competition={competition} user={user} teamId={teamId} isOwner={isOwner}/>
+                                    <TeamLeaderboardBox stats={viewStats} competition={competition} user={user} teamId={teamId} isOwner={isOwner} onFilter={setFilter}/>
                                 )
                             }
                         </div>
@@ -968,7 +1106,7 @@ export default function Competition() {
                                     <ErrorBoxSection
                                         errorMsg={statsError?.status + ' / ' + (statsError?.error || statsError?.message || statsError?.data?.detail)}/>
                                 ) : (
-                                    <IndividualLeaderboardBox stats={stats} userId={user?.id}/>
+                                    <IndividualLeaderboardBox stats={viewStats} userId={user?.id} onFilter={setFilter}/>
                                 )
                             }
                         </div>

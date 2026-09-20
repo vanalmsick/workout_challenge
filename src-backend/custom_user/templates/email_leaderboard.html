@@ -248,8 +248,8 @@
                               <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
                                 <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
                                   <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Teams</div>
-                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for team in competition.leaderboard.team %} <tr{% if team.rank == 1 %} bgcolor="#F0F9FF" {% endif %}>
-                                      <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if team.rank %}#{{ team.rank }}{% else %}&ndash;{% endif %}</td>
+                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for team in competition.leaderboard.team %} <tr{% if team.is_me %} bgcolor="#F0F9FF" {% endif %}>
+                                      <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if team.rank == 1 %}&#129351;{% elif team.rank == 2 %}&#129352;{% elif team.rank == 3 %}&#129353;{% elif team.rank %}#{{ team.rank }}{% else %}&ndash;{% endif %}</td>
                                       <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ team.name }}</td>
                                       <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
                             </tr> {% empty %} <tr>
@@ -279,8 +279,8 @@
                     <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
                       <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
                         <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Individuals</div>
-                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for individual in competition.leaderboard.individual %} <tr{% if individual.rank == 1 %} bgcolor="#F0F9FF" {% endif %}>
-                            <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if individual.rank %}#{{ individual.rank }}{% else %}&ndash;{% endif %}</td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for individual in competition.leaderboard.individual %} <tr{% if individual.is_me %} bgcolor="#F0F9FF" {% endif %}>
+                            <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if individual.rank == 1 %}&#129351;{% elif individual.rank == 2 %}&#129352;{% elif individual.rank == 3 %}&#129353;{% elif individual.rank %}#{{ individual.rank }}{% else %}&ndash;{% endif %}</td>
                             <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ individual.username }}</td>
                             <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
                   </tr> {% empty %} <tr>
@@ -397,8 +397,8 @@
                             <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
                               <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
                                 <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Teams</div>
-                                <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for team in competition.leaderboard.team %} <tr{% if team.rank == 1 %} bgcolor="#F0F9FF" {% endif %}>
-                                    <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if team.rank %}#{{ team.rank }}{% else %}&ndash;{% endif %}</td>
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for team in competition.leaderboard.team %} <tr{% if team.is_me %} bgcolor="#F0F9FF" {% endif %}>
+                                    <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if team.rank == 1 %}&#129351;{% elif team.rank == 2 %}&#129352;{% elif team.rank == 3 %}&#129353;{% elif team.rank %}#{{ team.rank }}{% else %}&ndash;{% endif %}</td>
                                     <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ team.name }}</td>
                                     <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
                           </tr> {% empty %} <tr>
@@ -428,8 +428,8 @@
                   <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
                     <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
                       <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Individuals</div>
-                      <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for individual in competition.leaderboard.individual %} <tr{% if individual.rank == 1 %} bgcolor="#F0F9FF" {% endif %}>
-                          <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if individual.rank %}#{{ individual.rank }}{% else %}&ndash;{% endif %}</td>
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for individual in competition.leaderboard.individual %} <tr{% if individual.is_me %} bgcolor="#F0F9FF" {% endif %}>
+                          <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if individual.rank == 1 %}&#129351;{% elif individual.rank == 2 %}&#129352;{% elif individual.rank == 3 %}&#129353;{% elif individual.rank %}#{{ individual.rank }}{% else %}&ndash;{% endif %}</td>
                           <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ individual.username }}</td>
                           <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
                 </tr> {% empty %} <tr>

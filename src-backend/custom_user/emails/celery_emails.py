@@ -155,6 +155,14 @@ def send_all_leaderboard_emails():
     return task_log
 
 
+def _prep_leaderboard(leaderboard, user_pk):
+    """Hide participants without any points and mark the recipient's own row."""
+    return {
+        'individual': [{**i, 'is_me': i['id'] == user_pk} for i in leaderboard['individual'] if i.get('total_capped')],
+        'team': [{**i, 'is_me': any(m['id'] == user_pk for m in i.get('members', []))} for i in leaderboard['team']],
+    }
+
+
 @app.task()
 def leaderboard_email(user_pk):
     """Email to send users their leaderboard."""
@@ -168,12 +176,12 @@ def leaderboard_email(user_pk):
         competition_all_stats = get_competition_stats(competition.pk)
         competition_all_data.append({
             'competition': competition_all_stats['competition'],
-            'leaderboard': competition_all_stats['leaderboard'],
+            'leaderboard': _prep_leaderboard(competition_all_stats['leaderboard'], user_obj.pk),
         })
         competition_7d_stats = get_competition_stats(competition.pk, last_seven_days=True)
         competition_7d_data.append({
             'competition': competition_7d_stats['competition'],
-            'leaderboard': competition_7d_stats['leaderboard'],
+            'leaderboard': _prep_leaderboard(competition_7d_stats['leaderboard'], user_obj.pk),
         })
 
     email_subject = 'Workout Challenge - Your Spot on the Leaderboard!'

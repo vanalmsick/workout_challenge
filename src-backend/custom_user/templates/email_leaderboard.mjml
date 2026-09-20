@@ -1,145 +1,200 @@
 <mjml>
-  <!-- Written with https://mjml.io/ -->
+  <!-- Written with https://mjml.io/ - compile with: npx mjml email_leaderboard.mjml -o email_leaderboard.html -->
   <mj-head>
-    <mj-preview>New week - fresh start! But first let's see where you're on the Leaderbaord for last week!</mj-preview>
+    <mj-title>Your spot on the leaderboard</mj-title>
+    <mj-preview>New week, fresh start. Here is how last week finished and where you stand overall.</mj-preview>
+    <mj-raw>
+      {% load humanize %}
+      <meta name="color-scheme" content="light">
+      <meta name="supported-color-schemes" content="light">
+    </mj-raw>
     <mj-attributes>
-      <mj-text line-height="1.2" />
+      <mj-all font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif" />
+      <mj-text font-size="15px" line-height="1.6" color="#1F2937" padding="0px 28px" />
+      <mj-section background-color="#ffffff" padding="0px" />
+      <mj-column padding="0px" />
+      <mj-divider border-color="#E5E7EB" border-width="1px" padding="22px 28px" />
+      <mj-button background-color="#075985" color="#ffffff" border-radius="999px" font-size="13px" font-weight="700" inner-padding="13px 30px" padding="0px" />
     </mj-attributes>
   </mj-head>
+
   <mj-body background-color="#E1E8ED">
-    <mj-hero mode="fixed-height" height="200px" background-url="{{ MAIN_HOST }}/running_email.jpg" background-size="cover" background-repeat="no-repeat" background-color="#075985">
-      <mj-text align="center" font-size="30px" color="#ffffff" padding-bottom="10px" padding-top="45px" css-class="no-invert">
-        Workout Challenge
+
+    <!-- ============ Hero ============ -->
+    <mj-hero mode="fixed-height" height="200px" background-url="{{ MAIN_HOST }}/running_email.jpg" background-color="#075985" padding="0px">
+      <mj-text align="center" css-class="no-invert" padding="46px 20px 0px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#CFE3F0;text-shadow:0 1px 4px rgba(0,0,0,0.45);">Weekly leaderboard</div>
+        <div style="font-size:30px;font-weight:700;line-height:1.2;color:#ffffff;padding-top:4px;text-shadow:0 2px 8px rgba(0,0,0,0.45);">Workout Challenge</div>
       </mj-text>
-      <mj-button background-color="#075985" color="#fff" border-radius="24px" border="1px solid #fff" href="{{ MAIN_HOST }}/login" font-family="Helvetica, Arial, sans-serif" padding="10px 25px">
-        LOGIN
-      </mj-button>
+      <mj-button href="{{ MAIN_HOST }}/login" background-color="#ffffff" color="#075985" padding="18px 20px 0px">Open the app</mj-button>
     </mj-hero>
-    <mj-section padding-top="0px" padding-bottom="0px" background-color="white">
-      <mj-column padding-bottom="0px">
-        <mj-text padding-bottom="0px">
-          <p>Hi {{ first_name }},</p>
-          <p>Let's see where you're on the leaderboard!</p>
+
+    <!-- ============ Intro ============ -->
+    <mj-section padding="30px 0px 0px">
+      <mj-column>
+        <mj-text>
+          <p style="margin:0 0 14px;">Hi {{ first_name }},</p>
+          <p style="margin:0;">New week, fresh start &ndash; but first, here is how things finished up.</p>
         </mj-text>
-        <mj-divider border-color="#E1E8ED" border-width="2px"></mj-divider>
-        <mj-text padding-top="5px" padding-bottom="0px">
-          <h3>This week's leaderboard:</h3>
+        <mj-divider />
+        <mj-raw>{% if competitions_7d %}</mj-raw>
+        <mj-text padding="0px 28px 2px">
+          <div style="font-size:17px;font-weight:700;color:#075985;">&#127942;&nbsp; Last 7 days</div>
+        </mj-text>
+        <mj-raw>{% endif %}</mj-raw>
+      </mj-column>
+    </mj-section>
+
+    <!-- ============ Last 7 days ============ -->
+    <mj-raw>{% for competition in competitions_7d %}</mj-raw>
+    <mj-section padding="16px 0px 0px">
+      <mj-column>
+        <mj-text padding="0px 28px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;">{{ competition.competition.name }}</div>
         </mj-text>
       </mj-column>
     </mj-section>
-    
-    <!-- This week leaderbaord section -->
-    <mj-raw> {% for competition in competitions_7d %} </mj-raw>
-    <mj-section padding-top="0px" padding-bottom="10px" background-color="white">
-      <mj-column>
-        <mj-text>
-          <b><span style="color:#075985">{{ competition.competition.name }}</span> - Team</b>
+    <mj-section padding="0px 0px 6px">
+      <mj-column width="50%">
+        <mj-text padding="10px 28px 0px">
+          <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Teams</div>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;">
+            {% for team in competition.leaderboard.team %}
+            <tr{% if team.rank == 1 %} bgcolor="#F0F9FF"{% endif %}>
+              <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if team.rank %}#{{ team.rank }}{% else %}&ndash;{% endif %}</td>
+              <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ team.name }}</td>
+              <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr><td style="padding:8px 0;font-size:13px;color:#8A97A4;">No teams yet.</td></tr>
+            {% endfor %}
+          </table>
+          <div style="height:20px;line-height:20px;font-size:0;">&nbsp;</div>
         </mj-text>
-        <mj-table>
-          <mj-raw> {% for team in competition.leaderboard.team %} </mj-raw>
-          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-            <td style="padding: 0 15px 0 0;">{% if team.rank is not None %}#{{ team.rank }}{% else %}-/-{% endif %}</td>
-            <td style="padding: 0 15px;">{{ team.name }}</td>
-            <td style="padding: 0 0 0 15px;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0 }}P{% endif %}</td>
-          </tr>
-          <mj-raw> {% endfor %} </mj-raw>
-        </mj-table>
       </mj-column>
-      <mj-column>
-        <mj-text>
-          <b><span style="color:#075985">{{ competition.competition.name }}</span> - Individual</b>
-        </mj-text>
-        <mj-table>
-          <mj-raw> {% for individual in competition.leaderboard.individual %} </mj-raw>
-          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-            <td style="padding: 0 15px 0 0;">{% if individual.rank is not None %}#{{ individual.rank }}{% else %}-/-{% endif %}</td>
-            <td style="padding: 0 15px;">{{ individual.username }}</td>
-            <td style="padding: 0 0 0 15px;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0 }}P{% endif %}</td>
-          </tr>
-          <mj-raw> {% endfor %} </mj-raw>
-        </mj-table>
-      </mj-column>
-    </mj-section>
-    <mj-raw> {% endfor %} </mj-raw>
-    
-    <!-- All time leaderbaord section -->
-    <mj-section padding-top="0px" padding-bottom="0px" background-color="white">
-      <mj-column padding-bottom="0px">
-        <mj-divider border-color="#E1E8ED" border-width="2px"></mj-divider>
-        <mj-text padding-top="5px" padding-bottom="0px">
-          <h3>All-time leaderboard:</h3>
+      <mj-column width="50%">
+        <mj-text padding="10px 28px 0px">
+          <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Individuals</div>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;">
+            {% for individual in competition.leaderboard.individual %}
+            <tr{% if individual.rank == 1 %} bgcolor="#F0F9FF"{% endif %}>
+              <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if individual.rank %}#{{ individual.rank }}{% else %}&ndash;{% endif %}</td>
+              <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ individual.username }}</td>
+              <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr><td style="padding:8px 0;font-size:13px;color:#8A97A4;">No participants yet.</td></tr>
+            {% endfor %}
+          </table>
         </mj-text>
       </mj-column>
     </mj-section>
-    <mj-raw> {% for competition in competitions_all %} </mj-raw>
-    <mj-section padding-top="0px" padding-bottom="10px" background-color="white">
+    <mj-raw>{% endfor %}</mj-raw>
+
+    <!-- ============ All time ============ -->
+    <mj-section padding="0px">
       <mj-column>
-        <mj-text>
-          <b><span style="color:#075985">{{ competition.competition.name }}</span> - Team</b>
+        <mj-raw>{% if competitions_all %}</mj-raw>
+        <mj-divider />
+        <mj-text padding="0px 28px 2px">
+          <div style="font-size:17px;font-weight:700;color:#075985;">All time</div>
         </mj-text>
-        <mj-table>
-          <mj-raw> {% for team in competition.leaderboard.team %} </mj-raw>
-          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-            <td style="padding: 0 15px 0 0;">{% if team.rank is not None %}#{{ team.rank }}{% else %}-/-{% endif %}</td>
-            <td style="padding: 0 15px;">{{ team.name }}</td>
-            <td style="padding: 0 0 0 15px;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0 }}P{% endif %}</td>
-          </tr>
-          <mj-raw> {% endfor %} </mj-raw>
-        </mj-table>
-      </mj-column>
-      <mj-column>
-        <mj-text>
-          <b><span style="color:#075985">{{ competition.competition.name }}</span> - Individual</b>
-        </mj-text>
-        <mj-table>
-          <mj-raw> {% for individual in competition.leaderboard.individual %} </mj-raw>
-          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-            <td style="padding: 0 15px 0 0;">{% if individual.rank is not None %}#{{ individual.rank }}{% else %}-/-{% endif %}</td>
-            <td style="padding: 0 15px;">{{ individual.username }}</td>
-            <td style="padding: 0 0 0 15px;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0 }}P{% endif %}</td>
-          </tr>
-          <mj-raw> {% endfor %} </mj-raw>
-        </mj-table>
+        <mj-raw>{% endif %}</mj-raw>
       </mj-column>
     </mj-section>
-    <mj-raw> {% endfor %} </mj-raw>
-    
+
+    <mj-raw>{% for competition in competitions_all %}</mj-raw>
+    <mj-section padding="16px 0px 0px">
+      <mj-column>
+        <mj-text padding="0px 28px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;">{{ competition.competition.name }}</div>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="0px 0px 6px">
+      <mj-column width="50%">
+        <mj-text padding="10px 28px 0px">
+          <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Teams</div>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;">
+            {% for team in competition.leaderboard.team %}
+            <tr{% if team.rank == 1 %} bgcolor="#F0F9FF"{% endif %}>
+              <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if team.rank %}#{{ team.rank }}{% else %}&ndash;{% endif %}</td>
+              <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ team.name }}</td>
+              <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr><td style="padding:8px 0;font-size:13px;color:#8A97A4;">No teams yet.</td></tr>
+            {% endfor %}
+          </table>
+          <div style="height:20px;line-height:20px;font-size:0;">&nbsp;</div>
+        </mj-text>
+      </mj-column>
+      <mj-column width="50%">
+        <mj-text padding="10px 28px 0px">
+          <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Individuals</div>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;">
+            {% for individual in competition.leaderboard.individual %}
+            <tr{% if individual.rank == 1 %} bgcolor="#F0F9FF"{% endif %}>
+              <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if individual.rank %}#{{ individual.rank }}{% else %}&ndash;{% endif %}</td>
+              <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ individual.username }}</td>
+              <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr><td style="padding:8px 0;font-size:13px;color:#8A97A4;">No participants yet.</td></tr>
+            {% endfor %}
+          </table>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-raw>{% endfor %}</mj-raw>
+
     <mj-raw> {% if goal_equalizer_note %} </mj-raw>
-    <!-- Goal Equalizer -->
-    <mj-section background-color="#075985" vertical-align="middle">
-      <mj-column width="100%" vertical-align="middle">
-        <mj-text align="center" color="#ffffff" font-size="18px" padding-bottom="10px" padding-top="20px">Make it fair by enabling the Goal Equalizer!</mj-text>
-        <mj-divider border-color="#fff" border-style="solid" border-width="1px" padding-left="100px" padding-right="100px" padding-bottom="20px"></mj-divider>
-        <mj-text align="center" color="#e5e7eb" font-size="11px" padding-bottom="25px" padding-top="0px">Everyone has a unique <b>Basal Metabolic Rate (BMR)</b>, dependent on factors like age, gender, height, and weight. The default goals are calibrated for a 35y/o 1.8m tall man. To ensure a fair competition, login and personalise your goals using the "Goal Equalizer" right below your personal settings.</mj-text>
+    <!-- ============ Goal equalizer ============ -->
+    <mj-section padding="18px 0px 0px">
+      <mj-column>
+        <mj-divider padding="0px 28px 24px" />
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#075985" padding="30px 0px">
+      <mj-column>
+        <mj-text align="center" color="#ffffff" padding="0px 28px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#9FC7DE;">Make it fair</div>
+          <div style="font-size:19px;font-weight:700;line-height:1.35;color:#ffffff;padding-top:8px;">Turn on the Goal Equalizer</div>
+        </mj-text>
+        <mj-text align="center" color="#D4E4EE" font-size="13px" padding="14px 34px 0px">
+          Everyone has a different <b style="color:#ffffff;">basal metabolic rate</b>, driven by age, gender, height and weight. The default goals are calibrated for a 35&nbsp;year old, 1.8&nbsp;m tall man. Personalise yours with the &ldquo;Goal Equalizer&rdquo; just below your personal settings.
+        </mj-text>
+        <mj-button href="{{ MAIN_HOST }}/login" background-color="#ffffff" color="#075985" padding="22px 28px 0px">Adjust my goals</mj-button>
       </mj-column>
     </mj-section>
     <mj-raw> {% endif %} </mj-raw>
-    
-    <!-- Final remarks -->
-    <mj-section padding-top="0px" padding-bottom="15px" background-color="white">
+
+    <!-- ============ Sign off ============ -->
+    <mj-section padding="0px 0px 30px">
       <mj-column>
         <mj-raw> {% if not goal_equalizer_note %} </mj-raw>
-          <mj-divider padding-bottom="0px" border-color="#E1E8ED" border-width="2px"></mj-divider>
+        <mj-divider />
         <mj-raw> {% endif %} </mj-raw>
-        <mj-text padding-top="20px">Login to see more detailed analyses, charts, and breakdowns:</mj-text>
-        <mj-button align="center" background-color="#075985" color="#fff" border-radius="24px" href="{{ MAIN_HOST }}/login" font-family="Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif" padding-bottom="5px" padding-top="5px">LOGIN</mj-button>
-        <mj-text padding-bottom="0px" padding-top="0px">
-          <p>Enjoy the Competition.</p>
-          <p>Good luck!</p>
+        <mj-text padding="26px 28px 0px">
+          <p style="margin:0 0 16px;">Log in for the full picture &ndash; detailed analyses, charts and breakdowns.</p>
+        </mj-text>
+        <mj-button href="{{ MAIN_HOST }}/login" padding="0px 28px" align="left">Open the app</mj-button>
+        <mj-text padding="22px 28px 0px">
+          <p style="margin:0 0 4px;">Enjoy the competition &ndash; good luck!</p>
+          <p style="margin:0;color:#5B6875;font-size:14px;">The Workout Challenge</p>
         </mj-text>
       </mj-column>
     </mj-section>
-    
-    <!-- Footnote -->
-    </mj-section>
-    <mj-section full-width="full-width">
-      <mj-column width="100%" vertical-align="middle">
-        <mj-text align="center" color="#9a9ea6" font-size="11px" padding-bottom="0px" padding-top="0">
-          <span class="apple-link">Workout Challenge</span>
-          <br/> Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}">Send us an Email</a>. <br/> See the <a href="https://github.com/vanalmsick/workout_challenge">Source Code</a>.
+
+    <!-- ============ Footer ============ -->
+    <mj-section background-color="#E1E8ED" padding="22px 0px 26px">
+      <mj-column>
+        <mj-text align="center" font-size="12px" line-height="1.7" color="#7A8794">
+          <span style="font-weight:700;color:#5B6875;">Workout Challenge</span><br />
+          Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}" style="color:#075985;text-decoration:none;font-weight:600;">Send us an email</a> &nbsp;&middot;&nbsp; <a href="https://github.com/vanalmsick/workout_challenge" style="color:#075985;text-decoration:none;font-weight:600;">Source code</a>
         </mj-text>
       </mj-column>
     </mj-section>
-        
+
   </mj-body>
 </mjml>

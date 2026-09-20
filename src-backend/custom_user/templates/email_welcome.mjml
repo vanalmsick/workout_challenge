@@ -1,99 +1,145 @@
 <mjml>
-  <!-- Written with https://mjml.io/ -->
+  <!-- Written with https://mjml.io/ - compile with: npx mjml email_welcome.mjml -o email_welcome.html -->
   <mj-head>
-    <mj-preview>Thanks for signing up to the Workout Challenge! Bookmark the page in your browser. How does the competition work? How to earn activity points? You'll find out now!</mj-preview>
+    <mj-title>Welcome to the Workout Challenge</mj-title>
+    <mj-preview>You're in! Here's how the competition works, how points are earned, and how to get your workouts imported automatically.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light">
+      <meta name="supported-color-schemes" content="light">
+    </mj-raw>
     <mj-attributes>
-      <mj-text line-height="1.2" />
+      <mj-all font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif" />
+      <mj-text font-size="15px" line-height="1.6" color="#1F2937" padding="0px 28px" />
+      <mj-section background-color="#ffffff" padding="0px" />
+      <mj-column padding="0px" />
+      <mj-divider border-color="#E5E7EB" border-width="1px" padding="22px 28px" />
+      <mj-button background-color="#075985" color="#ffffff" border-radius="999px" font-size="13px" font-weight="700" inner-padding="13px 30px" padding="0px" />
     </mj-attributes>
   </mj-head>
+
   <mj-body background-color="#E1E8ED">
-    <mj-hero mode="fixed-height" height="200px" background-url="{{ MAIN_HOST }}/running_email.jpg" background-size="cover" background-repeat="no-repeat" background-color="#075985">
-      <mj-text align="center" font-size="30px" color="#ffffff" padding-bottom="10px" padding-top="45px" css-class="no-invert">
-        Workout Challenge
+
+    <!-- ============ Hero ============ -->
+    <mj-hero mode="fixed-height" height="200px" background-url="{{ MAIN_HOST }}/running_email.jpg" background-color="#075985" padding="0px">
+      <mj-text align="center" css-class="no-invert" padding="46px 20px 0px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#CFE3F0;text-shadow:0 1px 4px rgba(0,0,0,0.45);">Welcome aboard</div>
+        <div style="font-size:30px;font-weight:700;line-height:1.2;color:#ffffff;padding-top:4px;text-shadow:0 2px 8px rgba(0,0,0,0.45);">Workout Challenge</div>
       </mj-text>
-      <mj-button background-color="#075985" color="#fff" border-radius="24px" border="1px solid #fff" href="{{ MAIN_HOST }}/login" font-family="Helvetica, Arial, sans-serif" padding="10px 25px">
-        LOGIN
-      </mj-button>
+      <mj-button href="{{ MAIN_HOST }}/login" background-color="#ffffff" color="#075985" padding="18px 20px 0px">Open the app</mj-button>
     </mj-hero>
-    
-    <mj-section padding-top="0px" padding-bottom="0px" background-color="white">
-      <mj-column padding-bottom="0px">
-        <mj-text padding-bottom="0px">
-          <p>Hi {{ first_name }},</p>
-          <p>Thanks for signing up to the <b>Workout Challenge</b>!</p>
-          <p><b>Bookmark the page:</b> <a href="{{ MAIN_HOST }}">{{ MAIN_HOST }}</a></p>
+
+    <!-- ============ Intro ============ -->
+    <mj-section padding="30px 0px 0px">
+      <mj-column>
+        <mj-text>
+          <p style="margin:0 0 14px;">Hi {{ first_name }},</p>
+          <p style="margin:0 0 14px;">Thanks for signing up to the <b>Workout Challenge</b> &ndash; compete with friends and colleagues on the workouts you already do.</p>
         </mj-text>
-        <mj-divider border-color="#E1E8ED" border-width="2px"></mj-divider>
+        <mj-text padding="6px 28px 0px">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="background-color:#F4F7FA;border-radius:10px;">
+            <tr>
+              <td style="padding:14px 18px;font-size:13px;line-height:1.5;color:#5B6875;">
+                <span style="font-weight:700;color:#1F2937;">Bookmark the app</span><br />
+                <a href="{{ MAIN_HOST }}" style="color:#075985;text-decoration:none;font-weight:600;word-break:break-all;">{{ MAIN_HOST }}</a>
+              </td>
+            </tr>
+          </table>
+        </mj-text>
+        <mj-divider />
       </mj-column>
     </mj-section>
-      
-    <!-- How-to Section -->
-    <mj-section padding-top="10px" padding-bottom="0px" background-color="white">
+
+    <!-- ============ How it works ============ -->
+    <mj-section padding="0px 0px 8px">
       <mj-column>
-        <mj-text padding-top="0px" padding-bottom="15px">
-          <h3>How does it work?</h3>
-          <ul>
-            <li>Join a friend's competition or create your own.</li>
-            <li>For automatic workout import, link your Strava account to the Workout Challenge.</li>
-            <li>Before a competition starts, join a team.</li>
-          </ul>
-        </mj-text>
-      </mj-column>
-      <mj-column>
-        <mj-text padding-top="0px" padding-bottom="15px">
-          <h3>How to earn activity points?</h3>
-          <ul>
-            <li>Each competition has its own activity goals.</li>
-            <li>You earn <b>1 point for every 1%</b> progress toward a goal.</li>
-            <li>For example, if the goal is 100 minutes of exercise and you work out 50 minutes, you earn 50 points.</li>
-            <li><i>Note:</i> Some goals have <b>minimum or maximum limits</b>. Activities above/below these limits won’t earn you points and are marked with an asterisk (*).</li>
-            <li>Hover over a goal to view its limits, or over the asterisk for more details.</li>
-          </ul>
+        <mj-text padding="0px 28px 4px">
+          <div style="font-size:17px;font-weight:700;color:#075985;">Getting started</div>
         </mj-text>
       </mj-column>
     </mj-section>
-      
+
+    <mj-section padding="0px">
+      <mj-column width="50%">
+        <mj-text padding="10px 28px 0px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;padding-bottom:8px;">Three steps</div>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;line-height:1.5;color:#1F2937;">
+            <tr>
+              <td width="26" valign="top" style="padding:0 0 12px;font-size:13px;font-weight:700;color:#075985;">1</td>
+              <td valign="top" style="padding:0 0 12px;">Join a friend&#39;s competition or create your own.</td>
+            </tr>
+            <tr>
+              <td width="26" valign="top" style="padding:0 0 12px;font-size:13px;font-weight:700;color:#075985;">2</td>
+              <td valign="top" style="padding:0 0 12px;">Link Strava for automatic workout imports &ndash; or log workouts by hand.</td>
+            </tr>
+            <tr>
+              <td width="26" valign="top" style="font-size:13px;font-weight:700;color:#075985;">3</td>
+              <td valign="top">Pick a team before the competition starts.</td>
+            </tr>
+          </table>
+          <div style="height:20px;line-height:20px;font-size:0;">&nbsp;</div>
+        </mj-text>
+      </mj-column>
+      <mj-column width="50%">
+        <mj-text padding="10px 28px 0px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;padding-bottom:8px;">How points work</div>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;line-height:1.5;color:#1F2937;">
+            <tr>
+              <td valign="top" style="padding:0 0 10px;">Every competition sets its own activity goals. You earn <b>1 point for every 1%</b> of a goal you complete.</td>
+            </tr>
+            <tr>
+              <td valign="top" style="padding:0 0 10px;">A 100&nbsp;minute goal and a 50&nbsp;minute workout means 50&nbsp;points.</td>
+            </tr>
+            <tr>
+              <td valign="top" style="font-size:13px;color:#5B6875;">Some goals carry minimum or maximum limits. Anything outside them earns no points and is marked with an asterisk&nbsp;(*). Hover a goal in the app to see its limits.</td>
+            </tr>
+          </table>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
     <mj-raw> {% if link_strava_note %} </mj-raw>
-    <!-- Link Strava -->
-    <mj-section background-color="#075985" vertical-align="middle">
-      <mj-column width="100%" vertical-align="middle">
-        <mj-text align="center" color="#ffffff" font-size="18px" padding-bottom="10px" padding-top="20px">Skip the hassle of manual logging – connect Strava for automatic workout imports!</mj-text>
-        <mj-divider border-color="#fff" border-style="solid" border-width="1px" padding-left="100px" padding-right="100px" padding-bottom="20px"></mj-divider>
-        <mj-text align="center" color="#e5e7eb" font-size="11px" padding-bottom="25px" padding-top="0px">
-          <p>Every day at 4 AM, your workouts are automatically imported, only syncing the most essential data with Strava to respect your privacy:</p>
-          <span>• Sport type</span><br/>
-          <span>• Start time & duration</span><br/>
-          <span>• Workout id</span><br/>
-          <span>• Distance, kcal, kj, avg. watt</span>
+    <!-- ============ Link Strava ============ -->
+    <mj-section padding="28px 0px 0px">
+      <mj-column>
+        <mj-divider padding="0px 28px 24px" />
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#075985" padding="30px 0px">
+      <mj-column>
+        <mj-text align="center" color="#ffffff" padding="0px 28px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#9FC7DE;">Recommended</div>
+          <div style="font-size:19px;font-weight:700;line-height:1.35;color:#ffffff;padding-top:8px;">Connect Strava and skip manual logging</div>
         </mj-text>
-        <mj-button align="center" background-color="#ffffff" color="#075985" border-radius="24px" href="{{ MAIN_HOST }}/strava/link" font-family="Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif" padding-bottom="5px" padding-top="0px">Link Strava</mj-button>
+        <mj-text align="center" color="#D4E4EE" font-size="13px" padding="14px 34px 0px">
+          Every day at 4&nbsp;AM your workouts are imported automatically. To respect your privacy we only ever read the essentials: sport type, start time &amp; duration, workout id, distance, kcal, kJ and average watts.
+        </mj-text>
+        <mj-button href="{{ MAIN_HOST }}/strava/link" background-color="#ffffff" color="#075985" padding="22px 28px 0px">Link Strava</mj-button>
       </mj-column>
     </mj-section>
     <mj-raw> {% endif %} </mj-raw>
-          
-    <!-- Final remarks -->
-    <mj-section padding-top="0px" padding-bottom="0px" background-color="white">
+
+    <!-- ============ Sign off ============ -->
+    <mj-section padding="0px 0px 30px">
       <mj-column>
         <mj-raw> {% if not link_strava_note %} </mj-raw>
-          <mj-divider border-color="#E1E8ED" border-width="2px"></mj-divider>
+        <mj-divider />
         <mj-raw> {% endif %} </mj-raw>
-        <mj-text padding-bottom="10px" padding-top="5px">
-          <p>Enjoy the Competition.</p>
-          <p>Good luck!</p>
+        <mj-text padding="26px 28px 0px">
+          <p style="margin:0 0 4px;">Enjoy the competition &ndash; good luck!</p>
+          <p style="margin:0;color:#5B6875;font-size:14px;">The Workout Challenge</p>
         </mj-text>
       </mj-column>
     </mj-section>
-          
-    <!-- Footnote -->
-    </mj-section>
-    <mj-section full-width="full-width">
-      <mj-column width="100%" vertical-align="middle">
-        <mj-text align="center" color="#9a9ea6" font-size="11px" padding-bottom="0px" padding-top="0">
-          <span class="apple-link">Workout Challenge</span>
-          <br> Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}">Send us an Email</a>. <br> See the <a href="https://github.com/vanalmsick/workout_challenge">Source Code</a>.
+
+    <!-- ============ Footer ============ -->
+    <mj-section background-color="#E1E8ED" padding="22px 0px 26px">
+      <mj-column>
+        <mj-text align="center" font-size="12px" line-height="1.7" color="#7A8794">
+          <span style="font-weight:700;color:#5B6875;">Workout Challenge</span><br />
+          Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}" style="color:#075985;text-decoration:none;font-weight:600;">Send us an email</a> &nbsp;&middot;&nbsp; <a href="https://github.com/vanalmsick/workout_challenge" style="color:#075985;text-decoration:none;font-weight:600;">Source code</a>
         </mj-text>
       </mj-column>
     </mj-section>
-        
+
   </mj-body>
 </mjml>

@@ -2,7 +2,7 @@
 <html lang="und" dir="auto" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>Welcome to the Workout Challenge</title>
+  <title>Still up for a challenge?</title>
   <!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--<![endif]-->
@@ -70,11 +70,6 @@
         width: 100% !important;
         max-width: 100%;
       }
-
-      .mj-column-per-50 {
-        width: 50% !important;
-        max-width: 50%;
-      }
     }
   </style>
   <style media="screen and (min-width:480px)">
@@ -82,19 +77,14 @@
       width: 100% !important;
       max-width: 100%;
     }
-
-    .moz-text-html .mj-column-per-50 {
-      width: 50% !important;
-      max-width: 50%;
-    }
   </style>
   <meta name="color-scheme" content="light">
   <meta name="supported-color-schemes" content="light">
 </head>
 
 <body style="word-spacing:normal;background-color:#E1E8ED;">
-  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">You're in! Here's how the competition works, how points are earned, and how to get your workouts imported automatically.</div>
-  <div aria-label="Welcome to the Workout Challenge" aria-roledescription="email" role="article" lang="und" dir="auto" style="word-spacing:normal;background-color:#E1E8ED;">
+  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">It has been a while. Start a new competition with friends, or log in and close your account - either way it is your call.</div>
+  <div aria-label="Still up for a challenge?" aria-roledescription="email" role="article" lang="und" dir="auto" style="word-spacing:normal;background-color:#E1E8ED;">
     <!-- ============ Hero ============ -->
     <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0;font-size:0;mso-line-height-rule:exactly;"><v:image style="border:0;mso-position-horizontal:center;position:absolute;top:0;width:600px;z-index:-3;" src="{{ MAIN_HOST }}/running_email.jpg" xmlns:v="urn:schemas-microsoft-com:vml" /><![endif]-->
     <div style="margin:0 auto;max-width:600px;">
@@ -113,7 +103,7 @@
                             <tr>
                               <td align="center" class="no-invert" style="font-size:0px;padding:46px 20px 0px;word-break:break-word;">
                                 <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#1F2937;">
-                                  <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#CFE3F0;text-shadow:0 1px 4px rgba(0,0,0,0.45);">Welcome aboard</div>
+                                  <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#CFE3F0;text-shadow:0 1px 4px rgba(0,0,0,0.45);">Time for a comeback</div>
                                   <div style="font-size:30px;font-weight:700;line-height:1.2;color:#ffffff;padding-top:4px;text-shadow:0 2px 8px rgba(0,0,0,0.45);">Workout Challenge</div>
                                 </div>
                               </td>
@@ -164,21 +154,26 @@
                               <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
                                 <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
                                   <p style="margin:0 0 14px;">Hi {{ first_name }},</p>
-                                  <p style="margin:0 0 14px;">Thanks for signing up to the <b>Workout Challenge</b> &ndash; compete with friends and colleagues on the workouts you already do.</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
-                              <td align="left" style="font-size:0px;padding:6px 28px 0px;word-break:break-word;">
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
                                 <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
                                   <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="background-color:#F4F7FA;border-radius:10px;">
                                     <tr>
-                                      <td style="padding:14px 18px;font-size:13px;line-height:1.5;color:#5B6875;">
-                                        <span style="font-weight:700;color:#1F2937;">Bookmark the app</span><br />
-                                        <a href="{{ MAIN_HOST }}" style="color:#075985;text-decoration:none;font-weight:600;word-break:break-all;">{{ MAIN_HOST }}</a>
+                                      <td style="padding:16px 18px;font-size:15px;line-height:1.5;color:#1F2937;">
+                                        <span style="font-size:18px;">&#128075;</span>&nbsp;&nbsp;It has been about <b>{{ inactive_months }} months</b> since you last used the Workout Challenge. <div style="font-size:13px;color:#5B6875;padding-top:4px;">Your account is just resting &ndash; nothing has been deleted. Logging in brings it back exactly as you left it.</div>
                                       </td>
                                     </tr>
                                   </table>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size:0px;padding:16px 28px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <p style="margin:0;">So &ndash; two ways forward, and both of them are entirely your call.</p>
                                 </div>
                               </td>
                             </tr>
@@ -204,13 +199,13 @@
       </table>
     </div>
     <!--[if mso | IE]></td></tr></table><![endif]-->
-    <!-- ============ How it works ============ -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+    <!-- ============ Option one: come back ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#075985" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#075985;background-color:#075985;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#075985;background-color:#075985;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:0px 0px 8px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:30px 0px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
@@ -220,9 +215,67 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="left" style="font-size:0px;padding:0px 28px 4px;word-break:break-word;">
+                              <td align="center" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#ffffff;">
+                                  <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#9FC7DE;">Option one</div>
+                                  <div style="font-size:19px;font-weight:700;line-height:1.35;color:#ffffff;padding-top:8px;">Start a competition and bring your friends</div>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:14px 34px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.6;text-align:center;color:#D4E4EE;">Setting one up takes a couple of minutes: choose the goals that suit your group, share the invite code, and you are racing. Link Strava and your workouts import themselves &ndash; no manual logging at all.</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:22px 28px 0px;word-break:break-word;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                                  <tbody>
+                                    <tr>
+                                      <td align="center" bgcolor="#ffffff" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#ffffff;" valign="middle">
+                                        <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#ffffff;color:#075985;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Start a competition </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <!-- ============ Option two: delete ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:30px 0px 0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
                                 <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
-                                  <div style="font-size:17px;font-weight:700;color:#075985;">Getting started</div>
+                                  <div style="font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#8A97A4;">Option two</div>
+                                  <div style="font-size:17px;font-weight:700;color:#075985;padding-top:6px;padding-bottom:10px;">Take your data with you</div>
+                                  <p style="margin:0 0 12px;">Not coming back? That is completely fine, and worth doing properly rather than leaving an account sitting around.</p>
+                                  <p style="margin:0;">Log in, open your personal settings and choose <b>Delete Account</b>. Your workouts, points and team history are removed for good. Either way, your data stays yours.</p>
                                 </div>
                               </td>
                             </tr>
@@ -244,90 +297,7 @@
       <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
-              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                  <tbody>
-                    <tr>
-                      <td style="vertical-align:top;padding:0px;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
-                          <tbody>
-                            <tr>
-                              <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
-                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
-                                  <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;padding-bottom:8px;">Three steps</div>
-                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;line-height:1.5;color:#1F2937;">
-                                    <tr>
-                                      <td width="26" valign="top" style="padding:0 0 12px;font-size:13px;font-weight:700;color:#075985;">1</td>
-                                      <td valign="top" style="padding:0 0 12px;">Join a friend&#39;s competition or create your own.</td>
-                                    </tr>
-                                    <tr>
-                                      <td width="26" valign="top" style="padding:0 0 12px;font-size:13px;font-weight:700;color:#075985;">2</td>
-                                      <td valign="top" style="padding:0 0 12px;">Link Strava for automatic workout imports &ndash; or log workouts by hand.</td>
-                                    </tr>
-                                    <tr>
-                                      <td width="26" valign="top" style="font-size:13px;font-weight:700;color:#075985;">3</td>
-                                      <td valign="top">Pick a team before the competition starts.</td>
-                                    </tr>
-                                  </table>
-                                  <div style="height:20px;line-height:20px;font-size:0;">&nbsp;</div>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
-              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                  <tbody>
-                    <tr>
-                      <td style="vertical-align:top;padding:0px;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
-                          <tbody>
-                            <tr>
-                              <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
-                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
-                                  <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;padding-bottom:8px;">How points work</div>
-                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;line-height:1.5;color:#1F2937;">
-                                    <tr>
-                                      <td valign="top" style="padding:0 0 10px;">Every competition sets its own activity goals. You earn <b>1 point for every 1%</b> of a goal you complete.</td>
-                                    </tr>
-                                    <tr>
-                                      <td valign="top" style="padding:0 0 10px;">A 100&nbsp;minute goal and a 50&nbsp;minute workout means 50&nbsp;points.</td>
-                                    </tr>
-                                    <tr>
-                                      <td valign="top" style="font-size:13px;color:#5B6875;">Some goals carry minimum or maximum limits. Anything outside them earns no points and is marked with an asterisk&nbsp;(*). Hover a goal in the app to see its limits.</td>
-                                    </tr>
-                                  </table>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% if link_strava_note %}<!-- ============ Link Strava ============ -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
-        <tbody>
-          <tr>
-            <td style="direction:ltr;font-size:0px;padding:28px 0px 0px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:20px 0px 0px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
@@ -337,60 +307,12 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:0px 28px 24px;word-break:break-word;">
-                                <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
-                                </p>
-                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#075985" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#075985;background-color:#075985;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#075985;background-color:#075985;width:100%;">
-        <tbody>
-          <tr>
-            <td style="direction:ltr;font-size:0px;padding:30px 0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                  <tbody>
-                    <tr>
-                      <td style="vertical-align:top;padding:0px;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
-                          <tbody>
-                            <tr>
-                              <td align="center" style="font-size:0px;padding:0px 28px;word-break:break-word;">
-                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#ffffff;">
-                                  <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#9FC7DE;">Recommended</div>
-                                  <div style="font-size:19px;font-weight:700;line-height:1.35;color:#ffffff;padding-top:8px;">Connect Strava and skip manual logging</div>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="center" style="font-size:0px;padding:14px 34px 0px;word-break:break-word;">
-                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.6;text-align:center;color:#D4E4EE;">Every day at 4&nbsp;AM your workouts are imported automatically. To respect your privacy we only ever read the essentials: sport type, start time &amp; duration, workout id, distance, kcal, kJ and average watts.</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="center" style="font-size:0px;padding:22px 28px 0px;word-break:break-word;">
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                   <tbody>
                                     <tr>
-                                      <td align="center" bgcolor="#ffffff" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#ffffff;" valign="middle">
-                                        <a href="{{ MAIN_HOST }}/strava/link" style="display:inline-block;background:#ffffff;color:#075985;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Link Strava </a>
+                                      <td align="center" bgcolor="#075985" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#075985;" valign="middle">
+                                        <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#075985;color:#ffffff;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Log in to my account </a>
                                       </td>
                                     </tr>
                                   </tbody>
@@ -410,7 +332,8 @@
         </tbody>
       </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% endif %}<!-- ============ Sign off ============ -->
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <!-- ============ Sign off ============ -->
     <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
     <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
       <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
@@ -424,17 +347,19 @@
                     <tr>
                       <td style="vertical-align:top;padding:0px;">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
-                          <tbody> {% if not link_strava_note %} <tr>
+                          <tbody>
+                            <tr>
                               <td align="center" style="font-size:0px;padding:22px 28px;word-break:break-word;">
                                 <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
                                 </p>
                                 <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
                               </td>
-                            </tr> {% endif %} <tr>
-                              <td align="left" style="font-size:0px;padding:26px 28px 0px;word-break:break-word;">
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
                                 <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
-                                  <p style="margin:0 0 4px;">Enjoy the competition &ndash; good luck!</p>
+                                  <p style="margin:0 0 4px;">Either way &ndash; thanks for having been part of it.</p>
                                   <p style="margin:0;color:#5B6875;font-size:14px;">The Workout Challenge</p>
                                 </div>
                               </td>

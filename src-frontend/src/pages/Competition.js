@@ -370,6 +370,12 @@ function TeamLeaderboardBox({stats, competition, user, teamId, isOwner}) {
 
 function IndividualLeaderboardBox({stats, userId}) {
 
+    const [showInactive, setShowInactive] = useState(false);
+    const hideInactive = stats?.competition?.start_date_count > 10;
+    const isInactive = (person) => person.total_capped == null && person.workout__user__id !== userId;
+    const inactiveCount = hideInactive ? stats.leaderboard.individual.filter(isInactive).length : 0;
+    const visibleIndividuals = (hideInactive && !showInactive) ? stats.leaderboard.individual.filter(person => !isInactive(person)) : stats.leaderboard.individual;
+
     return (
         <BoxSection>
             <div className="flex flex-col items-center justify-between sm:flex-row sm:items-center border-b-2 pb-3">
@@ -378,13 +384,13 @@ function IndividualLeaderboardBox({stats, userId}) {
 
             <table className="min-w-full my-2">
                 <tbody>
-                {(stats.leaderboard.individual.length === 0) ? (
+                {(visibleIndividuals.length === 0) ? (
                     <tr className="hover:bg-gray-100 dark:hover:bg-gray-900 border-b">
                         <td className="py-2 px-4 pb-3 text-center text-gray-500">Here participants will show up!
                         </td>
                     </tr>
                 ) : (
-                stats.leaderboard.individual.map((person, index) => (
+                visibleIndividuals.map((person, index) => (
                     <tr key={"leader_user" + index} className={((userId === person.workout__user__id) ? "bg-sky-50 dark:bg-sky-950 " : "") + "hover:bg-gray-100 dark:hover:bg-gray-900 border-b"}>
                         <td className="py-2 px-2">
                             <span className="font-semibold">#{person.rank}</span>
@@ -408,6 +414,13 @@ function IndividualLeaderboardBox({stats, userId}) {
                 )}
                 </tbody>
             </table>
+
+            {(inactiveCount > 0) && (
+                <button type="button" onClick={() => setShowInactive(!showInactive)}
+                        className="w-full text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 py-1 cursor-pointer">
+                    {showInactive ? "Show less" : `Show ${inactiveCount} inactive participant${inactiveCount > 1 ? "s" : ""}`}
+                </button>
+            )}
         </BoxSection>
     )
 }

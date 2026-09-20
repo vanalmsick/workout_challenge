@@ -5,8 +5,9 @@ from django.conf import settings
 from django.apps import apps
 from django.template.loader import render_to_string
 from workout_challenge.celery import app
-from django.db.models import Sum, Count, Q
+from django.db.models import Sum, Count, Max, Q
 from django.db.models.functions import TruncDate, TruncDay
+from django.utils import timezone
 
 from .multipurpose import send_email
 from competition.stats import get_competition_stats
@@ -275,8 +276,8 @@ def calendar_stats(user_pk):
             'datetime': date,
             'day': date.day,
             'workout_num': workout_num,
-            'color': '#FFFFFF' if date == today or workout_num > 0 else ('#e5e5e5' if date > today else '#000000'),
-            'background_color': '#7F1D1D' if date == today else ('#075971' if workout_num > 0 else '#FFFFFF')
+            'color': '#FFFFFF' if date == today or workout_num > 0 else ('#D1D5DB' if date > today else '#111827'),
+            'background_color': '#DC2626' if date == today else ('#075985' if workout_num > 0 else '#FFFFFF')
         })
 
     return streak_weeks, [return_calendar[i:i+7] for i in range(0, len(return_calendar), 7)]
@@ -318,9 +319,9 @@ def weekly_email(user_pk):
             'calendar': calendar,
             'week_streak': week_streak,
             'goals': {
-                'active_days': None if user_obj.goal_active_days is None or user_obj.goal_active_days == '' else {'recorded': recorded_distinct_days,'target': user_obj.goal_active_days, 'percent': min(1, recorded_distinct_days / user_obj.goal_active_days) * 100, 'percent_vml': int(min(1, recorded_distinct_days / user_obj.goal_active_days) * 100 * 2.5)},
-                'distance': None if user_obj.goal_distance is None or user_obj.goal_distance == '' else {'recorded': recorded_total_distance,'target': user_obj.goal_distance, 'percent': min(1, recorded_total_distance / user_obj.goal_distance) * 100, 'percent_vml': int(min(1, recorded_total_distance / user_obj.goal_distance) * 100 * 2.5)},
-                'minutes': None if user_obj.goal_workout_minutes is None or user_obj.goal_workout_minutes == '' else {'recorded': recorded_total_duration,'target': user_obj.goal_workout_minutes, 'percent': min(1, recorded_total_duration / user_obj.goal_workout_minutes) * 100, 'percent_vml': int(min(1, recorded_total_duration / user_obj.goal_workout_minutes) * 100 * 2.5)},
+                'active_days': None if user_obj.goal_active_days is None or user_obj.goal_active_days == '' else {'recorded': recorded_distinct_days,'target': user_obj.goal_active_days, 'percent': min(1, recorded_distinct_days / user_obj.goal_active_days) * 100},
+                'distance': None if user_obj.goal_distance is None or user_obj.goal_distance == '' else {'recorded': recorded_total_distance,'target': user_obj.goal_distance, 'percent': min(1, recorded_total_distance / user_obj.goal_distance) * 100},
+                'minutes': None if user_obj.goal_workout_minutes is None or user_obj.goal_workout_minutes == '' else {'recorded': recorded_total_duration,'target': user_obj.goal_workout_minutes, 'percent': min(1, recorded_total_duration / user_obj.goal_workout_minutes) * 100},
             },
             'openai_quote': todays_ai_quote,
             'EMAIL_REPLY_TO': settings.EMAIL_REPLY_TO[0] if settings.EMAIL_REPLY_TO is not None else settings.EMAIL_FROM,
@@ -334,3 +335,81 @@ def weekly_email(user_pk):
     send_email(subject=email_subject, body=email_body, to_email=user_obj.email)
 
     return {'pk': user_obj.pk, 'username': user_obj.username, 'email': user_obj.email}
+
+
+# Deactivated users get a nudge every 24 weeks (~6 months) since they last used the app.
+INACTIVE_REMINDER_WEEKS = 24
+
+
+def weeks_since_last_activity(user_obj, last_competition_end=None):
+    """Whole weeks since the later of the user's last login and their last competition's end date.
+
+    Pass last_competition_end when the caller already annotated it, to avoid a query per user.
+    """
+    dates = []
+    if user_obj.last_login is not None:
+        dates.append(timezone.localtime(user_obj.last_login).date())
+    if last_competition_end is None:
+        last_competition_end = user_obj.my_competitions.aggregate(end=Max('end_date'))['end']
+    if last_competition_end is not None:
+        dates.append(last_competition_end)
+    if len(dates) == 0:
+        # Never logged in and never joined a competition - fall back to when they signed up.
+        dates.append(timezone.localtime(user_obj.date_joined).date())
+
+    return (datetime.date.today() - max(dates)).days // 7
+
+
+@app.task()
+def send_all_account_inactive_emails():
+    """Schedule the come-back-or-close-up email for every deactivated user that is due one."""
+    print("Scheduling account inactive emails...")
+    CustomUser = apps.get_model('custom_user', 'CustomUser')
+    user_lst = CustomUser.objects.filter(is_active=False).annotate(
+        last_competition_end=Max('my_competitions__end_date')
+    ).order_by('pk').distinct()
+
+    due_lst = []
+    for user_obj in user_lst:
+        weeks = weeks_since_last_activity(user_obj, user_obj.last_competition_end)
+        if weeks > 0 and weeks % INACTIVE_REMINDER_WEEKS == 0:
+            due_lst.append(user_obj)
+
+    task_log = []
+    if len(due_lst) > 0:
+        eta_steps = max(min((60 * 60) // len(due_lst), 60), 10)
+        eta = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=10)
+        for user_obj in due_lst:
+            result = account_inactive_email.apply_async(args=[user_obj.pk], eta=eta)
+            task_log.append({'pk': user_obj.pk, 'username': user_obj.username, 'email': user_obj.email, 'task_id': result.task_id, 'eta': eta.isoformat()})
+            eta += datetime.timedelta(seconds=eta_steps)
+    return task_log
+
+
+@app.task()
+def account_inactive_email(user_pk):
+    """Email a dormant user: come back and start a competition, or log in and delete the account."""
+    CustomUser = apps.get_model('custom_user', 'CustomUser')
+    user_obj = CustomUser.objects.get(pk=user_pk)
+
+    inactive_months = max(6, (weeks_since_last_activity(user_obj) // INACTIVE_REMINDER_WEEKS) * 6)
+
+    email_subject = 'Workout Challenge - Still Up for a Challenge?'
+
+    email_body = render_to_string(
+        "email_account_inactive.html",
+        {
+            'first_name': user_obj.first_name,
+            'MAIN_HOST': settings.MAIN_HOST,
+            'inactive_months': inactive_months,
+            'EMAIL_REPLY_TO': settings.EMAIL_REPLY_TO[0] if settings.EMAIL_REPLY_TO is not None else settings.EMAIL_FROM,
+        }
+    )
+
+    if settings.DEBUG:
+        with open('tmp_email.html', 'w') as file:
+            file.write(email_body)
+
+    send_email(subject=email_subject, body=email_body, to_email=user_obj.email)
+
+    return {'pk': user_obj.pk, 'username': user_obj.username, 'email': user_obj.email, 'inactive_months': inactive_months}

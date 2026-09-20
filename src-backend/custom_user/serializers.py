@@ -123,7 +123,7 @@ class PasswordResetSerializer(serializers.Serializer):
                     'first_name': user.first_name,
                     'MAIN_HOST': settings.MAIN_HOST,
                     'RESET_URL': reset_url,
-                    'EMAIL_REPLY_TO': settings.EMAIL_REPLY_TO,
+                    'EMAIL_REPLY_TO': settings.EMAIL_REPLY_TO[0] if settings.EMAIL_REPLY_TO is not None else settings.EMAIL_FROM,
                 }
             )
 

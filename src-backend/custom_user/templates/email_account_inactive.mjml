@@ -1,0 +1,108 @@
+<mjml>
+  <!-- Written with https://mjml.io/ - compile with: npx mjml email_account_inactive.mjml -o email_account_inactive.html -->
+  <mj-head>
+    <mj-title>Still up for a challenge?</mj-title>
+    <mj-preview>It has been a while. Start a new competition with friends, or log in and close your account - either way it is your call.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light">
+      <meta name="supported-color-schemes" content="light">
+    </mj-raw>
+    <mj-attributes>
+      <mj-all font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif" />
+      <mj-text font-size="15px" line-height="1.6" color="#1F2937" padding="0px 28px" />
+      <mj-section background-color="#ffffff" padding="0px" />
+      <mj-column padding="0px" />
+      <mj-divider border-color="#E5E7EB" border-width="1px" padding="22px 28px" />
+      <mj-button background-color="#075985" color="#ffffff" border-radius="999px" font-size="13px" font-weight="700" inner-padding="13px 30px" padding="0px" />
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#E1E8ED">
+
+    <!-- ============ Hero ============ -->
+    <mj-hero mode="fixed-height" height="200px" background-url="{{ MAIN_HOST }}/running_email.jpg" background-color="#075985" padding="0px">
+      <mj-text align="center" css-class="no-invert" padding="46px 20px 0px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#CFE3F0;text-shadow:0 1px 4px rgba(0,0,0,0.45);">Time for a comeback</div>
+        <div style="font-size:30px;font-weight:700;line-height:1.2;color:#ffffff;padding-top:4px;text-shadow:0 2px 8px rgba(0,0,0,0.45);">Workout Challenge</div>
+      </mj-text>
+      <mj-button href="{{ MAIN_HOST }}/login" background-color="#ffffff" color="#075985" padding="18px 20px 0px">Open the app</mj-button>
+    </mj-hero>
+
+    <!-- ============ Intro ============ -->
+    <mj-section padding="30px 0px 0px">
+      <mj-column>
+        <mj-text>
+          <p style="margin:0 0 14px;">Hi {{ first_name }},</p>
+        </mj-text>
+        <mj-text padding="0px 28px">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="background-color:#F4F7FA;border-radius:10px;">
+            <tr>
+              <td style="padding:16px 18px;font-size:15px;line-height:1.5;color:#1F2937;">
+                <span style="font-size:18px;">&#128075;</span>&nbsp;&nbsp;It has been about <b>{{ inactive_months }} months</b> since you last used the Workout Challenge.
+                <div style="font-size:13px;color:#5B6875;padding-top:4px;">Your account is just resting &ndash; nothing has been deleted. Logging in brings it back exactly as you left it.</div>
+              </td>
+            </tr>
+          </table>
+        </mj-text>
+        <mj-text padding="16px 28px 0px">
+          <p style="margin:0;">So &ndash; two ways forward, and both of them are entirely your call.</p>
+        </mj-text>
+        <mj-divider />
+      </mj-column>
+    </mj-section>
+
+    <!-- ============ Option one: come back ============ -->
+    <mj-section background-color="#075985" padding="30px 0px">
+      <mj-column>
+        <mj-text align="center" color="#ffffff" padding="0px 28px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#9FC7DE;">Option one</div>
+          <div style="font-size:19px;font-weight:700;line-height:1.35;color:#ffffff;padding-top:8px;">Start a competition and bring your friends</div>
+        </mj-text>
+        <mj-text align="center" color="#D4E4EE" font-size="13px" padding="14px 34px 0px">
+          Setting one up takes a couple of minutes: choose the goals that suit your group, share the invite code, and you are racing. Link Strava and your workouts import themselves &ndash; no manual logging at all.
+        </mj-text>
+        <mj-button href="{{ MAIN_HOST }}/login" background-color="#ffffff" color="#075985" padding="22px 28px 0px">Start a competition</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- ============ Option two: delete ============ -->
+    <mj-section padding="30px 0px 0px">
+      <mj-column>
+        <mj-text padding="0px 28px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#8A97A4;">Option two</div>
+          <div style="font-size:17px;font-weight:700;color:#075985;padding-top:6px;padding-bottom:10px;">Take your data with you</div>
+          <p style="margin:0 0 12px;">Not coming back? That is completely fine, and worth doing properly rather than leaving an account sitting around.</p>
+          <p style="margin:0;">Log in, open your personal settings and choose <b>Delete Account</b>. Your workouts, points and team history are removed for good. Either way, your data stays yours.</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="20px 0px 0px">
+      <mj-column>
+        <mj-button href="{{ MAIN_HOST }}/login" padding="0px 28px" align="left">Log in to my account</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- ============ Sign off ============ -->
+    <mj-section padding="0px 0px 30px">
+      <mj-column>
+        <mj-divider />
+        <mj-text padding="0px 28px">
+          <p style="margin:0 0 4px;">Either way &ndash; thanks for having been part of it.</p>
+          <p style="margin:0;color:#5B6875;font-size:14px;">The Workout Challenge</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- ============ Footer ============ -->
+    <mj-section background-color="#E1E8ED" padding="22px 0px 26px">
+      <mj-column>
+        <mj-text align="center" font-size="12px" line-height="1.7" color="#7A8794">
+          <span style="font-weight:700;color:#5B6875;">Workout Challenge</span><br />
+          Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}" style="color:#075985;text-decoration:none;font-weight:600;">Send us an email</a> &nbsp;&middot;&nbsp; <a href="https://github.com/vanalmsick/workout_challenge" style="color:#075985;text-decoration:none;font-weight:600;">Source code</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

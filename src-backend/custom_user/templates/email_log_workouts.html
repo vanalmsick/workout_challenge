@@ -1,9 +1,8 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html lang="und" dir="auto" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>
-  </title>
+  <title>Log last week's workouts</title>
   <!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--<![endif]-->
@@ -58,8 +57,10 @@
     </style>
     <![endif]-->
   <!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
   <style type="text/css">
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700);
     @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
   </style>
   <!--<![endif]-->
@@ -76,22 +77,21 @@
       width: 100% !important;
       max-width: 100%;
     }
-  </style>
-  <style type="text/css">
-  </style>
-  <style type="text/css">
-  </style>
+  </style> {% load humanize %}
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
 </head>
 
 <body style="word-spacing:normal;background-color:#E1E8ED;">
-  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;"> New week, new gains! But first time to log last week's workouts before we send out the leaderboard this afternoon! </div>
-  <div style="background-color:#E1E8ED;">
+  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">New week, new gains. Get last week logged before the leaderboard goes out this afternoon.</div>
+  <div aria-label="Log last week's workouts" aria-roledescription="email" role="article" lang="und" dir="auto" style="word-spacing:normal;background-color:#E1E8ED;">
+    <!-- ============ Hero ============ -->
     <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0;font-size:0;mso-line-height-rule:exactly;"><v:image style="border:0;mso-position-horizontal:center;position:absolute;top:0;width:600px;z-index:-3;" src="{{ MAIN_HOST }}/running_email.jpg" xmlns:v="urn:schemas-microsoft-com:vml" /><![endif]-->
     <div style="margin:0 auto;max-width:600px;">
       <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
         <tbody>
           <tr style="vertical-align:top;">
-            <td background="{{ MAIN_HOST }}/running_email.jpg" style="background:#075985 url('{{ MAIN_HOST }}/running_email.jpg') no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;" height="200">
+            <td background="{{ MAIN_HOST }}/running_email.jpg" style="background:#075985 url('{{ MAIN_HOST }}/running_email.jpg') no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;height:200px;" height="200">
               <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" style="width:600px;" width="600" ><tr><td style=""><![endif]-->
               <div class="mj-hero-content" style="margin:0px auto;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px;">
@@ -101,17 +101,20 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px;">
                           <tbody>
                             <tr>
-                              <td align="center" class="no-invert" style="font-size:0px;padding:10px 25px;padding-top:45px;padding-bottom:10px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:30px;line-height:1.2;text-align:center;color:#ffffff;">Workout Challenge</div>
+                              <td align="center" class="no-invert" style="font-size:0px;padding:46px 20px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#1F2937;">
+                                  <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#CFE3F0;text-shadow:0 1px 4px rgba(0,0,0,0.45);">Time to log</div>
+                                  <div style="font-size:30px;font-weight:700;line-height:1.2;color:#ffffff;padding-top:4px;text-shadow:0 2px 8px rgba(0,0,0,0.45);">Workout Challenge</div>
+                                </div>
                               </td>
                             </tr>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <td align="center" style="font-size:0px;padding:18px 20px 0px;word-break:break-word;">
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                   <tbody>
                                     <tr>
-                                      <td align="center" bgcolor="#075985" role="presentation" style="border:1px solid #fff;border-radius:24px;cursor:auto;mso-padding-alt:10px 25px;background:#075985;" valign="middle">
-                                        <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#075985;color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> LOGIN </a>
+                                      <td align="center" bgcolor="#ffffff" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#ffffff;" valign="middle">
+                                        <a href="{{ MAIN_HOST }}/dashboard" style="display:inline-block;background:#ffffff;color:#075985;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Open the app </a>
                                       </td>
                                     </tr>
                                   </tbody>
@@ -131,46 +134,36 @@
         </tbody>
       </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <!-- ============ Intro ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:30px 0px 0px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td style="vertical-align:top;padding-bottom:0px;">
+                      <td style="vertical-align:top;padding:0px;">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                                  <p>Hi {{ first_name }},</p>
-                                  <p>New week, new gains!</p>
-                                  <mj-raw> {% if link_strava_note %} </mj-raw>
-                                  <p>But first, time to <b>log last week's workouts & steps</b> before we send out the leaderboard this afternoon!</p>
-                                  <mj-raw> {% else %} </mj-raw>
-                                  <p>But first, time to <b>log last week's steps</b> as Strava does not automatically import steps. Your workouts should have been imported already. We will send out the leaderboard this afternoon!</p>
-                                  <mj-raw> {% endif %} </mj-raw>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <p style="margin:0 0 14px;">Hi {{ first_name }},</p>
+                                  <p style="margin:0 0 14px;">New week, new gains.</p> {% if link_strava_note %} <p style="margin:0;">But first &ndash; time to <b>log last week's workouts and steps</b> before the leaderboard goes out this afternoon.</p> {% else %} <p style="margin:0;">But first &ndash; time to <b>log last week's steps</b>. Your workouts are already imported, but Strava does not track steps. The leaderboard goes out this afternoon.</p> {% endif %}
                                 </div>
                               </td>
                             </tr>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <p style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:100%;">
+                              <td align="center" style="font-size:0px;padding:22px 28px;word-break:break-word;">
+                                <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
                                 </p>
-                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                                  <h3>Your last workouts:</h3>
-                                </div>
                               </td>
                             </tr>
                           </tbody>
@@ -187,57 +180,43 @@
       </table>
     </div>
     <!--[if mso | IE]></td></tr></table><![endif]-->
-    <!-- This week leaderbaord section -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+    <!-- ============ Last workouts ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:0px 0px 4px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;">
-                          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-                            <th style="padding: 0 15px 0 0;">Time</th>
-                            <th style="padding: 0 15px;">Workout</th>
-                          </tr>
-                          <mj-raw> {% for item in last_workouts %} </mj-raw>
-                          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-                            <td style="padding: 0 15px 0 0;">{{ item.start_datetime|date:"D, M j H:i" }}</td>
-                            <td style="padding: 0 15px;">{% if item.sport_type == "Steps" %}{{ item.steps }}{% else %}{{ item.duration }}{% endif %} <b>{{ item.sport_type }}</b></td>
-                          </tr>
-                          <mj-raw> {% endfor %} </mj-raw>
-                        </table>
-                      </td>
-                    </tr> {% if link_strava_note %} <tr>
-                      <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;padding-top:7px;padding-bottom:17px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="center" bgcolor="#075985" role="presentation" style="border:none;border-radius:24px;cursor:auto;mso-padding-alt:10px 25px;background:#075985;" valign="middle">
-                                <a href="{{ MAIN_HOST }}/dashboard" style="display:inline-block;background:#075985;color:#ffffff;font-family:Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> Log Workouts & Steps </a>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <div style="font-size:17px;font-weight:700;color:#075985;padding-bottom:12px;">&#9201;&#65039;&nbsp; Your last workouts</div>
+                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;">
+                                    <tr>
+                                      <td style="padding:0 0 6px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;">When</td>
+                                      <td align="right" style="padding:0 0 6px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;">What</td>
+                                    </tr> {% for item in last_workouts %} <tr>
+                                      <td valign="top" style="padding:9px 0;border-top:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{{ item.start_datetime|date:"D, j M" }}<span style="color:#A7B2BC;"> &middot; {{ item.start_datetime|date:"H:i" }}</span></td>
+                                      <td valign="top" align="right" style="padding:9px 0;border-top:1px solid #EDF1F5;color:#1F2937;">{% if item.sport_type == "Steps" %}{{ item.steps|intcomma }} steps{% else %}<span style="color:#5B6875;">{{ item.duration_minutes|intcomma }} min</span> <b>{{ item.get_sport_type_display }}</b>{% endif %}</td>
+                                    </tr> {% empty %} <tr>
+                                      <td colspan="2" style="padding:14px 0;border-top:1px solid #EDF1F5;font-size:14px;color:#8A97A4;">Nothing logged yet &ndash; your first workout is one tap away.</td>
+                                    </tr> {% endfor %}
+                                  </table>
+                                </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
                       </td>
-                    </tr> {% else %} <tr>
-                      <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;padding-top:7px;padding-bottom:17px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
-                          <tbody>
-                            <tr>
-                              <td align="center" bgcolor="#075985" role="presentation" style="border:none;border-radius:24px;cursor:auto;mso-padding-alt:10px 25px;background:#075985;" valign="middle">
-                                <a href="{{ MAIN_HOST }}/dashboard" style="display:inline-block;background:#075985;color:#ffffff;font-family:Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> Log Steps </a>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr> {% endif %}
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -247,49 +226,120 @@
         </tbody>
       </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><![endif]-->
-    <!-- Link Strava -->{% if link_strava_note %}
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#075985" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:20px 0px 0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                                  <tbody>
+                                    <tr>
+                                      <td align="center" bgcolor="#075985" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#075985;" valign="middle">
+                                        <a href="{{ MAIN_HOST }}/dashboard" style="display:inline-block;background:#075985;color:#ffffff;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> {% if link_strava_note %}Log workouts &amp; steps{% else %}Log steps{% endif %} </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]--> {% if link_strava_note %}<!-- ============ Link Strava ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:24px 0px 0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:0px 28px 24px;word-break:break-word;">
+                                <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
+                                </p>
+                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#075985" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
     <div style="background:#075985;background-color:#075985;margin:0px auto;max-width:600px;">
       <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#075985;background-color:#075985;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;" width="100%">
+            <td style="direction:ltr;font-size:0px;padding:30px 0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-top:20px;padding-bottom:10px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:18px;line-height:1.2;text-align:center;color:#ffffff;">Skip the hassle of manual logging – connect Strava for automatic workout imports!</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-right:100px;padding-bottom:20px;padding-left:100px;word-break:break-word;">
-                        <p style="border-top:solid 1px #ffffff;font-size:1px;margin:0px auto;width:100%;">
-                        </p>
-                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #ffffff;font-size:1px;margin:0px auto;width:400px;" role="presentation" width="400px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:25px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.2;text-align:center;color:#e5e7eb;">
-                          <p>Every day at 4 AM, your workouts are automatically imported, only syncing the most essential data with Strava to respect your privacy:</p>
-                          <span>• Sport type</span><br />
-                          <span>• Start time & duration</span><br />
-                          <span>• Workout id</span><br />
-                          <span>• Distance, kcal, kj, avg. watt</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:5px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="center" bgcolor="#ffffff" role="presentation" style="border:none;border-radius:24px;cursor:auto;mso-padding-alt:10px 25px;background:#ffffff;" valign="middle">
-                                <a href="{{ MAIN_HOST }}/strava/link" style="display:inline-block;background:#ffffff;color:#075985;font-family:Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> Link Strava </a>
+                              <td align="center" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#ffffff;">
+                                  <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#9FC7DE;">Recommended</div>
+                                  <div style="font-size:19px;font-weight:700;line-height:1.35;color:#ffffff;padding-top:8px;">Connect Strava and skip manual logging</div>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:14px 34px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.6;text-align:center;color:#D4E4EE;">Every day at 4&nbsp;AM your workouts are imported automatically. To respect your privacy we only ever read the essentials: sport type, start time &amp; duration, workout id, distance, kcal, kJ and average watts.</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:22px 28px 0px;word-break:break-word;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                                  <tbody>
+                                    <tr>
+                                      <td align="center" bgcolor="#ffffff" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#ffffff;" valign="middle">
+                                        <a href="{{ MAIN_HOST }}/strava/link" style="display:inline-block;background:#ffffff;color:#075985;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Link Strava </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
                               </td>
                             </tr>
                           </tbody>
@@ -305,24 +355,37 @@
         </tbody>
       </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% endif %}
-    <!-- Final remarks -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+    <!--[if mso | IE]></td></tr></table><![endif]--> {% endif %}<!-- ============ Sign off ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:0px 0px 30px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;padding-top:5px;padding-bottom:10px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                          <p>Enjoy the Competition.</p>
-                          <p>Good luck!</p>
-                        </div>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody> {% if not link_strava_note %} <tr>
+                              <td align="center" style="font-size:0px;padding:22px 28px;word-break:break-word;">
+                                <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
+                                </p>
+                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                              </td>
+                            </tr> {% endif %} <tr>
+                              <td align="left" style="font-size:0px;padding:26px 28px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <p style="margin:0 0 4px;">Enjoy the competition &ndash; good luck!</p>
+                                  <p style="margin:0;color:#5B6875;font-size:14px;">The Workout Challenge</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </td>
                     </tr>
                   </tbody>
@@ -335,42 +398,40 @@
       </table>
     </div>
     <!--[if mso | IE]></td></tr></table><![endif]-->
-    <!-- Footnote -->
-    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-      <tbody>
-        <tr>
-          <td>
-            <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-            <div style="margin:0px auto;max-width:600px;">
-              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-                <tbody>
-                  <tr>
-                    <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
-                      <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-                      <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;" width="100%">
+    <!-- ============ Footer ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#E1E8ED" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#E1E8ED;background-color:#E1E8ED;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#E1E8ED;background-color:#E1E8ED;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:22px 0px 26px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;padding-top:0;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.2;text-align:center;color:#9a9ea6;"><span class="apple-link">Workout Challenge</span>
-                                  <br /> Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}">Send us an Email</a>. <br /> See the <a href="https://github.com/vanalmsick/workout_challenge">Source Code</a>.
-                                </div>
+                              <td align="center" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:12px;line-height:1.7;text-align:center;color:#7A8794;"><span style="font-weight:700;color:#5B6875;">Workout Challenge</span><br /> Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}" style="color:#075985;text-decoration:none;font-weight:600;">Send us an email</a> &nbsp;&middot;&nbsp; <a href="https://github.com/vanalmsick/workout_challenge" style="color:#075985;text-decoration:none;font-weight:600;">Source code</a></div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <!--[if mso | IE]></td></tr></table><![endif]-->
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!--[if mso | IE]></td></tr></table><![endif]-->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
   </div>
 </body>
 

@@ -1,9 +1,8 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html lang="und" dir="auto" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>
-  </title>
+  <title>Your spot on the leaderboard</title>
   <!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--<![endif]-->
@@ -58,8 +57,10 @@
     </style>
     <![endif]-->
   <!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
   <style type="text/css">
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700);
     @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
   </style>
   <!--<![endif]-->
@@ -86,22 +87,21 @@
       width: 50% !important;
       max-width: 50%;
     }
-  </style>
-  <style type="text/css">
-  </style>
-  <style type="text/css">
-  </style>
+  </style> {% load humanize %}
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
 </head>
 
 <body style="word-spacing:normal;background-color:#E1E8ED;">
-  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;"> New week - fresh start! But first let's see where you're on the Leaderbaord for last week! </div>
-  <div style="background-color:#E1E8ED;">
+  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">New week, fresh start. Here is how last week finished and where you stand overall.</div>
+  <div aria-label="Your spot on the leaderboard" aria-roledescription="email" role="article" lang="und" dir="auto" style="word-spacing:normal;background-color:#E1E8ED;">
+    <!-- ============ Hero ============ -->
     <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0;font-size:0;mso-line-height-rule:exactly;"><v:image style="border:0;mso-position-horizontal:center;position:absolute;top:0;width:600px;z-index:-3;" src="{{ MAIN_HOST }}/running_email.jpg" xmlns:v="urn:schemas-microsoft-com:vml" /><![endif]-->
     <div style="margin:0 auto;max-width:600px;">
       <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
         <tbody>
           <tr style="vertical-align:top;">
-            <td background="{{ MAIN_HOST }}/running_email.jpg" style="background:#075985 url('{{ MAIN_HOST }}/running_email.jpg') no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;" height="200">
+            <td background="{{ MAIN_HOST }}/running_email.jpg" style="background:#075985 url('{{ MAIN_HOST }}/running_email.jpg') no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;height:200px;" height="200">
               <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" style="width:600px;" width="600" ><tr><td style=""><![endif]-->
               <div class="mj-hero-content" style="margin:0px auto;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px;">
@@ -111,17 +111,20 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px;">
                           <tbody>
                             <tr>
-                              <td align="center" class="no-invert" style="font-size:0px;padding:10px 25px;padding-top:45px;padding-bottom:10px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:30px;line-height:1.2;text-align:center;color:#ffffff;">Workout Challenge</div>
+                              <td align="center" class="no-invert" style="font-size:0px;padding:46px 20px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#1F2937;">
+                                  <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#CFE3F0;text-shadow:0 1px 4px rgba(0,0,0,0.45);">Weekly leaderboard</div>
+                                  <div style="font-size:30px;font-weight:700;line-height:1.2;color:#ffffff;padding-top:4px;text-shadow:0 2px 8px rgba(0,0,0,0.45);">Workout Challenge</div>
+                                </div>
                               </td>
                             </tr>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <td align="center" style="font-size:0px;padding:18px 20px 0px;word-break:break-word;">
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                   <tbody>
                                     <tr>
-                                      <td align="center" bgcolor="#075985" role="presentation" style="border:1px solid #fff;border-radius:24px;cursor:auto;mso-padding-alt:10px 25px;background:#075985;" valign="middle">
-                                        <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#075985;color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> LOGIN </a>
+                                      <td align="center" bgcolor="#ffffff" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#ffffff;" valign="middle">
+                                        <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#ffffff;color:#075985;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Open the app </a>
                                       </td>
                                     </tr>
                                   </tbody>
@@ -141,43 +144,44 @@
         </tbody>
       </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <!-- ============ Intro ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:30px 0px 0px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td style="vertical-align:top;padding-bottom:0px;">
+                      <td style="vertical-align:top;padding:0px;">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                                  <p>Hi {{ first_name }},</p>
-                                  <p>Let's see where you're on the leaderboard!</p>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <p style="margin:0 0 14px;">Hi {{ first_name }},</p>
+                                  <p style="margin:0;">New week, fresh start &ndash; but first, here is how things finished up.</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <p style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:100%;">
+                              <td align="center" style="font-size:0px;padding:22px 28px;word-break:break-word;">
+                                <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
                                 </p>
-                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
                               </td>
-                            </tr>
-                            <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;padding-top:5px;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                                  <h3>This week's leaderboard:</h3>
+                            </tr> {% if competitions_7d %} <tr>
+                              <td align="left" style="font-size:0px;padding:0px 28px 2px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <div style="font-size:17px;font-weight:700;color:#075985;">&#127942;&nbsp; Last 7 days</div>
                                 </div>
                               </td>
-                            </tr>
+                            </tr> {% endif %}
                           </tbody>
                         </table>
                       </td>
@@ -192,97 +196,24 @@
       </table>
     </div>
     <!--[if mso | IE]></td></tr></table><![endif]-->
-    <!-- This week leaderbaord section -->{% for competition in competitions_7d %}
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+    <!-- ============ Last 7 days ============ -->{% for competition in competitions_7d %} <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:10px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
-              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;"><b><span style="color:#075985">{{ competition.competition.name }}</span> - Team</b></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;">
-                          <mj-raw> {% for team in competition.leaderboard.team %} </mj-raw>
-                          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-                            <td style="padding: 0 15px 0 0;">{% if team.rank is not None %}#{{ team.rank }}{% else %}-/-{% endif %}</td>
-                            <td style="padding: 0 15px;">{{ team.name }}</td>
-                            <td style="padding: 0 0 0 15px;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0 }}P{% endif %}</td>
-                          </tr>
-                          <mj-raw> {% endfor %} </mj-raw>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
-              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;"><b><span style="color:#075985">{{ competition.competition.name }}</span> - Individual</b></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;">
-                          <mj-raw> {% for individual in competition.leaderboard.individual %} </mj-raw>
-                          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-                            <td style="padding: 0 15px 0 0;">{% if individual.rank is not None %}#{{ individual.rank }}{% else %}-/-{% endif %}</td>
-                            <td style="padding: 0 15px;">{{ individual.username }}</td>
-                            <td style="padding: 0 0 0 15px;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0 }}P{% endif %}</td>
-                          </tr>
-                          <mj-raw> {% endfor %} </mj-raw>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% endfor %}
-    <!-- All time leaderbaord section -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
-        <tbody>
-          <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:16px 0px 0px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td style="vertical-align:top;padding-bottom:0px;">
+                      <td style="vertical-align:top;padding:0px;">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <p style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:100%;">
-                                </p>
-                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;padding-top:5px;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                                  <h3>All-time leaderboard:</h3>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;">{{ competition.competition.name }}</div>
                                 </div>
                               </td>
                             </tr>
@@ -299,188 +230,110 @@
         </tbody>
       </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% for competition in competitions_all %}
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:10px;padding-top:0px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:0px 0px 6px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
               <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;"><b><span style="color:#075985">{{ competition.competition.name }}</span> - Team</b></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;">
-                          <mj-raw> {% for team in competition.leaderboard.team %} </mj-raw>
-                          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-                            <td style="padding: 0 15px 0 0;">{% if team.rank is not None %}#{{ team.rank }}{% else %}-/-{% endif %}</td>
-                            <td style="padding: 0 15px;">{{ team.name }}</td>
-                            <td style="padding: 0 0 0 15px;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0 }}P{% endif %}</td>
-                          </tr>
-                          <mj-raw> {% endfor %} </mj-raw>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
-              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;"><b><span style="color:#075985">{{ competition.competition.name }}</span> - Individual</b></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;">
-                          <mj-raw> {% for individual in competition.leaderboard.individual %} </mj-raw>
-                          <tr style="border-top:1px solid #ecedee;border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
-                            <td style="padding: 0 15px 0 0;">{% if individual.rank is not None %}#{{ individual.rank }}{% else %}-/-{% endif %}</td>
-                            <td style="padding: 0 15px;">{{ individual.username }}</td>
-                            <td style="padding: 0 0 0 15px;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0 }}P{% endif %}</td>
-                          </tr>
-                          <mj-raw> {% endfor %} </mj-raw>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% endfor %}{% if goal_equalizer_note %}
-    <!-- Goal Equalizer -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#075985" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#075985;background-color:#075985;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#075985;background-color:#075985;width:100%;">
-        <tbody>
-          <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;" width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-top:20px;padding-bottom:10px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:18px;line-height:1.2;text-align:center;color:#ffffff;">Make it fair by enabling the Goal Equalizer!</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-right:100px;padding-bottom:20px;padding-left:100px;word-break:break-word;">
-                        <p style="border-top:solid 1px #ffffff;font-size:1px;margin:0px auto;width:100%;">
-                        </p>
-                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #ffffff;font-size:1px;margin:0px auto;width:400px;" role="presentation" width="400px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:25px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.2;text-align:center;color:#e5e7eb;">Everyone has a unique <b>Basal Metabolic Rate (BMR)</b>, dependent on factors like age, gender, height, and weight. The default goals are calibrated for a 35y/o 1.8m tall man. To ensure a fair competition, login and personalise your goals using the "Goal Equalizer" right below your personal settings.</div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% endif %}
-    <!-- Final remarks -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
-        <tbody>
-          <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:15px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                  <tbody> {% if not goal_equalizer_note %} <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                        <p style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:100%;">
-                        </p>
-                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr> {% endif %} <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;padding-top:20px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">Login to see more detailed analyses, charts, and breakdowns:</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;padding-top:5px;padding-bottom:5px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="center" bgcolor="#075985" role="presentation" style="border:none;border-radius:24px;cursor:auto;mso-padding-alt:10px 25px;background:#075985;" valign="middle">
-                                <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#075985;color:#ffffff;font-family:Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> LOGIN </a>
-                              </td>
-                            </tr>
-                          </tbody>
+                              <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Teams</div>
+                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for team in competition.leaderboard.team %} <tr{% if team.rank == 1 %} bgcolor="#F0F9FF" {% endif %}>
+                                      <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if team.rank %}#{{ team.rank }}{% else %}&ndash;{% endif %}</td>
+                                      <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ team.name }}</td>
+                                      <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
+                            </tr> {% empty %} <tr>
+                              <td style="padding:8px 0;font-size:13px;color:#8A97A4;">No teams yet.</td>
+                            </tr> {% endfor %}
                         </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                          <p>Enjoy the Competition.</p>
-                          <p>Good luck!</p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <div style="height:20px;line-height:20px;font-size:0;">&nbsp;</div>
               </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
             </td>
           </tr>
         </tbody>
       </table>
+      </td>
+      </tr>
+      </tbody>
+      </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><![endif]-->
-    <!-- Footnote -->
-    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-      <tbody>
-        <tr>
-          <td>
-            <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-            <div style="margin:0px auto;max-width:600px;">
-              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+    <!--[if mso | IE]></td><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
+    <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+      <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td style="vertical-align:top;padding:0px;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                 <tbody>
                   <tr>
-                    <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
-                      <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-                      <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;" width="100%">
-                          <tbody>
-                            <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;padding-top:0;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.2;text-align:center;color:#9a9ea6;"><span class="apple-link">Workout Challenge</span>
-                                  <br /> Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}">Send us an Email</a>. <br /> See the <a href="https://github.com/vanalmsick/workout_challenge">Source Code</a>.
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <!--[if mso | IE]></td></tr></table><![endif]-->
+                    <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
+                      <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                        <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Individuals</div>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for individual in competition.leaderboard.individual %} <tr{% if individual.rank == 1 %} bgcolor="#F0F9FF" {% endif %}>
+                            <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if individual.rank %}#{{ individual.rank }}{% else %}&ndash;{% endif %}</td>
+                            <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ individual.username }}</td>
+                            <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
+                  </tr> {% empty %} <tr>
+                    <td style="padding:8px 0;font-size:13px;color:#8A97A4;">No participants yet.</td>
+                  </tr> {% endfor %}
+              </table>
+    </div>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><![endif]-->
+  </td>
+  </tr>
+  </tbody>
+  </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><![endif]--> {% endfor %}<!-- ============ All time ============ -->
+  <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                        <tbody> {% if competitions_all %} <tr>
+                            <td align="center" style="font-size:0px;padding:22px 28px;word-break:break-word;">
+                              <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
+                              </p>
+                              <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:0px 28px 2px;word-break:break-word;">
+                              <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                <div style="font-size:17px;font-weight:700;color:#075985;">All time</div>
+                              </div>
+                            </td>
+                          </tr> {% endif %}
+                        </tbody>
+                      </table>
                     </td>
                   </tr>
                 </tbody>
@@ -491,6 +344,300 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><![endif]--> {% for competition in competitions_all %} <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:16px 0px 0px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                        <tbody>
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                              <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8A97A4;">{{ competition.competition.name }}</div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:0px 0px 6px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
+            <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                        <tbody>
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
+                              <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Teams</div>
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for team in competition.leaderboard.team %} <tr{% if team.rank == 1 %} bgcolor="#F0F9FF" {% endif %}>
+                                    <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if team.rank %}#{{ team.rank }}{% else %}&ndash;{% endif %}</td>
+                                    <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ team.name }}</td>
+                                    <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if team.total_capped is not None %}{{ team.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
+                          </tr> {% empty %} <tr>
+                            <td style="padding:8px 0;font-size:13px;color:#8A97A4;">No teams yet.</td>
+                          </tr> {% endfor %}
+                      </table>
+                      <div style="height:20px;line-height:20px;font-size:0;">&nbsp;</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+  </div>
+  <!--[if mso | IE]></td><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
+  <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+        <tr>
+          <td style="vertical-align:top;padding:0px;">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="font-size:0px;padding:10px 28px 0px;word-break:break-word;">
+                    <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                      <div style="font-size:13px;font-weight:700;color:#1F2937;padding-bottom:4px;">Individuals</div>
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="font-size:14px;"> {% for individual in competition.leaderboard.individual %} <tr{% if individual.rank == 1 %} bgcolor="#F0F9FF" {% endif %}>
+                          <td width="34" align="left" style="padding:8px 0 8px 6px;border-bottom:1px solid #EDF1F5;font-weight:700;color:#075985;">{% if individual.rank %}#{{ individual.rank }}{% else %}&ndash;{% endif %}</td>
+                          <td style="padding:8px 4px;border-bottom:1px solid #EDF1F5;font-weight:600;color:#1F2937;">{{ individual.username }}</td>
+                          <td align="right" style="padding:8px 6px 8px 0;border-bottom:1px solid #EDF1F5;color:#5B6875;white-space:nowrap;">{% if individual.total_capped is not None %}{{ individual.total_capped|floatformat:0|intcomma }}&nbsp;P{% endif %}</td>
+                </tr> {% empty %} <tr>
+                  <td style="padding:8px 0;font-size:13px;color:#8A97A4;">No participants yet.</td>
+                </tr> {% endfor %}
+            </table>
+  </div>
+  </td>
+  </tr>
+  </tbody>
+  </table>
+  </td>
+  </tr>
+  </tbody>
+  </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><![endif]-->
+  </td>
+  </tr>
+  </tbody>
+  </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><![endif]--> {% endfor %}{% if goal_equalizer_note %}<!-- ============ Goal equalizer ============ -->
+  <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:18px 0px 0px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                        <tbody>
+                          <tr>
+                            <td align="center" style="font-size:0px;padding:0px 28px 24px;word-break:break-word;">
+                              <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
+                              </p>
+                              <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#075985" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#075985;background-color:#075985;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#075985;background-color:#075985;width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:30px 0px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                        <tbody>
+                          <tr>
+                            <td align="center" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                              <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#ffffff;">
+                                <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#9FC7DE;">Make it fair</div>
+                                <div style="font-size:19px;font-weight:700;line-height:1.35;color:#ffffff;padding-top:8px;">Turn on the Goal Equalizer</div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="center" style="font-size:0px;padding:14px 34px 0px;word-break:break-word;">
+                              <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.6;text-align:center;color:#D4E4EE;">Everyone has a different <b style="color:#ffffff;">basal metabolic rate</b>, driven by age, gender, height and weight. The default goals are calibrated for a 35&nbsp;year old, 1.8&nbsp;m tall man. Personalise yours with the &ldquo;Goal Equalizer&rdquo; just below your personal settings.</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="center" style="font-size:0px;padding:22px 28px 0px;word-break:break-word;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                                <tbody>
+                                  <tr>
+                                    <td align="center" bgcolor="#ffffff" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#ffffff;" valign="middle">
+                                      <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#ffffff;color:#075985;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Adjust my goals </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><![endif]--> {% endif %}<!-- ============ Sign off ============ -->
+  <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:0px 0px 30px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                        <tbody> {% if not goal_equalizer_note %} <tr>
+                            <td align="center" style="font-size:0px;padding:22px 28px;word-break:break-word;">
+                              <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
+                              </p>
+                              <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                            </td>
+                          </tr> {% endif %} <tr>
+                            <td align="left" style="font-size:0px;padding:26px 28px 0px;word-break:break-word;">
+                              <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                <p style="margin:0 0 16px;">Log in for the full picture &ndash; detailed analyses, charts and breakdowns.</p>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                                <tbody>
+                                  <tr>
+                                    <td align="center" bgcolor="#075985" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#075985;" valign="middle">
+                                      <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#075985;color:#ffffff;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Open the app </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:22px 28px 0px;word-break:break-word;">
+                              <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                <p style="margin:0 0 4px;">Enjoy the competition &ndash; good luck!</p>
+                                <p style="margin:0;color:#5B6875;font-size:14px;">The Workout Challenge</p>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><![endif]-->
+  <!-- ============ Footer ============ -->
+  <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#E1E8ED" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#E1E8ED;background-color:#E1E8ED;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#E1E8ED;background-color:#E1E8ED;width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:22px 0px 26px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                        <tbody>
+                          <tr>
+                            <td align="center" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                              <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:12px;line-height:1.7;text-align:center;color:#7A8794;"><span style="font-weight:700;color:#5B6875;">Workout Challenge</span><br /> Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}" style="color:#075985;text-decoration:none;font-weight:600;">Send us an email</a> &nbsp;&middot;&nbsp; <a href="https://github.com/vanalmsick/workout_challenge" style="color:#075985;text-decoration:none;font-weight:600;">Source code</a></div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--[if mso | IE]></td></tr></table><![endif]-->
   </div>
 </body>
 

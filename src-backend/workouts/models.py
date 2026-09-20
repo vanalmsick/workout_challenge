@@ -174,6 +174,10 @@ class Workout(models.Model):
     def duration_seconds(self):
         return self.duration.seconds
 
+    @property
+    def duration_minutes(self):
+        return self.duration.seconds // 60
+
     def __str__(self):
         """str print-out of model entry"""
         return f"{self.start_datetime} - {self.sport_type} ({self.duration / (1_000 * 60)} min / {self.kcal} kcal)"

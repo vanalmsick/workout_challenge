@@ -1,9 +1,8 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html lang="und" dir="auto" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>
-  </title>
+  <title>Your weekly check-in</title>
   <!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--<![endif]-->
@@ -58,8 +57,10 @@
     </style>
     <![endif]-->
   <!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
   <style type="text/css">
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700);
     @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
   </style>
   <!--<![endif]-->
@@ -86,42 +87,44 @@
       width: 50% !important;
       max-width: 50%;
     }
-  </style>
-  <style type="text/css">
-  </style>
-  <style type="text/css">
-  </style>
+  </style> {% load humanize %}
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
 </head>
 
 <body style="word-spacing:normal;background-color:#E1E8ED;">
-  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;"> Keep the momentum going – keep the streak alive! Aim for 150-300 minutes of moderate or 75-150 minutes of vigorous activity weekly (or an equivalent mix) spread over at least 2 days, as recommended by the WHO. </div>
-  <div style="background-color:#E1E8ED;">
+  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">Keep the momentum going. Here is your streak and how your personal 7-day goals are tracking.</div>
+  <div aria-label="Your weekly check-in" aria-roledescription="email" role="article" lang="und" dir="auto" style="word-spacing:normal;background-color:#E1E8ED;">
+    <!-- ============ Hero ============ -->
     <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0;font-size:0;mso-line-height-rule:exactly;"><v:image style="border:0;mso-position-horizontal:center;position:absolute;top:0;width:600px;z-index:-3;" src="{{ MAIN_HOST }}/running_email.jpg" xmlns:v="urn:schemas-microsoft-com:vml" /><![endif]-->
     <div style="margin:0 auto;max-width:600px;">
       <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
         <tbody>
           <tr style="vertical-align:top;">
-            <td background="{{ MAIN_HOST }}/running_email.jpg" style="background:#075985 url('{{ MAIN_HOST }}/running_email.jpg') no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;" height="200">
+            <td background="{{ MAIN_HOST }}/running_email.jpg" style="background:#075985 url('{{ MAIN_HOST }}/running_email.jpg') no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;height:200px;" height="200">
               <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" style="width:600px;" width="600" ><tr><td style=""><![endif]-->
               <div class="mj-hero-content" style="margin:0px auto;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px;">
                   <tbody>
                     <tr>
-                      <td style>
+                      <td style="">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px;">
                           <tbody>
                             <tr>
-                              <td align="center" class="no-invert" style="font-size:0px;padding:10px 25px;padding-top:45px;padding-bottom:10px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:30px;line-height:1.2;text-align:center;color:#ffffff;">Workout Challenge</div>
+                              <td align="center" class="no-invert" style="font-size:0px;padding:46px 20px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#1F2937;">
+                                  <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#CFE3F0;text-shadow:0 1px 4px rgba(0,0,0,0.45);">Weekly check-in</div>
+                                  <div style="font-size:30px;font-weight:700;line-height:1.2;color:#ffffff;padding-top:4px;text-shadow:0 2px 8px rgba(0,0,0,0.45);">Workout Challenge</div>
+                                </div>
                               </td>
                             </tr>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <td align="center" style="font-size:0px;padding:18px 20px 0px;word-break:break-word;">
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                   <tbody>
                                     <tr>
-                                      <td align="center" bgcolor="#075985" role="presentation" style="border:1px solid #fff;border-radius:24px;cursor:auto;mso-padding-alt:10px 25px;background:#075985;" valign="middle">
-                                        <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#075985;color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> LOGIN </a>
+                                      <td align="center" bgcolor="#ffffff" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#ffffff;" valign="middle">
+                                        <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#ffffff;color:#075985;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Open the app </a>
                                       </td>
                                     </tr>
                                   </tbody>
@@ -141,329 +144,53 @@
         </tbody>
       </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <!-- ============ Intro ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
         <tbody>
           <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+            <td style="direction:ltr;font-size:0px;padding:30px 0px 0px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td style="vertical-align:top;padding-bottom:0px;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style width="100%">
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                                  <p>Hi {{ first_name }},</p>
-                                  <p>Let’s check in on your week!</p>
-                                  <p>Keep the momentum going – keep the streak alive!</p>
-                                  <p>Aim for 150-300 minutes of moderate or 75-150 minutes of vigorous activity weekly (or an equivalent mix) spread over at least 2 days, as recommended by the WHO.</p>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <p style="margin:0 0 14px;">Hi {{ first_name }},</p>
+                                  <p style="margin:0 0 16px;">Let's check in on your week &ndash; keep the momentum going and the streak alive.</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <p style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:100%;">
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="background-color:#F4F7FA;border-radius:10px;">
+                                    <tr>
+                                      <td style="padding:14px 18px;font-size:13px;line-height:1.55;color:#5B6875;">
+                                        <span style="font-weight:700;letter-spacing:0.8px;text-transform:uppercase;font-size:11px;color:#8A97A4;">WHO recommendation</span><br /> 150&ndash;300 minutes of moderate or 75&ndash;150 minutes of vigorous activity per week (or an equivalent mix), spread across at least two days.
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:22px 28px;word-break:break-word;">
+                                <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
                                 </p>
-                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
-        <tbody>
-          <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-top:5px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
-              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                  <tbody>
-                    <tr>
-                      <td style="vertical-align:top;padding-top:0px;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style width="100%">
-                          <tbody>
-                            <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                                  <h3>Your Streak:</h3>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0px;word-break:break-word;">
-                                <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;">
-                                  <tr class="calendar" style="width: 35px; height: 35px; text-align: center; padding: 0px;" align="center">
-                                    <td style="font-weight: bold;">
-                                      <!--[if mso]><v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="height:30px;width:30px;" strokecolor="white" strokeweight="1px" fillcolor="FFFFFF"><v:textbox inset="0,0,0,0"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><font style="font-size:14px; color:#000000;">M</font></td></tr></table></v:textbox></v:oval><![endif]-->
-                                      <!--[if !mso]><!-->
-                                      <div class="day" style="height: 25px; width: 25px; margin-left: auto; margin-right: auto; justify-content: center; align-items: center; display: flex; border-radius: 9999px; background-color: #FFFFFF; color: #000000;">M</div>
-                                      <!--<![endif]-->
-                                    </td>
-                                    <td style="font-weight: bold;">
-                                      <!--[if mso]><v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="height:30px;width:30px;" strokecolor="white" strokeweight="1px" fillcolor="FFFFFF"><v:textbox inset="0,0,0,0"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><font style="font-size:14px; color:#000000;">T</font></td></tr></table></v:textbox></v:oval><![endif]-->
-                                      <!--[if !mso]><!-->
-                                      <div class="day" style="height: 25px; width: 25px; margin-left: auto; margin-right: auto; justify-content: center; align-items: center; display: flex; border-radius: 9999px; background-color: #FFFFFF; color: #000000;">T</div>
-                                      <!--<![endif]-->
-                                    </td>
-                                    <td style="font-weight: bold;">
-                                      <!--[if mso]><v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="height:30px;width:30px;" strokecolor="white" strokeweight="1px" fillcolor="FFFFFF"><v:textbox inset="0,0,0,0"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><font style="font-size:14px; color:#000000;">W</font></td></tr></table></v:textbox></v:oval><![endif]-->
-                                      <!--[if !mso]><!-->
-                                      <div class="day" style="height: 25px; width: 25px; margin-left: auto; margin-right: auto; justify-content: center; align-items: center; display: flex; border-radius: 9999px; background-color: #FFFFFF; color: #000000;">W</div>
-                                      <!--<![endif]-->
-                                    </td>
-                                    <td style="font-weight: bold;">
-                                      <!--[if mso]><v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="height:30px;width:30px;" strokecolor="white" strokeweight="1px" fillcolor="FFFFFF"><v:textbox inset="0,0,0,0"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><font style="font-size:14px; color:#000000;">T</font></td></tr></table></v:textbox></v:oval><![endif]-->
-                                      <!--[if !mso]><!-->
-                                      <div class="day" style="height: 25px; width: 25px; margin-left: auto; margin-right: auto; justify-content: center; align-items: center; display: flex; border-radius: 9999px; background-color: #FFFFFF; color: #000000;">T</div>
-                                      <!--<![endif]-->
-                                    </td>
-                                    <td style="font-weight: bold;">
-                                      <!--[if mso]><v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="height:30px;width:30px;" strokecolor="white" strokeweight="1px" fillcolor="FFFFFF"><v:textbox inset="0,0,0,0"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><font style="font-size:14px; color:#000000;">F</font></td></tr></table></v:textbox></v:oval><![endif]-->
-                                      <!--[if !mso]><!-->
-                                      <div class="day" style="height: 25px; width: 25px; margin-left: auto; margin-right: auto; justify-content: center; align-items: center; display: flex; border-radius: 9999px; background-color: #FFFFFF; color: #000000;">F</div>
-                                      <!--<![endif]-->
-                                    </td>
-                                    <td style="font-weight: bold;">
-                                      <!--[if mso]><v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="height:30px;width:30px;" strokecolor="white" strokeweight="1px" fillcolor="FFFFFF"><v:textbox inset="0,0,0,0"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><font style="font-size:14px; color:#000000;">S</font></td></tr></table></v:textbox></v:oval><![endif]-->
-                                      <!--[if !mso]><!-->
-                                      <div class="day" style="height: 25px; width: 25px; margin-left: auto; margin-right: auto; justify-content: center; align-items: center; display: flex; border-radius: 9999px; background-color: #FFFFFF; color: #000000;">S</div>
-                                      <!--<![endif]-->
-                                    </td>
-                                    <td style="font-weight: bold;">
-                                      <!--[if mso]><v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="height:30px;width:30px;" strokecolor="white" strokeweight="1px" fillcolor="FFFFFF"><v:textbox inset="0,0,0,0"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><font style="font-size:14px; color:#000000;">S</font></td></tr></table></v:textbox></v:oval><![endif]-->
-                                      <!--[if !mso]><!-->
-                                      <div class="day" style="height: 25px; width: 25px; margin-left: auto; margin-right: auto; justify-content: center; align-items: center; display: flex; border-radius: 9999px; background-color: #FFFFFF; color: #000000;">S</div>
-                                      <!--<![endif]-->
-                                    </td>
-                                  </tr>
-                                  <mj-raw> {% for week in calendar %} </mj-raw>
-                                  <tr class="calendar" style="width: 35px; height: 35px; text-align: center; padding: 0px;" align="center">
-                                    <mj-raw> {% for day in week %} </mj-raw>
-                                    <td>
-                                      <!--[if mso]><v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="height:30px;width:30px;" strokecolor="white" strokeweight="1px" fillcolor="{{ day.background_color }}"><v:textbox inset="0,0,0,0"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><font style="font-size:14px; color:{{ day.color }};">{{ day.day }}</font></td></tr></table></v:textbox></v:oval><![endif]-->
-                                      <!--[if !mso]><!-->
-                                      <div class="day" style="height: 25px; width: 25px; margin-left: auto; margin-right: auto; justify-content: center; align-items: center; display: flex; border-radius: 9999px; background-color: {{ day.background_color }}; color: {{ day.color }};">{{ day.day }}</div>
-                                      <!--<![endif]-->
-                                    </td>
-                                    <mj-raw> {% endfor %} </mj-raw>
-                                  </tr>
-                                  <mj-raw> {% endfor %} </mj-raw>
-                                  <tr>
-                                    <td colspan="7" style="padding-top:5px;padding-bottom:5px;text-align:center; font-family:Arial, sans-serif; background-color:#F3F7FA;">
-                                      <span style="display:inline-block; width:25px; height:25px; line-height:25px; text-align:center; mso-line-height-rule:exactly; mso-table-lspace:0pt; mso-table-rspace:0pt; border:2px solid #60A8D8; border-radius:50%; background-color:#60A8D8; color:#FFFFFF; font-weight:bold; font-family:Arial, sans-serif;"> &#10003; </span>
-                                      <span style="display:inline-block; height:25px; line-height: 25px; text-align: center;padding-left:5px; mso-table-lspace:0pt; mso-table-rspace:0pt;color: #6b7280;font-weight:bold;">{{ week_streak }} Week Streak</span>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
-              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                  <tbody>
-                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style width="100%">
-                      <tbody>
-                        <tr>
-                          <td align="left" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                            <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                              <h3>Your Personal 7-Day Goals:</h3>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0px;word-break:break-word;"> {% if goals.active_days is not None %} <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                              <tr>
-                                <td style="height:10px; font-size:0; line-height:0;">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td style="background-color:#f9f9f9; border-radius:8px; padding:18px;">
-                                  <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                    <tr>
-                                      <td style="font-size:14px; line-height:16px; mso-line-height-rule:exactly; font-weight:bold; color: #6b7280;">Active Days</td>
-                                      <td align="right" style="font-size:14px; line-height:16px; mso-line-height-rule:exactly; color: #6b7280;">{{ goals.active_days.recorded }} days <span style="font-size:10px;">/ {{ goals.active_days.target }} days</span></td>
-                                    </tr>
-                                    <tr>
-                                      <td colspan="2" height="12" style="padding-top:8px; line-height:0; font-size:0;">
-                                        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" arcsize="50%" strokecolor="#e5e5e5" strokeweight="1px" style="width:{{ goals.active_days.percent_vml }}%;height:12px;" fillcolor="#4a78b5"><v:fill color="#4a78b5" /></v:roundrect><![endif]-->
-                                        <!--[if !mso]><!-- -->
-                                        <div style="background:#e5e5e5; border-radius:4px; width:100%; height:12px;">
-                                          <div style="background:#4a78b5; height:12px; border-radius:4px; width:{{ goals.active_days.percent }}%;"></div>
-                                        </div>
-                                        <!--<![endif]-->
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>
-                            </table> {% endif %} {% if goals.minutes is not None %} <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                              <tr>
-                                <td style="height:15px; font-size:0; line-height:0;">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td style="background-color:#f9f9f9; border-radius:8px; padding:18px;">
-                                  <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                    <tr>
-                                      <td style="font-size:14px; line-height:16px; mso-line-height-rule:exactly; font-weight:bold; color: #6b7280;">Exercise</td>
-                                      <td align="right" style="font-size:14px; line-height:16px; mso-line-height-rule:exactly; color: #6b7280;">{{ goals.minutes.recorded }} min <span style="font-size:10px;">/ {{ goals.minutes.target }} min</span></td>
-                                    </tr>
-                                    <tr>
-                                      <td colspan="2" height="12" style="padding-top:8px; line-height:0; font-size:0;">
-                                        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" arcsize="50%" strokecolor="#e5e5e5" strokeweight="1px" style="width:{{ goals.minutes.percent_vml }}%;height:12px;" fillcolor="#4a78b5"><v:fill color="#4a78b5" /></v:roundrect><![endif]-->
-                                        <!--[if !mso]><!-- -->
-                                        <div style="background:#e5e5e5; border-radius:4px; width:100%; height:12px;">
-                                          <div style="background:#4a78b5; height:12px; border-radius:4px; width:{{ goals.minutes.percent }}%;"></div>
-                                        </div>
-                                        <!--<![endif]-->
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>
-                            </table> {% endif %} {% if goals.distance is not None %} <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                              <tr>
-                                <td style="height:15px; font-size:0; line-height:0;">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td style="background-color:#f9f9f9; border-radius:8px; padding:18px;">
-                                  <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                    <tr>
-                                      <td style="font-size:14px; line-height:16px; mso-line-height-rule:exactly; font-weight:bold; color: #6b7280;">Distance</td>
-                                      <td align="right" style="font-size:14px; line-height:16px; mso-line-height-rule:exactly; color: #6b7280;">{{ goals.distance.recorded }} km <span style="font-size:10px;">/ {{ goals.distance.target }} km</span></td>
-                                    </tr>
-                                    <tr>
-                                      <td colspan="2" height="12" style="padding-top:8px; line-height:0; font-size:0;">
-                                        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" arcsize="50%" strokecolor="#e5e5e5" strokeweight="1px" style="width:{{ goals.distance.percent_vml }}%;height:12px;" fillcolor="#4a78b5"><v:fill color="#4a78b5" /></v:roundrect><![endif]-->
-                                        <!--[if !mso]><!-- -->
-                                        <div style="background:#e5e5e5; border-radius:4px; width:100%; height:12px;">
-                                          <div style="background:#4a78b5; height:12px; border-radius:4px; width:{{ goals.distance.percent }}%;"></div>
-                                        </div>
-                                        <!--<![endif]-->
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>
-                            </table> {% endif %} </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% if openai_quote is not None %}
-    <!-- AI Health Quote -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#075985" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#075985;background-color:#075985;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#075985;background-color:#075985;width:100%;">
-        <tbody>
-          <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;" width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-top:20px;padding-bottom:10px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.2;text-align:center;color:#ffffff;">{{ openai_quote }}</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-right:100px;padding-bottom:10px;padding-left:100px;word-break:break-word;">
-                        <p style="border-top:solid 1px #ffffff;font-size:1px;margin:0px auto;width:100%;">
-                        </p>
-                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #ffffff;font-size:1px;margin:0px auto;width:400px;" role="presentation" width="400px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.2;text-align:center;color:#e5e7eb;">
-                          <p>by OpenAI's ChatGPT 4o</p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><![endif]--> {% endif %}
-    <!-- Final remarks -->
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="white" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
-        <tbody>
-          <tr>
-            <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                  <tbody> {% if openai_quote is None %} <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <p style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:100%;">
-                        </p>
-                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 2px #E1E8ED;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr> {% endif %} <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;padding-top:20px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">Login to see more detailed analyses, charts, and breakdowns:</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;padding-top:5px;padding-bottom:2px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
-                          <tbody>
-                            <tr>
-                              <td align="center" bgcolor="#075985" role="presentation" style="border:none;border-radius:24px;cursor:auto;mso-padding-alt:10px 25px;background:#075985;" valign="middle">
-                                <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#075985;color:#ffffff;font-family:Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> LOGIN </a>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:10px;word-break:break-word;">
-                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.2;text-align:left;color:#000000;">
-                          <p>Enjoy the Competition.</p>
-                          <p>Good luck!</p>
-                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -476,42 +203,308 @@
       </table>
     </div>
     <!--[if mso | IE]></td></tr></table><![endif]-->
-    <!-- Footnote -->
-    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-      <tbody>
-        <tr>
-          <td>
-            <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-            <div style="margin:0px auto;max-width:600px;">
-              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-                <tbody>
-                  <tr>
-                    <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
-                      <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-                      <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;" width="100%">
+    <!-- ============ Streak + goals ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:0px 0px 8px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
+              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
                             <tr>
-                              <td align="center" style="font-size:0px;padding:10px 25px;padding-top:0;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.2;text-align:center;color:#9a9ea6;"><span class="apple-link">Workout Challenge</span>
-                                  <br> Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}">Send us an Email</a>. <br> See the <a href="https://github.com/vanalmsick/workout_challenge">Source Code</a>.
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <div style="font-size:17px;font-weight:700;color:#075985;padding-bottom:12px;">&#128293;&nbsp; Your streak</div>
+                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="table-layout:fixed;">
+                                    <tr> {% for label in "MTWTFSS"|make_list %} <td align="center" style="padding:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.6px;color:#A7B2BC;">{{ label }}</td> {% endfor %} </tr> {% for week in calendar %} <tr> {% for day in week %} <td align="center" style="padding:3px 0;font-size:0;line-height:0;">
+                                        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" arcsize="50%" stroke="f" fillcolor="{{ day.background_color }}" style="width:28px;height:28px;v-text-anchor:middle;"><w:anchorlock/><center style="color:{{ day.color }};font-family:'Segoe UI',Arial,sans-serif;font-size:12px;font-weight:700;">{{ day.day }}</center></v:roundrect><![endif]-->
+                                        <!--[if !mso]><!-- -->
+                                        <div style="width:28px;height:28px;line-height:28px;margin:0 auto;border-radius:50%;background-color:{{ day.background_color }};color:{{ day.color }};font-size:12px;font-weight:700;text-align:center;mso-line-height-rule:exactly;">{{ day.day }}</div><!--<![endif]-->
+                                      </td> {% endfor %} </tr> {% endfor %}
+                                  </table>
+                                  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="margin-top:12px;background-color:#F4F7FA;border-radius:10px;">
+                                    <tr>
+                                      <td align="center" style="padding:11px 12px;font-size:13px;font-weight:700;color:#5B6875;">
+                                        <span style="background-color:#6387BC;color:#ffffff;border-radius:999px;padding:2px 8px;font-size:12px;">&#10003;</span>&nbsp;&nbsp;{{ week_streak }} week streak
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <div style="height:20px;line-height:20px;font-size:0;">&nbsp;</div>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <!--[if mso | IE]></td></tr></table><![endif]-->
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!--[if mso | IE]></td></tr></table><![endif]-->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td><td class="" style="vertical-align:top;width:300px;" ><![endif]-->
+              <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <div style="font-size:17px;font-weight:700;color:#075985;padding-bottom:12px;">Your 7-day goals</div> {% if goals.active_days %} <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="background-color:#F4F7FA;border-radius:10px;">
+                                    <tr>
+                                      <td style="padding:14px 16px;">
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation">
+                                          <tr>
+                                            <td style="font-size:13px;font-weight:700;color:#1F2937;">Active days</td>
+                                            <td align="right" style="font-size:13px;color:#5B6875;white-space:nowrap;"><b style="color:#075985;">{{ goals.active_days.recorded|intcomma }}</b> / {{ goals.active_days.target|intcomma }}</td>
+                                          </tr>
+                                        </table>
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" bgcolor="#E3E8EE" style="margin-top:9px;background-color:#E3E8EE;border-radius:999px;">
+                                          <tr>
+                                            <td width="{{ goals.active_days.percent|floatformat:0 }}%" height="10" bgcolor="#6387BC" style="height:10px;line-height:10px;font-size:0;mso-line-height-rule:exactly;background-color:#6387BC;border-radius:999px;">&nbsp;</td>
+                                            <td height="10" style="height:10px;line-height:10px;font-size:0;mso-line-height-rule:exactly;">&nbsp;</td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <div style="height:10px;line-height:10px;font-size:0;">&nbsp;</div> {% endif %} {% if goals.minutes %} <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="background-color:#F4F7FA;border-radius:10px;">
+                                    <tr>
+                                      <td style="padding:14px 16px;">
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation">
+                                          <tr>
+                                            <td style="font-size:13px;font-weight:700;color:#1F2937;">Exercise</td>
+                                            <td align="right" style="font-size:13px;color:#5B6875;white-space:nowrap;"><b style="color:#075985;">{{ goals.minutes.recorded|intcomma }}</b> / {{ goals.minutes.target|intcomma }} min</td>
+                                          </tr>
+                                        </table>
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" bgcolor="#E3E8EE" style="margin-top:9px;background-color:#E3E8EE;border-radius:999px;">
+                                          <tr>
+                                            <td width="{{ goals.minutes.percent|floatformat:0 }}%" height="10" bgcolor="#6387BC" style="height:10px;line-height:10px;font-size:0;mso-line-height-rule:exactly;background-color:#6387BC;border-radius:999px;">&nbsp;</td>
+                                            <td height="10" style="height:10px;line-height:10px;font-size:0;mso-line-height-rule:exactly;">&nbsp;</td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <div style="height:10px;line-height:10px;font-size:0;">&nbsp;</div> {% endif %} {% if goals.distance %} <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="background-color:#F4F7FA;border-radius:10px;">
+                                    <tr>
+                                      <td style="padding:14px 16px;">
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation">
+                                          <tr>
+                                            <td style="font-size:13px;font-weight:700;color:#1F2937;">Distance</td>
+                                            <td align="right" style="font-size:13px;color:#5B6875;white-space:nowrap;"><b style="color:#075985;">{{ goals.distance.recorded|floatformat:0|intcomma }}</b> / {{ goals.distance.target|intcomma }} km</td>
+                                          </tr>
+                                        </table>
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" bgcolor="#E3E8EE" style="margin-top:9px;background-color:#E3E8EE;border-radius:999px;">
+                                          <tr>
+                                            <td width="{{ goals.distance.percent|floatformat:0 }}%" height="10" bgcolor="#6387BC" style="height:10px;line-height:10px;font-size:0;mso-line-height-rule:exactly;background-color:#6387BC;border-radius:999px;">&nbsp;</td>
+                                            <td height="10" style="height:10px;line-height:10px;font-size:0;mso-line-height-rule:exactly;">&nbsp;</td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table> {% endif %} {% if not goals.active_days and not goals.minutes and not goals.distance %} <div style="font-size:14px;color:#8A97A4;">No personal goals set yet &ndash; add them in your settings to track progress here.</div> {% endif %}
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]--> {% if openai_quote is not None %}<!-- ============ AI health fact ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:18px 0px 0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:0px 28px 24px;word-break:break-word;">
+                                <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
+                                </p>
+                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#075985" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#075985;background-color:#075985;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#075985;background-color:#075985;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:30px 0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#9FC7DE;">
+                                  <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;">Fact of the day</div>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:12px 34px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:17px;line-height:1.45;text-align:center;color:#ffffff;">{{ openai_quote }}</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:14px 28px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.6;text-align:center;color:#8FB6CD;">Generated by OpenAI&rsquo;s ChatGPT</div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]--> {% endif %}<!-- ============ Sign off ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:0px 0px 30px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody> {% if openai_quote is None %} <tr>
+                              <td align="center" style="font-size:0px;padding:22px 28px;word-break:break-word;">
+                                <p style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:100%;">
+                                </p>
+                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #E5E7EB;font-size:1px;margin:0px auto;width:544px;" role="presentation" width="544px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                              </td>
+                            </tr> {% endif %} <tr>
+                              <td align="left" style="font-size:0px;padding:26px 28px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <p style="margin:0 0 16px;">Log in for the full picture &ndash; detailed analyses, charts and breakdowns.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+                                  <tbody>
+                                    <tr>
+                                      <td align="center" bgcolor="#075985" role="presentation" style="border:none;border-radius:999px;cursor:auto;mso-padding-alt:13px 30px;background:#075985;" valign="middle">
+                                        <a href="{{ MAIN_HOST }}/login" style="display:inline-block;background:#075985;color:#ffffff;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:700;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:13px 30px;mso-padding-alt:0px;border-radius:999px;" target="_blank"> Open the app </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size:0px;padding:22px 28px 0px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1.6;text-align:left;color:#1F2937;">
+                                  <p style="margin:0 0 4px;">Enjoy the competition &ndash; good luck!</p>
+                                  <p style="margin:0;color:#5B6875;font-size:14px;">The Workout Challenge</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <!-- ============ Footer ============ -->
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#E1E8ED" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#E1E8ED;background-color:#E1E8ED;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#E1E8ED;background-color:#E1E8ED;width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:22px 0px 26px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;padding:0px;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:0px 28px;word-break:break-word;">
+                                <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Helvetica, Arial, sans-serif;font-size:12px;line-height:1.7;text-align:center;color:#7A8794;"><span style="font-weight:700;color:#5B6875;">Workout Challenge</span><br /> Any issues? <a href="mailto:{{ EMAIL_REPLY_TO }}" style="color:#075985;text-decoration:none;font-weight:600;">Send us an email</a> &nbsp;&middot;&nbsp; <a href="https://github.com/vanalmsick/workout_challenge" style="color:#075985;text-decoration:none;font-weight:600;">Source code</a></div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
   </div>
 </body>
 

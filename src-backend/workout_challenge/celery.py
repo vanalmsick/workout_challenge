@@ -62,6 +62,12 @@ app.conf.beat_schedule = {
         "schedule": crontab(day_of_week="1", minute="5", hour="6"),
         "args": (),
     },
+    # every Monday evening remind inactive users every 6 months to delete account or start comeption again
+    "send_all_account_inactive_emails": {
+        "task": "custom_user.emails.celery_emails.send_all_account_inactive_emails",
+        "schedule": crontab(day_of_week="1", minute="5", hour="18"),
+        "args": (),
+    },
     # every Sunday night delete expired JWT refresh tokens from the blacklist tables (one row per login otherwise forever)
     "flush_expired_tokens": {
         "task": "workout_challenge.celery.flush_expired_tokens",

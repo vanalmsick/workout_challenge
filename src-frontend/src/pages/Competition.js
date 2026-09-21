@@ -84,13 +84,6 @@ function FilterLink({onClick, title, additionalClasses = "", children}) {
     );
 }
 
-function filterLabel(filter, stats) {
-    if (!filter) return null;
-    if (filter.type === 'user') return stats?.users?.[filter.value]?.username ?? 'Participant';
-    if (filter.type === 'team') return stats?.teams?.[filter.value]?.name ?? 'Team';
-    return getWorkoutType(filter.value).label;
-}
-
 /** Only rendered while a filter is active: shows it, lets the user swap it or clear it. */
 function FilterBar({filter, setFilter, stats, feed}) {
     if (!filter || !stats) return null;
@@ -105,40 +98,39 @@ function FilterBar({filter, setFilter, stats, feed}) {
     }
 
     return (
-        <BoxSection additionalClasses="mb-4 py-3">
-            <div className="flex flex-col items-center gap-3 sm:flex-row">
-                <span className="flex items-center gap-2 text-gray-500 uppercase font-bold text-sm">
-                    <Filter className="h-4 w-4"/> Filter
-                </span>
-                <div className="w-full sm:w-64">
-                    <select value={filter.type + ':' + filter.value} onChange={changeFilter}
-                            className={inputClasses({highlight: true})} aria-label="Active filter">
-                        <optgroup label="Participants">
-                            {users.map(person => (
-                                <option key={"filter_user" + person.id} value={"user:" + person.id}>{person.username}</option>
-                            ))}
-                        </optgroup>
-                        <optgroup label="Teams">
-                            {teams.map(team => (
-                                <option key={"filter_team" + team.id} value={"team:" + team.id}>{team.name}</option>
-                            ))}
-                        </optgroup>
-                        <optgroup label="Activities">
-                            {sports.map(sportType => (
-                                <option key={"filter_sport" + sportType} value={"sport:" + sportType}>{getWorkoutType(sportType).label}</option>
-                            ))}
-                        </optgroup>
-                    </select>
+        <div className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pointer-events-none">
+            <div className="pointer-events-auto w-full max-w-xl sm:w-auto rounded-2xl bg-white dark:bg-gray-800 shadow-[0_4px_24px_rgba(0,0,0,0.25)] dark:shadow-[0_6px_32px_rgba(0,0,0,0.9)] dark:ring-1 dark:ring-white/10 px-6 py-3">
+                <div className="flex flex-col items-center gap-3 sm:flex-row">
+                    <span className="flex items-center gap-2 text-gray-500 uppercase font-bold text-sm">
+                        <Filter className="h-4 w-4"/> Active filter
+                    </span>
+                    <div className="w-full sm:w-64">
+                        <select value={filter.type + ':' + filter.value} onChange={changeFilter}
+                                className={inputClasses({highlight: true})} aria-label="Active filter">
+                            <optgroup label="Participants">
+                                {users.map(person => (
+                                    <option key={"filter_user" + person.id} value={"user:" + person.id}>{person.username}</option>
+                                ))}
+                            </optgroup>
+                            <optgroup label="Teams">
+                                {teams.map(team => (
+                                    <option key={"filter_team" + team.id} value={"team:" + team.id}>{team.name}</option>
+                                ))}
+                            </optgroup>
+                            <optgroup label="Activities">
+                                {sports.map(sportType => (
+                                    <option key={"filter_sport" + sportType} value={"sport:" + sportType}>{getWorkoutType(sportType).label}</option>
+                                ))}
+                            </optgroup>
+                        </select>
+                    </div>
+                    <button type="button" onClick={() => setFilter(null)}
+                            className="flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm transition hover:bg-gray-300 cursor-pointer dark:bg-gray-900 dark:hover:bg-gray-700">
+                        <X className="h-3 w-3"/> Clear filter
+                    </button>
                 </div>
-                <button type="button" onClick={() => setFilter(null)}
-                        className="flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm transition hover:bg-gray-300 cursor-pointer dark:bg-gray-900 dark:hover:bg-gray-700">
-                    <X className="h-3 w-3"/> Clear filter
-                </button>
-                <span className="text-sm text-gray-500 italic sm:ml-auto text-center sm:text-right">
-                    Showing {filterLabel(filter, stats)} only - click any participant, team or activity to change.
-                </span>
             </div>
-        </BoxSection>
+        </div>
     );
 }
 
@@ -1011,7 +1003,7 @@ export default function Competition() {
         <PageWrapper>
             <NavMenu page={id}/>
 
-            <div className="container mx-auto p-4">
+            <div className={"container mx-auto p-4" + (filter ? " pb-52 sm:pb-28" : "")}>
 
                 {
                     (competitionLoading || feedLoading) ? (

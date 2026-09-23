@@ -10,7 +10,7 @@ import {competitionsApi} from '../utils/reducers/competitionsSlice';
 import {statsApi} from '../utils/reducers/statsSlice';
 import {feedApi} from '../utils/reducers/feedSlice';
 import {PageWrapper} from "../utils/miscellaneous";
-import {sentryError} from "../utils/reducers/baseQueryWithReauth";
+import {refreshAccessToken, sentryError} from "../utils/reducers/baseQueryWithReauth";
 import {inputClasses, labelClasses} from "../forms/basicComponents";
 
 /* The public (logged-out) forms reuse the exact same field styling as the rest
@@ -430,45 +430,11 @@ const apiSetNewPassword = async (uid, token, newPassword) => {
 }
 
 
-const apiRefreshToken = async (refreshToken) => {
-    try {
-        const response = await fetch((process.env.REACT_APP_BACKEND_URL || '') + '/api/token/refresh/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                refresh: refreshToken,
-            }),
-        });
-        
-        if (response.ok) {
-            console.log('Token Refresh Successful');
-            const token = await response.json();
-            localStorage.setItem('access_token', token.access);
-            return [true, undefined];
-        } else {
-            console.log('Token Refresh Error:', response.status, response.statusText);
-            let error = null;
-            try {
-                error = await response.json();
-            } catch (e) {
-                error = { detail: 'Unknown error' };
-            }
-            localStorage.removeItem('refresh_token');
-            return [false, response.statusText + ' (' + response.status + ') - ' + error.detail];
-        }
-    } catch (error) {
-        console.error('Network or server error during token refresh:', error);
-        localStorage.removeItem('refresh_token');
-        // Capture network errors in Sentry
-        sentryError({
-            result: error,
-            errorSource: 'manual-api',
-            endpointName: 'refresh-token',
-        });
-        return [false, 'Network or server error occurred during token refresh. Please try again.'];
-    }
+const apiRefreshToken = async () => {
+    // shares the one mutexed refresh used by the RTK Query base query
+    const success = await refreshAccessToken();
+    if (!success) console.log('Token Refresh Error');
+    return [success, success ? undefined : 'Your session has expired. Please log in again.'];
 };
 
 
@@ -657,10 +623,10 @@ function LogInPage() {
     }
 
     // check if refreshToken already exists and user is already logged in
-    async function checkRefreshToken(refreshToken) {
+    async function checkRefreshToken() {
         console.log('refresh_token already exists - check if still valid');
         setIsLoading(true);
-        const [success, msg] = await apiRefreshToken(refreshToken);
+        const [success] = await apiRefreshToken();
         if (success) {
             // success refreshing access_token - redirecting to dashboard
             await waitForLocalStorage('access_token');
@@ -668,7 +634,6 @@ function LogInPage() {
             navigate(`/dashboard/${location.search}`);
         } else {
             // error refreshing access_token - manual login required
-            localStorage.removeItem('refresh_token');
             console.log('refresh_token exists but expired - new login required');
         }
         setIsLoading(false);
@@ -684,7 +649,7 @@ function LogInPage() {
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken !== null) {
             localStorage.removeItem('access_token');
-            checkRefreshToken(refreshToken);
+            checkRefreshToken();
         }
     }, []);
 

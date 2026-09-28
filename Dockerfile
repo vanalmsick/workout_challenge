@@ -105,6 +105,10 @@ COPY --from=frontend /build/build /usr/share/nginx/html
 # supervisord.conf expects the top-level directory containing src-backend/.
 WORKDIR /workout_challenge
 
+ARG APP_VERSION=""
+ENV APP_VERSION=$APP_VERSION
+LABEL org.opencontainers.image.version="$APP_VERSION"
+
 # Django migrations + sqlite database, persisted across container rebuilds.
 VOLUME /workout_challenge/src-backend/data
 

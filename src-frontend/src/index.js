@@ -13,11 +13,13 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
 // Optional Sentry monitoring
 const SENTRY_DSN = window.RUNTIME_CONFIG?.REACT_APP_SENTRY_DSN;
+const APP_VERSION = window.RUNTIME_CONFIG?.REACT_APP_VERSION;
 if (SENTRY_DSN !== undefined && SENTRY_DSN !== null && SENTRY_DSN !== '') {
     console.log('Sentry error monitoring is enabled.');
     Sentry.init({
         dsn: SENTRY_DSN,
         environment: "frontend",
+        release: APP_VERSION || undefined,
         integrations: [
             Sentry.browserTracingIntegration(),
             Sentry.browserProfilingIntegration(),

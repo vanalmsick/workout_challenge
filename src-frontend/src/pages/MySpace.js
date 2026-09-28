@@ -240,13 +240,16 @@ function CompetitionRow({competition, user}) {
             <td className="py-2 px-4 text-right text-sm">
                 {(statsLoading) ? (
                     <div><BeatLoader color="rgb(209 213 219)" /></div>
-                ) : (stats.competition.start_date_count >= 0) ? (
-                        ((stats.users[user.id]?.rank == null) ? (
+                ) : (!stats) ? (
+                    // request failed (e.g. 401 while the session expires and we redirect to /login) and there is no cached data yet
+                    <span className="text-gray-400" title={statsError?.status ? `Error ${statsError.status}` : undefined}>Stats unavailable</span>
+                ) : (stats.competition?.start_date_count >= 0) ? (
+                        ((stats.users?.[user?.id]?.rank == null) ? (
                             <span className="text-gray-400">Time to work out!</span>
                         ) : (
-                            <>No. <span className="text-xl font-semibold">{stats.users[user.id]?.rank}</span>
+                            <>No. <span className="text-xl font-semibold">{stats.users[user.id].rank}</span>
                                 {(competition.has_teams) ? (
-                                    <span className="text-gray-400 italic"><br/><span className="font-semibold">{teamLabel(stats.teams[teamId]?.name)}:</span> #{stats.teams[teamId]?.rank}</span>
+                                    <span className="text-gray-400 italic"><br/><span className="font-semibold">{teamLabel(stats.teams?.[teamId]?.name)}:</span> #{stats.teams?.[teamId]?.rank}</span>
                                 ) : null
                                 }
                             </>

@@ -260,6 +260,7 @@ if sentry_sdk_url:
         sentry_sdk.init(
             dsn=sentry_sdk_url,
             environment="backend",
+            release=(os.environ.get("APP_VERSION") or "").strip() or None,
             send_default_pii=False,
             enable_tracing=True,
             # Profiling runs a sampling thread and buffers stack samples per transaction. At

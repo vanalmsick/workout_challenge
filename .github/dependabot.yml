@@ -28,11 +28,10 @@ updates:
         update-types:
           - "major"
     commit-message:
-      prefix: "dependabot chore "
+      prefix: "dependabot chore frontend "
       include: "scope"
     labels:
       - "dependencies"
-      - "frontend"
     open-pull-requests-limit: 1
 
   # ── Backend: pip ───────────────────────────────────────────────────────────
@@ -60,11 +59,10 @@ updates:
         update-types:
           - "major"
     commit-message:
-      prefix: "dependabot chore "
+      prefix: "dependabot chore backend "
       include: "scope"
     labels:
       - "dependencies"
-      - "backend"
     open-pull-requests-limit: 1
 
   # ── Docker base images ─────────────────────────────────────────────────────
@@ -88,11 +86,10 @@ updates:
         update-types:
           - "major"
     commit-message:
-      prefix: "dependabot chore "
+      prefix: "dependabot chore docker "
       include: "scope"
     labels:
       - "dependencies"
-      - "docker"
     open-pull-requests-limit: 1
 
   # ── GitHub Actions ─────────────────────────────────────────────────────────
@@ -115,9 +112,8 @@ updates:
         update-types:
           - "major"
     commit-message:
-      prefix: "dependabot chore "
+      prefix: "dependabot chore github-actions "
       include: "scope"
     labels:
       - "dependencies"
-      - "github-actions"
     open-pull-requests-limit: 1

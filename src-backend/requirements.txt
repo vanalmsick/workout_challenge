@@ -16,3 +16,4 @@ sentry-sdk[django]
 sentry-sdk[celery]
 openai
 gevent
+packaging

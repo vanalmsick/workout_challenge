@@ -34,7 +34,7 @@ RUN npm run build
 # ==============================================================================
 # Stage 2 - Python dependencies: build a self-contained virtualenv
 # ==============================================================================
-FROM python:3.14-alpine AS pydeps
+FROM python:3.15-alpine AS pydeps
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_ROOT_USER_ACTION=ignore
@@ -57,7 +57,7 @@ RUN --mount=type=cache,id=pip-$TARGETARCH,target=/root/.cache/pip,sharing=locked
 # ==============================================================================
 # Stage 3 - Final runtime image
 # ==============================================================================
-FROM python:3.14-alpine AS final
+FROM python:3.15-alpine AS final
 
 LABEL org.opencontainers.image.title="Workout Challenge" \
       org.opencontainers.image.description="Compete with friends on workout minutes, calories and steps." \

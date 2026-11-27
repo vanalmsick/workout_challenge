@@ -3,19 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@reduxjs/toolkit": "^2.13.0",
+    "@reduxjs/toolkit": "^2.14.0",
     "@sentry/react": "^10.75.3",
     "@sentry/tracing": "^7.120.4",
-    "@tanstack/react-query": "^5.105.0",
-    "@tanstack/react-query-devtools": "^5.105.0",
+    "@tanstack/react-query": "^5.107.1",
+    "@tanstack/react-query-devtools": "^5.107.1",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/user-event": "^14.6.10",
     "chart.js": "^4.6.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "lodash": "^4.18.1",
-    "lucide-react": "^1.65.0",
+    "lucide-react": "^1.72.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.3.1",
     "react-chartjs-2": "^5.3.1",
@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
-    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/postcss": "^4.3.5",
     "postcss": "^8.5.32",
     "tailwindcss": "^4.3.3"
   }
